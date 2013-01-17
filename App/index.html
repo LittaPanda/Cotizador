@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
+        <title>Cotizador</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="CSS/Vendors/normalize.css">
@@ -32,21 +32,78 @@
                     </h3>
             </div>
             <div data-role="content">
-            
+            	<ul id="MainMenu" data-role="listview" data-divider-theme="a" data-inset="true">
+                    <li data-role="list-divider" role="heading">
+                        Menú principal
+                    </li>
+                    <li data-theme="a">
+                        <a href="#MarcasPage" id="StartButton" data-transition="slide">
+                            Entrar
+                        </a>
+                    </li>
+                    <li data-theme="a">
+                        <a href="" data-transition="slide">
+                            Mis cotizaciones
+                        </a>
+                    </li>
+                    <li data-theme="a">
+                        <a href="" data-transition="slide">
+                            Favoritos
+                        </a>
+                    </li>
+                    <li data-theme="a">
+                        <a href="" data-transition="slide">
+                            Salir
+                        </a>
+                    </li>
+                </ul>
+                <div id="CopyrightContainer">
+                	<label id="Copyright" title="Copyright">Copyright</label>
+                </div>
             </div>
         </div>
     <!--Termina HOME-->
     <!--Inicia Marcas-->
     <div data-role="page" id="MarcasPage">
             <div data-theme="e" data-role="header">
-                    <div data-role="navbar" data-iconpos="top">
+                    <div data-role="navbar" data-iconpos="right">
                         <ul>
-                            <li></li>
+                            <li>
+                            	<a href="#AppHome" data-transition="slide" data-theme="a" data-icon="arrow-l">HOME</a>
+                            </li>
                         </ul>
                 	</div>
             </div>
             <div data-role="content">
-            
+            	<div id="ModelosGrid" class="ui-grid-a">
+                    <div class="ui-block-a">
+						<div class="contenedorImagen">
+                        	<img src="Img/Nissan.png" alt="Nissan" class="imagenStyle" />
+                    	</div>
+                    </div>
+                    <div class="ui-block-b">
+                    </div>
+                    <div class="ui-block-a">
+                    </div>
+                    <div class="ui-block-b">
+                    </div>
+                    <div class="ui-block-a">
+                    </div>
+                    <div class="ui-block-b">
+                    </div>
+                    <div class="ui-block-a">
+                    </div>
+                    <div class="ui-block-b">
+                    </div>
+                    <div class="ui-block-a">
+                    </div>
+                    <div class="ui-block-b">
+                    </div>
+                    <div class="ui-block-a">
+                    </div>
+                    <div class="ui-block-b">
+                    </div>
+                </div>
             </div>
     </div>
     <!--Termina Marcas-->

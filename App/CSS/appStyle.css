@@ -1,3 +1,25 @@
 @charset "utf-8";
 /* CSS Document */
+#CopyrightContainer{
+	text-align:right;
+	width:100%;
+}
 
+#Copyright{
+	font-size: 10px;
+	color:#999;
+}
+
+.contenedorImagen{
+	width: 100px; 
+	height: 100px; 
+	position: relative; 
+	background-color: #fbfbfb; 
+	border: 1px solid #b8b8b8;
+}
+
+.imagenStyle{
+	position: absolute;
+	margin: 0px;
+	padding: auto 0px auto 0px;
+}
