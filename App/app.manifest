@@ -1,0 +1,14 @@
+CACHE MANIFEST
+# Cotizador
+# Primera version::17/01/2013
+
+# Archivos que se guardarán para trabajar Off-Line.
+CACHE:
+index.html
+
+# Archivos que requieren estar On-Line para funcionar.
+NETWORK:
+
+
+# Archivos que serán mostrados en caso de alguna falla
+FALLBACK:
