@@ -9,29 +9,37 @@
 	  }
 		
 	  localDataStorage.webdb.createTable = function(DBTable, TFields) {
-		  var fields = stringifyFields(TFields); 
+		  var fields = concatenateFields(TFields, true); 
 		  var db = localDataStorage.webdb.db;
 		  db.transaction(function(tx) {
 			tx.executeSql("CREATE TABLE IF NOT EXISTS "+ DBTable +"(ID INTEGER PRIMARY KEY ASC, " + fields + ")", []);
 		  });
 	  }
 	  
-	  function stringifyFields(TFields){
+	  function concatenateFields(TFields, typeNeeded){
 		  var fields = "";
 		  var fieldsPositions = TFields.lenght - 1; 
 		  for(var field in TFields){
 			  var thisField = TFields[field];
 			  if(field != fieldsPositions){
-			  	fields += thisField.Name + " " + thisField.Type + ",";
+				 if(typeNeeded){
+			  		fields += thisField.Name + " " + thisField.Type + ", ";
+				 }else{
+					fields += thisField.Name + ", ";
+				 }
 			  }else{
-				fields += thisField.Name + " " + thisField.Type;
+				if(typeNeeded){
+			  		fields += thisField.Name + " " + thisField.Type;
+				 }else{
+					fields += thisField.Name;
+				 }
 			  }
 		  }
 		  return fields;
 	  }
 		
 	  localDataStorage.webdb.addNewItem = function(DBTable, TFields, thisItem) {
-		  var fields = stringifyFields(TFields); 
+		  var fields = concatenateFields(TFields, false); 
 		  var db = localDataStorage.webdb.db;
 		  db.transaction(function(tx){
 		  		var addedOn = new Date();
