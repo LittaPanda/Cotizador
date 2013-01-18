@@ -1,5 +1,5 @@
 p// JavaScript Document
-var CarsInformation =  
+var carsCatalog =  
 	[
 	{"Brand":"Chevrolet", "Model":"Spark", "Color":"Azul","Version":"Deluxe","Descripcion":"Contiene un año de seguro mas stereo y 2 pares de ruedas","Price":"350000"},
 	{"Brand":"Chevrolet", "Model":"Spark", "Color":"Rosa","Version":"Standar","Descripcion":"Contiene 6 meses de seguro","Price":"200000"},
