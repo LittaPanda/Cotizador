@@ -20,3 +20,10 @@ var carsCatalog =
 	{"Brand":"Volkswagen", "Model":"Jetta", "Color":"Negro","Version":"Deluxe","Description":"Contiene un año de seguro mas stereo y 2 pares de ruedas","Price":"1800000"},
 	{"Brand":"Volkswagen", "Model":"Jetta", "Color":"Rojo","Version":"Standar","Description":"Contiene 6 meses de seguro","Price":"1800000"},
 	];
+	
+	
+var brandsCatalog =  
+[{"Brand":"Chevrolet"},
+ {"Brand":"Nissan"},
+ {"Brand":"Volkswagen"}
+];

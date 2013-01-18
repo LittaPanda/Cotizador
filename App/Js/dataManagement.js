@@ -156,11 +156,11 @@
   }
   
   function renderBrands(row) {
-	return "<div class=\"contenedorImagen\"><a><img src=\"" + row.brand + ".png alt=\""+ row.brand +"\" title=\""+ row.brand +"\" class=\"imagenStyle\" /></a></div>";
+	return "<div class=\"contenedorImagen\"><a><img src=\"Img/" + row.brand + ".png alt=\""+ row.brand +"\" title=\""+ row.brand +"\" class=\"imagenStyle\" /></a></div>";
   }
   
   function renderModels(row) {
-	return "<div class=\"contenedorImagen\"><a><img src=\"" + row.brand+row.model + ".png alt=\""+ row.model +"\" title=\""+ row.model +"\" class=\"imagenStyle\" /></a></div>";
+	return "<div class=\"contenedorImagen\"><a><img src=\"Img/" + row.brand+"/" + row.model + ".png alt=\""+ row.model +"\" title=\""+ row.model +"\" class=\"imagenStyle\" /></a></div>";
   }
   
   function renderVersions(row) {
@@ -181,6 +181,13 @@
 					,{"Name":"added_on","Type":"DATETIME"}];
 	localDataStorage.webdb.open(DBName, DBVersion, DBDesc);
 	localDataStorage.webdb.createTable(DBTable, TFields);
+
+	DBTable = null;
+	DBTable="BrandsList";
+	TFields = null;
+	TFileds= [{"Name":"brand","Type":"TEXT"}];
+	localDataStorage.webdb.createTable(DBTable, TFields);
+
 	localDataStorage.webdb.getAllitemsList(loaditems(typeList));
   }
   
