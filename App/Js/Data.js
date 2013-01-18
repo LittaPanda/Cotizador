@@ -1,15 +1,25 @@
-// JavaScript Document
+p// JavaScript Document
 var CarsInformation =  
 	[
-	{"Brand":"Nissan", "Model":"Leaf", "Color":"Blue","Price":"250000","Version":"De luxe"},
-	{"Brand":"Nissan", "Model":"Leaf", "Color":"Blue","Price":"180000","Version":"Standar"},
-	{"Brand":"Nissan", "Model":"Leaf", "Color":"Red","Price":"220000","Version":"De luxe"},
-	{"Brand":"Nissan", "Model":"Leaf", "Color":"Red","Price":"1900000","Version":"Premium"},
-	{"Brand":"Nissan", "Model":"Leaf", "Color":"Red","Price":"150000","Version":"Standar"},
-	{"Brand":"Nissan", "Model":"Leaf", "Color":"Green","Price":"180000","Version":"Premium"},
+	{"Brand":"Chevrolet", "Model":"Spark", "Color":"Azul","Version":"Deluxe","Descripcion":"Contiene un año de seguro mas stereo y 2 pares de ruedas","Price":"350000"},
+	{"Brand":"Chevrolet", "Model":"Spark", "Color":"Rosa","Version":"Standar","Descripcion":"Contiene 6 meses de seguro","Price":"200000"},
+	{"Brand":"Chevrolet", "Model":"Spark", "Color":"Verde","Version":"Deluxe","Descripcion":"Contiene un año de seguro mas stereo y 2 pares de ruedas","Price":"350000"},
+
+	{"Brand":"Nissan", "Model":"March", "Color":"Azul","Version":"Deluxe","Descripcion":"Contiene un año de seguro mas stereo y 2 pares de ruedas","Price":"3250000"},
+	{"Brand":"Nissan", "Model":"March", "Color":"Rojo","Version":"Deluxe","Descripcion":"Contiene un año de seguro mas stereo y 2 pares de ruedas","Price":"3250000"},
+	{"Brand":"Nissan", "Model":"Versa", "Color":"Azul","Version":"Premium","Descripcion":"Contiene un año de seguro","Price":"3000000"},
+	{"Brand":"Nissan", "Model":"Versa", "Color":"Negro","Version":"Standar","Descripcion":"Contiene 6 meses de seguro","Price":"2600000"},
+	{"Brand":"Nissan", "Model":"Versa", "Color":"Rojo","Version":"Standar","Descripcion":"Contiene 6 meses de seguro","Price":"2600000"},
 	
-	{"Brand":"Nissan", "Model":"Stone", "Color":"Light Blue","Price":"160000","Version":"Standar"},
-	{"Brand":"Nissan", "Model":"Stone", "Color":"Blue","Price":"160000","Version":"Standar"},
-	{"Brand":"Nissan", "Model":"Stone", "Color":"Light Red","Price":"220000","Version":"De luxe"},
-	{"Brand":"Nissan", "Model":"Stone", "Color":"Light Red","Price":"200000","Version":"Premium"},
+	{"Brand":"Volkswagen", "Model":"Beetle", "Color":"Blanco","Version":"Clasico","Descripcion":"No contiene nada adicional","Price":"1800000"},
+	{"Brand":"Volkswagen", "Model":"Beetle", "Color":"Blanco","Version":"XBox","Descripcion":"Contiene un XBox de regalo","Price":"1800000"},
+	{"Brand":"Volkswagen", "Model":"Beetle", "Color":"Negro","Version":"Clasico","Descripcion":"No contiene nada adicional","Price":"1800000"},
+	{"Brand":"Volkswagen", "Model":"Beetle", "Color":"Negro","Version":"XBox","Descripcion":"Contiene un XBox de regalo","Price":"1800000"},
+	{"Brand":"Volkswagen", "Model":"Beetle", "Color":"Rojo","Version":"Clasico","Descripcion":"No contiene nada adicional","Price":"1800000"},
+	{"Brand":"Volkswagen", "Model":"Jetta", "Color":"Blanco","Version":"Premium","Descripcion":"Contiene un año de seguro","Price":"1800000"},
+	{"Brand":"Volkswagen", "Model":"Jetta", "Color":"Negro","Version":"Deluxe","Descripcion":"Contiene un año de seguro mas stereo y 2 pares de ruedas","Price":"1800000"},
+	{"Brand":"Volkswagen", "Model":"Jetta", "Color":"Rojo","Version":"Standar","Descripcion":"Contiene 6 meses de seguro","Price":"1800000"},
+
+	
+	
 	];
