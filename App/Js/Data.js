@@ -1,4 +1,4 @@
-p// JavaScript Document
+// JavaScript Document
 var carsCatalog =  
 	[
 	{"Brand":"Chevrolet", "Model":"Spark", "Color":"Azul","Version":"Deluxe","Description":"Contiene un año de seguro mas stereo y 2 pares de ruedas","Price":"350000"},
