@@ -116,7 +116,7 @@
 		for (var i=0; i < rs.rows.length; i++) {
 			switch (typeList){
 				case "Brands":
-					rowOutput += renderBrands(rs.rows.item(i));
+					rowOutput += renderBrands(rs.rows.item(i));					
 				break;
 				case "Models":
 					rowOutput += renderModels(rs.rows.item(i));
@@ -125,8 +125,17 @@
 					rowOutput += renderVersions(rs.rows.item(i));
 				break;
 			}		
+			rowOutput += "</div>";
 			itemsList.innerHTML = rowOutput;  
 		}	 		
+	  }
+	  
+	  function renderBlockA() {
+		return "<div class=\"ui-block-a\"></div>";
+	  }
+	  
+	  function renderBlockB() {
+		return "<div class=\"ui-block-b\"></div>";
 	  }
 	  
 	  function renderBrands(row) {
