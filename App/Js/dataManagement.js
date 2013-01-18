@@ -141,7 +141,7 @@
   
   function renderBrands(row) {
 
-	return "<div class=\"contenedorImagen\"><a href=\"#ModelsPage\"><img src=\"" + row.brand + ".png alt=\""+ row.brand +"\" title=\""+ row.brand +"\" class=\"imagenStyle\" /></a></div>";
+	return "<div class=\"contenedorImagen\"><a href=\"#ModelsPage\"><img src=\"Img/" + row.brand + ".png alt=\""+ row.brand +"\" title=\""+ row.brand +"\" class=\"imagenStyle\" /></a></div>";
   }
   
   function renderModels(row) {
