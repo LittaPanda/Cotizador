@@ -44,7 +44,7 @@
 		  db.transaction(function(tx){
 		  		var addedOn = new Date();
 		  		tx.executeSql("INSERT INTO "+ DBTable +"("+ fields +") VALUES (?, ?, ?, ?, ?, ?, ?)",
-			  [thisItem.brand, thisItem.model,thisItem.color, thisItem.version, thisItem.description, thisItem.price, addedOn],
+			  thisItem,
 			  localDataStorage.webdb.onSuccess,
 			  localDataStorage.webdb.onError);
 		 });
@@ -147,6 +147,7 @@
 				var src = carsCatalog[car];
 				thisCar.Brand = src.Brand;
 				thisCar.Model = src.Model;
+				thisCar.AddedOn = new Date();
 				localDataStorage.webdb.addNewItem(DBTable, TFields, thisCar);
 		}
 	  }
