@@ -85,12 +85,11 @@
 		return "<div class=\"contenedorImagen\"><a><img src=\"Img/" + row.brand+"/"+row.model+row.color+ row.version  + ".png alt=\""+ row.version +"\" title=\""+ row.version +"\" class=\"imagenStyle\" /></a></div>";
 	  }
 	  
-	  function init() {
+	  function init(typeList) {
 		var DBName = "ETCatalog";
 		var DBVersion = "1.0";
 		var DBDesc = "Local storage of cars for mobile app";
 		var DBTable = "CarList";
-		var typeList = document.getElementById("TypeList");
 		localDataStorage.webdb.open(DBName, DBVersion, DBDesc);
 		localDataStorage.webdb.createTable(DBTable);
 		localDataStorage.webdb.getAllitemsList(loaditems(typeList));
