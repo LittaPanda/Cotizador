@@ -52,9 +52,9 @@
 		  });
 	  }
 	  
-	  function loaditems(tx, rs, typeList) {
+	  function loaditems(typeList, tx, rs) {
 		var rowOutput = "";
-		var itemsList = document.getElementById("ItemsContainer");
+		var itemsList = document.getElementById(typeList+"Container");
 		for (var i=0; i < rs.rows.length; i++) {
 			switch (typeList){
 				case "Brands":
@@ -68,9 +68,9 @@
 				break;
 				default:
 				break;
-			}		  
-		}	  
-		itemsList.innerHTML = rowOutput;
+			}		
+			itemsList.innerHTML = rowOutput;  
+		}	 		
 	  }
 	  
 	  function renderBrands(row) {
