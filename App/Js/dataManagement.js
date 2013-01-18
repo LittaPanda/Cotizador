@@ -114,6 +114,15 @@
 		var rowOutput = "";
 		var itemsList = document.getElementById(typeList+"Container");
 		for (var i=0; i < rs.rows.length; i++) {
+			if((i%2)!=0)
+				{
+					rowOutput+=renderBlockA();	
+				}
+			else
+				{
+					rowOutput+=renderBlockB();
+				}
+				
 			switch (typeList){
 				case "Brands":
 					rowOutput += renderBrands(rs.rows.item(i));					
@@ -131,11 +140,11 @@
 	  }
 	  
 	  function renderBlockA() {
-		return "<div class=\"ui-block-a\"></div>";
+		return "<div class=\"ui-block-a\">";
 	  }
 	  
 	  function renderBlockB() {
-		return "<div class=\"ui-block-b\"></div>";
+		return "<div class=\"ui-block-b\">";
 	  }
 	  
 	  function renderBrands(row) {
