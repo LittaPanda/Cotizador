@@ -41,9 +41,10 @@
 	  localDataStorage.webdb.addNewItem = function(DBTable, TFields, thisItem) {
 		  var fields = concatenateFields(TFields, false); 
 		  var db = localDataStorage.webdb.db;
+		  var totalParameters = setNumberofParameters(thisItem.length)
 		  db.transaction(function(tx){
 		  		var addedOn = new Date();
-		  		tx.executeSql("INSERT INTO "+ DBTable +"("+ fields +") VALUES"+setNumberofParameters(thisItem.length),//+" (?, ?, ?, ?, ?, ?, ?)",
+		  		tx.executeSql("INSERT INTO "+ DBTable +"("+ fields +") VALUES " + totalParameters,//+" (?, ?, ?, ?, ?, ?, ?)",
 			  thisItem,
 			  localDataStorage.webdb.onSuccess,
 			  localDataStorage.webdb.onError);
@@ -151,8 +152,7 @@
 						,{"Name":"version","Type":"TEXT"}
 						,{"Name":"description","Type":"TEXT"}
 						,{"Name":"price","Type":"TEXT"}
-						,{"Name":"added_on","Type":"DATETIME"},
-		];
+						,{"Name":"added_on","Type":"DATETIME"}];
 		localDataStorage.webdb.open(DBName, DBVersion, DBDesc);
 		localDataStorage.webdb.createTable(DBTable, TFields);
 		localDataStorage.webdb.getAllitemsList(loaditems(typeList));
