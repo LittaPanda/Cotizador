@@ -43,13 +43,30 @@
 		  var db = localDataStorage.webdb.db;
 		  db.transaction(function(tx){
 		  		var addedOn = new Date();
-		  		tx.executeSql("INSERT INTO "+ DBTable +"("+ fields +") VALUES (?, ?, ?, ?, ?, ?, ?)",
+		  		tx.executeSql("INSERT INTO "+ DBTable +"("+ fields +") VALUES"+setNumberofParameters(thisItem.length),//+" (?, ?, ?, ?, ?, ?, ?)",
 			  thisItem,
 			  localDataStorage.webdb.onSuccess,
 			  localDataStorage.webdb.onError);
 		 });
 	  }
 		
+	function setNumberofParameters(length)
+	{
+		var parameters= "(";
+		for(var x=0;x<length;x++)
+		{
+			parameters+="?";
+			if((x+1)==length)
+			{
+				parameters+=")";
+			}
+			else
+			{
+				parameters+=",";
+			}
+		}
+		return parameters;
+	}
 	  localDataStorage.webdb.onError = function(tx, e) {
 		alert("Ha ocurrido un error: " + e.message);
 	  }
@@ -143,11 +160,12 @@
 	  
 	  function addList(DBTable, TFields) {		
 		for(var car in carsCatalog){
-				var thisCar = new Car();
+	//			var thisCar = new Car();
 				var src = carsCatalog[car];
-				thisCar.Brand = src.Brand;
+				var thisCar = new Array(src.Brand,src.Model,src.Color,src.Version,src.Description,src.Price,new Date());
+		/*		thisCar.Brand = src.Brand;
 				thisCar.Model = src.Model;
-				thisCar.AddedOn = new Date();
+				thisCar.AddedOn = new Date();*/
 				localDataStorage.webdb.addNewItem(DBTable, TFields, thisCar);
 		}
 	  }
