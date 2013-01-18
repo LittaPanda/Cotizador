@@ -46,14 +46,6 @@
 	});
   }
   
-  localDataStorage.webdb.getAllBrands = function(renderFunc, DBTable, brand) {
-	var db = localDataStorage.webdb.db;
-	db.transaction(function(tx) {
-	  tx.executeSql("SELECT brand FROM "+ DBTable, [], renderFunc,
-		  localDataStorage.webdb.onError);
-	});
-  }
-  
   localDataStorage.webdb.getAllModels = function(renderFunc, DBTable, brand) {
 	var db = localDataStorage.webdb.db;
 	db.transaction(function(tx) {
@@ -83,14 +75,14 @@
 		var parameters= "(";
 		for(var x=0;x<length;x++)
 		{
-			parameters+="?";
+			parameters += "?";
 			if((x+1)==length)
 			{
-				parameters+=")";
+				parameters += ")";
 			}
 			else
 			{
-				parameters+=",";
+				parameters += ",";
 			}
 		}
 		return parameters;
@@ -124,11 +116,11 @@
 	for (var i=0; i < rs.rows.length; i++) {
 		if((i%2)!=0)
 			{
-				rowOutput+=renderBlockA();	
+				rowOutput += renderBlockA();	
 			}
 		else
 			{
-				rowOutput+=renderBlockB();
+				rowOutput += renderBlockB();
 			}
 			
 		switch (typeList){
@@ -147,16 +139,8 @@
 	}	 		
   }
   
-  function renderBlockA() {
-	return "<div class=\"ui-block-a\">";
-  }
-  
-  function renderBlockB() {
-	return "<div class=\"ui-block-b\">";
-  }
-  
   function renderBrands(row) {
-	return "<div class=\"contenedorImagen\"><a><img src=\"" + row.brand + ".png alt=\""+ row.brand +"\" title=\""+ row.brand +"\" class=\"imagenStyle\" /></a></div>";
+	return "<div class=\"contenedorImagen\"><a href=\"#ModelsPage\"><img src=\"" + row.brand + ".png alt=\""+ row.brand +"\" title=\""+ row.brand +"\" class=\"imagenStyle\" /></a></div>";
   }
   
   function renderModels(row) {
@@ -165,6 +149,14 @@
   
   function renderVersions(row) {
 	return "<div class=\"contenedorImagen\"><a><img src=\"Img/" + row.brand+"/"+row.model+row.color+ row.version  + ".png alt=\""+ row.version +"\" title=\""+ row.version +"\" class=\"imagenStyle\" /></a></div>";
+  }
+  
+  function renderBlockA() {
+	return "<div class=\"ui-block-a\">";
+  }
+  
+  function renderBlockB() {
+	return "<div class=\"ui-block-b\">";
   }
   
   function init(typeList) {
