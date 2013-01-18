@@ -21,6 +21,9 @@
         <script src="Js/Vendors/jquery.mobile-1.2.0.min.js"></script>
         <script src="Js/plugins.js"></script>
         <script src="Js/main.js"></script>
+        <script src="Js/Data.js"></script>
+        <script src="Js/dataManagement.js"></script>
+        <script src="Js/classCar.js"></script>
         
     </head>
     <body>
@@ -82,10 +85,12 @@
     <!--Termina Marcas-->
     <!--Inicia Modelos-->
     <div data-role="page" id="ModelsPage">
+    		<input type="hidden" id="SelectedModel" value="" />
             <div data-theme="e" data-role="header">
                     <div data-role="navbar" data-iconpos="top">
                         <ul>
-                            <li></li>
+                            <li><a href="#AppHome" data-transition="slide" data-theme="a" data-icon="arrow-l">HOME</a></li>
+                            <li><a href="#BrandsPage" data-transition="slide" data-theme="a" data-icon="arrow-l">Marcas</a></li>
                         </ul>
                 	</div>
             </div>
@@ -96,10 +101,14 @@
     <!--Termina Modelos-->
     <!--Inicia Detalle-->
     <div data-role="page" id="DetailPage">
+    		<input type="hidden" id="SelectedColor" value="" />
+            <input type="hidden" id="SelectedVersion" value="" />
             <div data-theme="e" data-role="header">
                     <div data-role="navbar" data-iconpos="top">
                         <ul>
-                            <li></li>
+                            <li><a href="#AppHome" data-transition="slide" data-theme="a" data-icon="arrow-l">HOME</a></li>
+                            <li><a href="#BrandsPage" data-transition="slide" data-theme="a" data-icon="arrow-l">Marcas</a></li>
+                            <li><a href="#ModelsPage" data-transition="slide" data-theme="a" data-icon="arrow-l">Modelos</a></li>
                         </ul>
                 	</div>
             </div>
