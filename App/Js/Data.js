@@ -21,9 +21,16 @@ var carsCatalog =
 	{"Brand":"Volkswagen", "Model":"Jetta", "Color":"Rojo","Version":"Standar","Description":"Contiene 6 meses de seguro","Price":"1800000"},
 	];
 	
-	
 var brandsCatalog =  
 [{"Brand":"Chevrolet"},
  {"Brand":"Nissan"},
  {"Brand":"Volkswagen"}
 ];
+
+//Customer data
+var customerRecords = [
+	{"FirstName":"Dulce", "LastName1":"Chavez", "LastName2":"Sanabria","Address":"29 de Junio no. 25", "City":"Tepotzotlan", "State":"Mexico", "ZipCode":"54616", "Phone":"58764701", "RFC":"CASD950630NN2", "Email":"dulce@hotmail.com"},
+];
+	
+	
+
