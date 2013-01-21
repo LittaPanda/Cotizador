@@ -1,7 +1,11 @@
 // JavaScript Document
+  var handledTypeList= "";
   var localDataStorage = {};
   localDataStorage.webdb = {};
   localDataStorage.webdb.db = null;
+  var DBTable2="BrandsList";
+  var TFields2= [{"Name":"brand","Type":"TEXT"}
+				  ,{"Name":"added_on","Type":"DATETIME"}];
 	
   localDataStorage.webdb.open = function(DBName, DBVersion, DBDesc) {
 	  var dbSize = 5 * 1024 * 1024; // 5MB
@@ -40,7 +44,6 @@
 	
   localDataStorage.webdb.getAllitemsList = function(renderFunc, DBTable) {
 	var db = localDataStorage.webdb.db;
-	alert(DBTable);
 	db.transaction(function(tx) {
 	  tx.executeSql("SELECT * FROM "+ DBTable, [], renderFunc,
 		  localDataStorage.webdb.onError);
@@ -71,6 +74,16 @@
 		  localDataStorage.webdb.onError);
 	  });
   }
+  
+  localDataStorage.webdb.truncateList = function(DBTable) {
+	var db = localDataStorage.webdb.db;
+	db.transaction(function(tx){
+	  tx.executeSql("DELETE FROM "+ DBTable, [],
+		  localDataStorage.webdb.onSuccess,
+		  localDataStorage.webdb.onError);
+	  });
+  }
+  
 	  
   function setNumberofParameters(length){
 		var parameters= "(";
@@ -140,6 +153,15 @@
 	}	 		
   }
   
+  function getAllItemsList(tx, rs) {
+	var rowOutput = "";
+	var allItems = new Array;
+	for (var i=0; i < rs.rows.length; i++) {
+		allItems.push(rs.rows.item(i));		 
+	}	
+	addBrands(DBTable2, TFields2, allItems);		
+  }
+  
   function renderBrands(row) {
 
 	return "<div class=\"contenedorImagen\"><a href=\"#ModelsPage\"><img src=\"Img/" + row.brand + ".png\" alt=\""+ row.brand +"\" title=\""+ row.brand +"\" class=\"imagenStyle\" /></a></div>";
@@ -160,7 +182,7 @@
   function renderBlockB() {
 	return "<div class=\"ui-block-b\">";
   }
-  var handledTypeList= "";
+
   function init(typeList) {
 	var DBName = "ETCatalog";
 	var DBVersion = "1.0";
@@ -175,15 +197,11 @@
 					,{"Name":"added_on","Type":"DATETIME"}];
 	localDataStorage.webdb.open(DBName, DBVersion, DBDesc);
 	localDataStorage.webdb.createTable(DBTable, TFields);
-	addBrands(DBTable, TFields);
-//	DBTable = null;
-	var DBTable2="BrandsList";
-//	TFields = null;
-	var TFields2= [{"Name":"brand","Type":"TEXT"}
-				  ,{"Name":"added_on","Type":"DATETIME"}];
+	// must be addCars=>addBrands(DBTable, TFields);	
 	localDataStorage.webdb.createTable(DBTable2, TFields2);
-	addBrands(DBTable2, TFields2);
-	handledTypeList = typeList;
+	//localDataStorage.webdb.truncateList(DBTable2);
+	handledTypeList = "Brands";
+	localDataStorage.webdb.getAllitemsList(getAllItemsList,DBTable2);
 	localDataStorage.webdb.getAllitemsList(loaditems,DBTable2);
   }
   
@@ -199,14 +217,34 @@
 	}
   }
   
-  function addBrands(DBTable, TFields) {		
+  function addBrands(DBTable, TFields, allBrandsList) {	
+  	var isDup;
+  	var itemsToAdd = new Array;		
 	for(var brand in brandsCatalog){
-			//var thisCar = new Car();
-			var src = brandsCatalog[brand];
-			var thisBrand = new Array(src.Brand,new Date());
-			/*thisCar.Brand = src.Brand;
-			thisCar.Model = src.Model;
-			thisCar.AddedOn = new Date();*/
-			localDataStorage.webdb.addNewItem(DBTable, TFields, thisBrand);
+		isDup = false;
+		var src = brandsCatalog[brand];
+		if(allBrandsList.length != 0){
+			for(var itemIn in allBrandsList){
+				if(!isDup){
+					var itemInSrc = allBrandsList[itemIn];
+					if(itemInSrc.brand == src.Brand){
+						isDup = true;				
+					}
+				}				
+			}
+			if(!isDup){
+				var thisBrand = new Array(src.Brand,new Date());	
+				itemsToAdd.push(thisBrand);	
+			}
+		}else{
+			var thisBrand = new Array(src.Brand,new Date());	
+			itemsToAdd.push(thisBrand);		
+		}
+	}
+	if(itemsToAdd.length != 0){
+		for(newItem in itemsToAdd){
+			var thisNew = itemsToAdd[newItem];
+			localDataStorage.webdb.addNewItem(DBTable, TFields, thisNew);
+		}
 	}
   }
