@@ -19,7 +19,7 @@
   localDataStorage.webdb.addNewItem = function(DBTable, TFields, thisItem) {
 	  var fields = concatenateFields(TFields, false); 
 	  var db = localDataStorage.webdb.db;
-	  var totalParameters = setNumberofParameters(thisItem.length)
+	  var totalParameters = setNumberofParameters(thisItem.length);
 	  db.transaction(function(tx){
 			var addedOn = new Date();
 			tx.executeSql("INSERT INTO "+ DBTable +"("+ fields +") VALUES " + totalParameters,
@@ -34,12 +34,13 @@
   }
   
   localDataStorage.webdb.onSuccess = function(tx, r) {
-	localDataStorage.webdb.getAllitemsList(loaditems(typeList));
+	//localDataStorage.webdb.getAllitemsList(loaditems);
   }
 	
 	
   localDataStorage.webdb.getAllitemsList = function(renderFunc, DBTable) {
 	var db = localDataStorage.webdb.db;
+	alert(DBTable);
 	db.transaction(function(tx) {
 	  tx.executeSql("SELECT * FROM "+ DBTable, [], renderFunc,
 		  localDataStorage.webdb.onError);
@@ -90,7 +91,7 @@
   
   function concatenateFields(TFields, typeNeeded){
 	  var fields = "";
-	  var fieldsPositions = TFields.lenght - 1; 
+	  var fieldsPositions = TFields.length - 1; 
 	  for(var field in TFields){
 		  var thisField = TFields[field];
 		  if(field != fieldsPositions){
@@ -110,9 +111,9 @@
 	  return fields;
   }
 	  
-  function loaditems(typeList, tx, rs) {
+  function loaditems(tx, rs) {
 	var rowOutput = "";
-	var itemsList = document.getElementById(typeList+"Container");
+	var itemsList = document.getElementById(handledTypeList+"Container");
 	for (var i=0; i < rs.rows.length; i++) {
 		if((i%2)!=0)
 			{
@@ -123,7 +124,7 @@
 				rowOutput += renderBlockB();
 			}
 			
-		switch (typeList){
+		switch (handledTypeList){
 			case "Brands":
 				rowOutput += renderBrands(rs.rows.item(i));					
 			break;
@@ -141,15 +142,15 @@
   
   function renderBrands(row) {
 
-	return "<div class=\"contenedorImagen\"><a href=\"#ModelsPage\"><img src=\"Img/" + row.brand + ".png alt=\""+ row.brand +"\" title=\""+ row.brand +"\" class=\"imagenStyle\" /></a></div>";
+	return "<div class=\"contenedorImagen\"><a href=\"#ModelsPage\"><img src=\"Img/" + row.brand + ".png\" alt=\""+ row.brand +"\" title=\""+ row.brand +"\" class=\"imagenStyle\" /></a></div>";
   }
   
   function renderModels(row) {
-	return "<div class=\"contenedorImagen\"><a><img src=\"Img/" + row.brand+"/" + row.model + ".png alt=\""+ row.model +"\" title=\""+ row.model +"\" class=\"imagenStyle\" /></a></div>";
+	return "<div class=\"contenedorImagen\"><a><img src=\"Img/" + row.brand+"/" + row.model + ".png\" alt=\""+ row.model +"\" title=\""+ row.model +"\" class=\"imagenStyle\" /></a></div>";
   }
   
   function renderVersions(row) {
-	return "<div class=\"contenedorImagen\"><a><img src=\"Img/" + row.brand+"/"+row.model+row.color+ row.version  + ".png alt=\""+ row.version +"\" title=\""+ row.version +"\" class=\"imagenStyle\" /></a></div>";
+	return "<div class=\"contenedorImagen\"><a><img src=\"Img/" + row.brand+"/"+row.model+row.color+ row.version  + ".png\" alt=\""+ row.version +"\" title=\""+ row.version +"\" class=\"imagenStyle\" /></a></div>";
   }
   
   function renderBlockA() {
@@ -159,7 +160,7 @@
   function renderBlockB() {
 	return "<div class=\"ui-block-b\">";
   }
-  
+  var handledTypeList= "";
   function init(typeList) {
 	var DBName = "ETCatalog";
 	var DBVersion = "1.0";
@@ -174,17 +175,19 @@
 					,{"Name":"added_on","Type":"DATETIME"}];
 	localDataStorage.webdb.open(DBName, DBVersion, DBDesc);
 	localDataStorage.webdb.createTable(DBTable, TFields);
-
-	DBTable = null;
-	DBTable="BrandsList";
-	TFields = null;
-	TFileds= [{"Name":"brand","Type":"TEXT"}];
-	localDataStorage.webdb.createTable(DBTable, TFields);
-
-	localDataStorage.webdb.getAllitemsList(loaditems(typeList));
+	addBrands(DBTable, TFields);
+//	DBTable = null;
+	var DBTable2="BrandsList";
+//	TFields = null;
+	var TFields2= [{"Name":"brand","Type":"TEXT"}
+				  ,{"Name":"added_on","Type":"DATETIME"}];
+	localDataStorage.webdb.createTable(DBTable2, TFields2);
+	addBrands(DBTable2, TFields2);
+	handledTypeList = typeList;
+	localDataStorage.webdb.getAllitemsList(loaditems,DBTable2);
   }
   
-  function addList(DBTable, TFields) {		
+  function addCars(DBTable, TFields) {		
 	for(var car in carsCatalog){
 			//var thisCar = new Car();
 			var src = carsCatalog[car];
@@ -193,5 +196,17 @@
 			thisCar.Model = src.Model;
 			thisCar.AddedOn = new Date();*/
 			localDataStorage.webdb.addNewItem(DBTable, TFields, thisCar);
+	}
+  }
+  
+  function addBrands(DBTable, TFields) {		
+	for(var brand in brandsCatalog){
+			//var thisCar = new Car();
+			var src = brandsCatalog[brand];
+			var thisBrand = new Array(src.Brand,new Date());
+			/*thisCar.Brand = src.Brand;
+			thisCar.Model = src.Model;
+			thisCar.AddedOn = new Date();*/
+			localDataStorage.webdb.addNewItem(DBTable, TFields, thisBrand);
 	}
   }

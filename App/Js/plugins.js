@@ -24,6 +24,7 @@
 // Place any jQuery/helper plugins in here.
 $(document).ready(function(e) {
     $('#StartButton').click(function(){
-		
+		var typeList = "Brands";
+		init(typeList);
 		});
 });
