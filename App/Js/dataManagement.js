@@ -3,27 +3,25 @@
   var localDataStorage = {};
   localDataStorage.webdb = {};
   localDataStorage.webdb.db = null;
-  var DBTable2="BrandsList";
-  var TFields2= [{"Name":"brand","Type":"TEXT"}
-				  ,{"Name":"added_on","Type":"DATETIME"}];
+  var dbSetup = new DataBaseSetup();
 	
   localDataStorage.webdb.open = function(DBName, DBVersion, DBDesc) {
 	  var dbSize = 5 * 1024 * 1024; // 5MB
 	  localDataStorage.webdb.db = openDatabase(DBName, DBVersion, DBDesc, dbSize);
-  }
+  };
 	
   localDataStorage.webdb.createTable = function(DBTable, TFields) {
-	  var fields = concatenateFields(TFields, true); 
+	  var fields = dbSetup.concatenateFields(TFields, true); 
 	  var db = localDataStorage.webdb.db;
 	  db.transaction(function(tx) {
 		tx.executeSql("CREATE TABLE IF NOT EXISTS "+ DBTable +"(ID INTEGER PRIMARY KEY ASC, " + fields + ")", []);
 	  });
-  }
+  };
   
   localDataStorage.webdb.addNewItem = function(DBTable, TFields, thisItem) {
-	  var fields = concatenateFields(TFields, false); 
+	  var fields = dbSetup.concatenateFields(TFields, false); 
 	  var db = localDataStorage.webdb.db;
-	  var totalParameters = setNumberofParameters(thisItem.length);
+	  var totalParameters = dbSetup.setNumberofParameters(thisItem.length);
 	  db.transaction(function(tx){
 			var addedOn = new Date();
 			tx.executeSql("INSERT INTO "+ DBTable +"("+ fields +") VALUES " + totalParameters,
@@ -31,15 +29,15 @@
 						  localDataStorage.webdb.onSuccess,
 						  localDataStorage.webdb.onError);
 	 });
-  }
+  };
 	
   localDataStorage.webdb.onError = function(tx, e) {
 	alert("Ha ocurrido un error: " + e.message);
-  }
+  };
   
   localDataStorage.webdb.onSuccess = function(tx, r) {
 	//localDataStorage.webdb.getAllitemsList(loaditems);
-  }
+  };
 	
 	
   localDataStorage.webdb.getAllitemsList = function(renderFunc, DBTable) {
@@ -48,7 +46,7 @@
 	  tx.executeSql("SELECT * FROM "+ DBTable, [], renderFunc,
 		  localDataStorage.webdb.onError);
 	});
-  }
+  };
   
   localDataStorage.webdb.getAllModels = function(renderFunc, DBTable, brand) {
 	var db = localDataStorage.webdb.db;
@@ -56,7 +54,7 @@
 	  tx.executeSql("SELECT * FROM "+ DBTable +" WHERE brand=?", [brand], renderFunc,
 		  localDataStorage.webdb.onError);
 	});
-  }
+  };
   
   localDataStorage.webdb.getAllColors = function(renderFunc, DBTable, brand , model) {
 	var db = localDataStorage.webdb.db;
@@ -64,7 +62,7 @@
 	  tx.executeSql("SELECT * FROM "+ DBTable +" WHERE brand=? AND model=?", [brand, model], renderFunc,
 		  localDataStorage.webdb.onError);
 	});
-  }
+  };
 	  
   localDataStorage.webdb.deleteList = function(id, DBTable) {
 	var db = localDataStorage.webdb.db;
@@ -73,7 +71,7 @@
 		  localDataStorage.webdb.onSuccess,
 		  localDataStorage.webdb.onError);
 	  });
-  }
+  };
   
   localDataStorage.webdb.truncateList = function(DBTable) {
 	var db = localDataStorage.webdb.db;
@@ -82,47 +80,7 @@
 		  localDataStorage.webdb.onSuccess,
 		  localDataStorage.webdb.onError);
 	  });
-  }
-  
-	  
-  function setNumberofParameters(length){
-		var parameters= "(";
-		for(var x=0;x<length;x++)
-		{
-			parameters += "?";
-			if((x+1)==length)
-			{
-				parameters += ")";
-			}
-			else
-			{
-				parameters += ",";
-			}
-		}
-		return parameters;
-  }
-  
-  function concatenateFields(TFields, typeNeeded){
-	  var fields = "";
-	  var fieldsPositions = TFields.length - 1; 
-	  for(var field in TFields){
-		  var thisField = TFields[field];
-		  if(field != fieldsPositions){
-			 if(typeNeeded){
-				fields += thisField.Name + " " + thisField.Type + ", ";
-			 }else{
-				fields += thisField.Name + ", ";
-			 }
-		  }else{
-			if(typeNeeded){
-				fields += thisField.Name + " " + thisField.Type;
-			 }else{
-				fields += thisField.Name;
-			 }
-		  }
-	  }
-	  return fields;
-  }
+  };
 	  
   function loaditems(tx, rs) {
 	var rowOutput = "";
@@ -159,7 +117,7 @@
 	for (var i=0; i < rs.rows.length; i++) {
 		allItems.push(rs.rows.item(i));		 
 	}	
-	addBrands(DBTable2, TFields2, allItems);		
+	addBrands(dbSetup.brandsTableName, dbSetup.brandFields, allItems);		
   }
   
   function renderBrands(row) {
@@ -183,26 +141,16 @@
 	return "<div class=\"ui-block-b\">";
   }
 
-  function init(typeList) {
-	var DBName = "ETCatalog";
-	var DBVersion = "1.0";
-	var DBDesc = "Local storage of cars for mobile app";
-	var DBTable = "CarList";
-	var TFields = [{"Name":"brand","Type":"TEXT"}
-					,{"Name":"model","Type":"TEXT"}
-					,{"Name":"color","Type":"TEXT"}
-					,{"Name":"version","Type":"TEXT"}
-					,{"Name":"description","Type":"TEXT"}
-					,{"Name":"price","Type":"TEXT"}
-					,{"Name":"added_on","Type":"DATETIME"}];
-	localDataStorage.webdb.open(DBName, DBVersion, DBDesc);
-	localDataStorage.webdb.createTable(DBTable, TFields);
-	// must be addCars=>addBrands(DBTable, TFields);	
-	localDataStorage.webdb.createTable(DBTable2, TFields2);
-	//localDataStorage.webdb.truncateList(DBTable2);
-	handledTypeList = "Brands";
-	localDataStorage.webdb.getAllitemsList(getAllItemsList,DBTable2);
-	localDataStorage.webdb.getAllitemsList(loaditems,DBTable2);
+  function init() {
+	localDataStorage.webdb.open(dbSetup.Name, dbSetup.Version, dbSetup.Vesc);
+	localDataStorage.webdb.createTable(dbSetup.carsTableName, dbSetup.allFields);
+	localDataStorage.webdb.createTable(dbSetup.brandsTableName, dbSetup.brandFields);	
+  }
+  
+  function loadBrands(typeList){
+	handledTypeList = typeList;
+	localDataStorage.webdb.getAllitemsList(getAllItemsList,dbSetup.brandsTableName);
+	localDataStorage.webdb.getAllitemsList(loaditems,dbSetup.brandsTableName);
   }
   
   function addCars(DBTable, TFields) {		

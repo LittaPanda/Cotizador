@@ -1,6 +1,6 @@
 // Definición de la clase Auto
-function Car(brand_value, model_value, color_value, version_value, description_value, price_value) {
-      var brand;
+/*function Car(brand_value, model_value, color_value, version_value, description_value, price_value) {
+	var brand;
       var model;
       var color;
 	  var version;
@@ -54,4 +54,21 @@ function Car(brand_value, model_value, color_value, version_value, description_v
 	  this.setPrice = function(price_value) {
             this.price = price_value;
       }
-}
+}*/
+//Construccion del uso del prototipo
+Car = function () {       
+      	this.brand = new String;
+		this.model = new String;
+		this.color = new String;
+		this.version = new String;
+		this.description = new String;
+		this.price = new String;
+	  };
+	  
+Car.prototype.isDup = function (itemToCompare){
+		if(this.brand == itemToCompare.Brand){
+			return true;
+		}else{
+			return false;
+		}
+	};

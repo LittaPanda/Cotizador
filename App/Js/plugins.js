@@ -25,6 +25,6 @@
 $(document).ready(function(e) {
     $('#StartButton').click(function(){
 		var typeList = "Brands";
-		init(typeList);
+		loadBrands(typeList);
 		});
 });
