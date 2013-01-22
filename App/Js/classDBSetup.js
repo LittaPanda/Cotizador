@@ -9,6 +9,22 @@ DataBaseSetup = function () {
 						  	   ,{"Name":"added_on","Type":"DATETIME"});
 		this.brandFields = new Array({"Name":"brand","Type":"TEXT"}
 				  					,{"Name":"added_on","Type":"DATETIME"});
+		//customers
+		this.customerAllFields = new Array({"Name":"id","Type":"TEXT"}
+						  	   ,{"Name":"firstName","Type":"TEXT"}
+							   ,{"Name":"lastName1","Type":"TEXT"}
+						  	   ,{"Name":"lastName2","Type":"TEXT"}
+						  	   ,{"Name":"address","Type":"TEXT"}
+						  	   ,{"Name":"neighborhood","Type":"TEXT"}
+							   ,{"Name":"city","Type":"TEXT"}
+						  	   ,{"Name":"state","Type":"TEXT"}
+						  	   ,{"Name":"country","Type":"TEXT"}
+							   ,{"Name":"zipCode","Type":"TEXT"}
+						  	   ,{"Name":"phone","Type":"TEXT"}
+						  	   ,{"Name":"rfc","Type":"TEXT"}
+						  	   ,{"Name":"email","Type":"TEXT"}
+							   ,{"Name":"added_on","Type":"DATETIME"});
+		this.customersTableName = "CustomerList";	
 		this.brandsTableName = "BrandsList";
 		this.carsTableName = "CarList";
 		this.Name = "ETCatalog";

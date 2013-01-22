@@ -231,6 +231,8 @@
 	//localDataStorage.webdb.truncateList(dbSetup.brandsTableName);
 	localDataStorage.webdb.getAllitemsList(storeNewCars,dbSetup.carsTableName);
 	localDataStorage.webdb.getAllitemsList(storeNewBrands,dbSetup.brandsTableName);
+	//customers
+	localDataStorage.webdb.createTable(dbSetup.customersTableName, dbSetup.customerAllFields);
   }
   
   function loadBrands(typeList){
