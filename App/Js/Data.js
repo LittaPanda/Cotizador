@@ -3,7 +3,7 @@ var carsCatalog =
 	[
 	{"Brand":"Chevrolet", "Model":"Spark", "Color":"Azul","Version":"Deluxe","Description":"Contiene un año de seguro mas stereo y 2 pares de ruedas","Price":"350000"},
 	{"Brand":"Chevrolet", "Model":"Spark", "Color":"Rosa","Version":"Standar","Description":"Contiene 6 meses de seguro","Price":"200000"},
-	{"Brand":"Chevrolet", "Model":"Spark", "Color":"Verde","Version":"Deluxe","Description":"Contiene un año de seguro mas stereo y 2 pares de ruedas","Price":"350000"},
+	{"Brand":"Chevrolet", "Model":"Spark", "Color":"Verde","Version":"Premium","Description":"Contiene un año de seguro mas stereo y 2 pares de ruedas","Price":"350000"},
 
 	{"Brand":"Nissan", "Model":"March", "Color":"Azul","Version":"Deluxe","Description":"Contiene un año de seguro mas stereo y 2 pares de ruedas","Price":"3250000"},
 	{"Brand":"Nissan", "Model":"March", "Color":"Rojo","Version":"Deluxe","Description":"Contiene un año de seguro mas stereo y 2 pares de ruedas","Price":"3250000"},

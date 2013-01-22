@@ -32,4 +32,9 @@ $(document).ready(function(e) {
 		var typeList = "Models";
 		loadModels(typeList, brand);
 	});
+	$('.modelLink').live('click' , function(){
+		var brand = this.name;
+		var model = this.id;
+		loadDetail(brand, model, "Standar", "Rosa");
+	});
 });
