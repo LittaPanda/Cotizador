@@ -1,10 +1,19 @@
 CACHE MANIFEST
 # Cotizador
-# Primera version::17/01/2013
+# Primera version::21/01/2013
 
 # Archivos que se guardarán para trabajar Off-Line.
 CACHE:
 index.html
+JS/Data.js
+JS/dataManagement.js
+JS/classCar.js
+JS/classDBSetup.js
+JS/main.js
+JS/plugins.js
+JS/Vendors/jquery.js
+JS/Vendors/jquery.mobile-1.2.0.min.js
+JS/Vendors/modernizr.js
 
 # Archivos que requieren estar On-Line para funcionar.
 NETWORK:

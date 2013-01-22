@@ -27,4 +27,9 @@ $(document).ready(function(e) {
 		var typeList = "Brands";
 		loadBrands(typeList);
 		});
+	$('.brandLink').live('click' , function(){
+		var brand = this.id;
+		var typeList = "Models";
+		loadModels(typeList, brand);
+	});
 });

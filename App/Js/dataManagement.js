@@ -51,7 +51,7 @@
   localDataStorage.webdb.getAllModels = function(renderFunc, DBTable, brand) {
 	var db = localDataStorage.webdb.db;
 	db.transaction(function(tx) {
-	  tx.executeSql("SELECT * FROM "+ DBTable +" WHERE brand=?", [brand], renderFunc,
+	  tx.executeSql("SELECT DISTINCT model,brand FROM "+ DBTable +" WHERE brand=?", [brand], renderFunc,
 		  localDataStorage.webdb.onError);
 	});
   };
@@ -81,12 +81,21 @@
 		  localDataStorage.webdb.onError);
 	  });
   };
+  
+  localDataStorage.webdb.dropDataBase = function(DBName) {
+	var db = localDataStorage.webdb.db;
+	db.transaction(function(tx){
+	  tx.executeSql("DROP DATABASE "+ DBName, [],
+		  localDataStorage.webdb.onSuccess,
+		  localDataStorage.webdb.onError);
+	  });
+  };
 	  
   function loaditems(tx, rs) {
 	var rowOutput = "";
 	var itemsList = document.getElementById(handledTypeList+"Container");
 	for (var i=0; i < rs.rows.length; i++) {
-		if((i%2)!=0)
+		if((i%2)==0)
 			{
 				rowOutput += renderBlockA();	
 			}
@@ -111,8 +120,7 @@
 	}	 		
   }
   
-  function getAllItemsList(tx, rs) {
-	var rowOutput = "";
+  function storeNewBrands(tx, rs) {
 	var allItems = new Array;
 	for (var i=0; i < rs.rows.length; i++) {
 		allItems.push(rs.rows.item(i));		 
@@ -120,9 +128,26 @@
 	addBrands(dbSetup.brandsTableName, dbSetup.brandFields, allItems);		
   }
   
+  function storeNewCars(tx, rs) {
+	var allItems = new Array;
+	var dateToCompare = new Date();
+	for (var i=0; i < rs.rows.length; i++) {
+			var newCar = new Car();				
+			var thatItem = rs.rows.item(i);			
+			newCar.isolate.brand = thatItem.brand;
+			newCar.isolate.model = thatItem.model;
+			newCar.isolate.color = thatItem.color;
+			newCar.isolate.version = thatItem.version;
+			newCar.isolate.description = thatItem.description;
+			newCar.isolate.price = thatItem.price;
+			newCar.isolate.added_on = dateToCompare;
+			allItems.push(newCar);		 
+	}	
+	addCars(dbSetup.carsTableName, dbSetup.allFields, allItems, dateToCompare);		
+  }
+  
   function renderBrands(row) {
-
-	return "<div class=\"contenedorImagen\"><a href=\"#ModelsPage\"><img src=\"Img/" + row.brand + ".png\" alt=\""+ row.brand +"\" title=\""+ row.brand +"\" class=\"imagenStyle\" /></a></div>";
+	return "<div class=\"contenedorImagen\"><a class=\"brandLink\" href=\"#ModelsPage\" id=\"" + row.brand + "\"><img src=\"Img/" + row.brand + ".png\" alt=\""+ row.brand +"\" title=\""+ row.brand +"\" class=\"imagenStyle\" /></a></div>";
   }
   
   function renderModels(row) {
@@ -144,24 +169,50 @@
   function init() {
 	localDataStorage.webdb.open(dbSetup.Name, dbSetup.Version, dbSetup.Vesc);
 	localDataStorage.webdb.createTable(dbSetup.carsTableName, dbSetup.allFields);
-	localDataStorage.webdb.createTable(dbSetup.brandsTableName, dbSetup.brandFields);	
+	localDataStorage.webdb.createTable(dbSetup.brandsTableName, dbSetup.brandFields);
+	//localDataStorage.webdb.truncateList(dbSetup.carsTableName);
+	//localDataStorage.webdb.truncateList(dbSetup.brandsTableName);
+	localDataStorage.webdb.getAllitemsList(storeNewCars,dbSetup.carsTableName);
+	localDataStorage.webdb.getAllitemsList(storeNewBrands,dbSetup.brandsTableName);
   }
   
   function loadBrands(typeList){
-	handledTypeList = typeList;
-	localDataStorage.webdb.getAllitemsList(getAllItemsList,dbSetup.brandsTableName);
+	handledTypeList = typeList;	
 	localDataStorage.webdb.getAllitemsList(loaditems,dbSetup.brandsTableName);
   }
   
-  function addCars(DBTable, TFields) {		
+  function loadModels(typeList, brand){
+	handledTypeList = typeList;
+	localDataStorage.webdb.getAllModels(loaditems,dbSetup.carsTableName,brand);
+  }
+  
+  function addCars(DBTable, TFields, allItemsList, dateToCompare) {	
+	var itemsToAdd = new Array;		
 	for(var car in carsCatalog){
-			//var thisCar = new Car();
 			var src = carsCatalog[car];
-			var thisCar = new Array(src.Brand,src.Model,src.Color,src.Version,src.Description,src.Price,new Date());
-			/*thisCar.Brand = src.Brand;
-			thisCar.Model = src.Model;
-			thisCar.AddedOn = new Date();*/
-			localDataStorage.webdb.addNewItem(DBTable, TFields, thisCar);
+			var thisCar = new Car();
+			var carToAdd = new Array(src.Brand,src.Model,src.Color,src.Version,src.Description,src.Price,new Date());
+			thisCar.isolate.brand = src.Brand;
+			thisCar.isolate.model = src.Model;
+			thisCar.isolate.color = src.Color;
+			thisCar.isolate.version = src.Version;
+			thisCar.isolate.description = src.Description;
+			thisCar.isolate.price = src.Price;
+			thisCar.isolate.added_on = dateToCompare;
+			if(allItemsList.length != 0){
+				for(var itemIn in allItemsList){
+					if(!thisCar.dup || !newCar.dup){
+						var newCar = allItemsList[itemIn];
+						thisCar.isDup(newCar.isolate);
+						if(thisCar.dup){
+							newCar.dup = true;
+						}
+					}				
+				}
+			}
+			if(!thisCar.dup){
+				localDataStorage.webdb.addNewItem(DBTable, TFields, carToAdd);
+			}
 	}
   }
   
@@ -181,11 +232,11 @@
 				}				
 			}
 			if(!isDup){
-				var thisBrand = new Array(src.Brand,new Date());	
+				var thisBrand = new Array(src.Brand,new Date());							
 				itemsToAdd.push(thisBrand);	
 			}
 		}else{
-			var thisBrand = new Array(src.Brand,new Date());	
+			var thisBrand = new Array(src.Brand,new Date());		
 			itemsToAdd.push(thisBrand);		
 		}
 	}
