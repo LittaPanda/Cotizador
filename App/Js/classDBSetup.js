@@ -54,3 +54,8 @@ DataBaseSetup.prototype.setNumberofParameters = function(length){
 		}
 		return parameters;
   };
+  
+DataBaseSetup.prototype.onError=function(errorMessage)
+{
+	alert(errorMessage);//$("#dialogo").dialog();
+}
