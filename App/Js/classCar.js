@@ -13,26 +13,23 @@ Car = function () {
 	  };
 	  
 Car.prototype.isDup = function (itemToCompare){
-		var isduplicate= 0;
-		if(this.isolate.brand == itemToCompare.brand){
-			isduplicate++;
+		if(this.isolate.brand != itemToCompare.brand){
+			return;
 		}
-		if(this.isolate.model == itemToCompare.model){
-			isduplicate++;
+		if(this.isolate.model != itemToCompare.model){
+			return;
 		}
-		if(this.isolate.color == itemToCompare.color){
-			isduplicate++;
+		if(this.isolate.color != itemToCompare.color){
+			return;
 		}
-		if(this.isolate.version == itemToCompare.version){
-			isduplicate++;
+		if(this.isolate.version != itemToCompare.version){
+			return;
 		}
-		if(this.isolate.description == itemToCompare.description){
-			isduplicate++;
+		if(this.isolate.description != itemToCompare.description){
+			return;
 		}
-		if(this.isolate.price == itemToCompare.price){
-			isduplicate++;
+		if(this.isolate.price != itemToCompare.price){
+			return;
 		}
-		if(isduplicate == 6){
-			this.dup = true;
-		}
+		this.dup = true;
 	};

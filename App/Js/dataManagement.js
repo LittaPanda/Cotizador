@@ -174,7 +174,7 @@
 	  	var src = $('#'+handledTypeList+'-template').html();
 		var template = Handlebars.compile(src);		
 		var html = template(data);		
-		$(handledTypeList+"Container").html(html);
+		$('#'+handledTypeList+"Container").html(html);
   }
   
   function storeNewBrands(tx, rs) {
