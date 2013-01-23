@@ -37,4 +37,10 @@ $(document).ready(function(e) {
 		var model = this.id;
 		loadDetail(brand, model, "Standar", "Rosa");
 	});
+	//$('#PopupButton').live('click',function(){
+//		$('#PopupPage').bind({ create: function(event,ui){
+//			renderPopup();
+//		}
+//		}).dialog("open");
+//	});
 });
