@@ -177,6 +177,14 @@
 		$('#'+handledTypeList+"Container").html(html);
   }
   
+  //states
+  function renderPopup(){
+	  	var src = $('#Popup-template').html();
+		var template = Handlebars.compile(src);		
+		var html = template(States);		
+		$('#PopupContainer').html(html);
+  }
+  
   function storeNewBrands(tx, rs) {
 	var allItems = new Array;
 	for (var i=0; i < rs.rows.length; i++) {

@@ -114,7 +114,7 @@
                 	</div>
             </div>
             <div data-role="content">
-            	<script id="Detail-template" type="text/x-handlebars-template">
+                <script id="Detail-template" type="text/x-handlebars-template">
                 	<table id="CarContainer" style="width:100%;">
 						<tr>
 							<td><h2>Precio: ${{price}}</h2></td>
@@ -132,11 +132,47 @@
 							</td>
 						</tr>
 					</table>
+					<a href="#PopupPage" id="PopupButton" data-rel="dialog" data-transition="pop" data-icon="arrow-l">muestra popup</a>
                 </script>
+                
             	<div id="DetailContainer"></div>
+                
             </div>
     </div>
     <!--Termina Detalle-->
+    <!--Inicia Popup-->
+    <div data-role="page" id="PopupPage">            
+            <div data-role="content">
+            	<script id="Popup-template" type="text/x-handlebars-template">
+                	<form>
+					  <fieldset>
+						<label for="firstName">Nombre</label>
+						<input type="text" name="firstName" id="firstName"/>
+						<label for="lastName1">Apellido paterno</label>
+						<input type="text" name="lastName1" id="lastName1"/>
+						<label for="lastName2">Apellido materno</label>
+						<input type="text" name="lastName2" id="lastName2"/>
+						<label>Dirección</label><br><br>
+						<label for="address">Calle</label>
+						<input type="text" name="address" id="address"/>
+						<label for="neighborhood">Colonia</label>
+						<input type="text" name="neighborhood" id="neighborhood"/>
+						<label for="city">Ciudad</label>
+						<input type="text" name="city" id="city"/>
+						<label for="state">Estado</label>
+						<select id="StateSelector">
+									{{#each States}}
+									<option value="{{State}}">{{State}}</option>
+									{{/each}}
+								</select>
+						
+						</fieldset>
+					</form>
+                </script>
+            	<div id="PopupContainer"></div>
+            </div>
+    </div>
+    <!--Termina Popup-->
     <!--Inicia Reporte-->
     <div data-role="page" id="ReportPage">            
             <div data-role="content">
