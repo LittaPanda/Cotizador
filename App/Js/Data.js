@@ -27,10 +27,43 @@ var brandsCatalog =
  {"Brand":"Volkswagen"}
 ];
 
-//Customer data
-var customerRecords = [
-	{"FirstName":"Dulce", "LastName1":"Chavez", "LastName2":"Sanabria","Address":"29 de Junio no. 25", "City":"Tepotzotlan", "State":"Mexico", "ZipCode":"54616", "Phone":"58764701", "RFC":"CASD950630NN2", "Email":"dulce@hotmail.com"},
-];
+//States list
+var States = 
+	[
+	    {"State" : "Aguascalientes"},
+		{"State" : "Baja California"},
+		{"State" : "Baja California Sur"},
+		{"State" : "Campeche"},
+		{"State" : "Chiapas"},
+		{"State" : "Chihuahua"},
+		{"State" : "Coahuila"},
+		{"State" : "Colima"},
+		{"State" : "Distrito Federal"},
+		{"State" : "Durango"},
+		{"State" : "Estado de México"},
+		{"State" : "Guanajuato"},
+		{"State" : "Guerrero"},
+		{"State" : "Hidalgo"},
+		{"State" : "Jalisco"},
+		{"State" : "Michoacán"},
+		{"State" : "Morelos"},
+		{"State" : "Nayarit"},
+		{"State" : "Nuevo León"},
+		{"State" : "Oaxaca"},
+		{"State" : "Puebla"},
+		{"State" : "Querétaro"},
+		{"State" : "Quintana Roo"},
+		{"State" : "San Luis Potosí"},
+		{"State" : "Sinaloa"},
+		{"State" : "Sonora"},
+		{"State" : "Tabasco"},
+		{"State" : "Tamaulipas"},
+		{"State" : "Tlaxcala"},
+		{"State" : "Veracruz"},
+		{"State" : "Yucatán"},
+		{"State" : "Zacatecas"},	
+	];
+
 	
 	
 
