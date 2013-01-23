@@ -103,7 +103,7 @@
     </div>
     <!--Termina Modelos-->
     <!--Inicia Detalle-->
-    <div data-role="page" id="DetailPage">
+        <div data-role="page" id="DetailPage">
     		<input type="hidden" id="SelectedColor" value="" />
             <input type="hidden" id="SelectedVersion" value="" />
             <div data-theme="e" data-role="header">
@@ -116,34 +116,15 @@
                 	</div>
             </div>
             <div data-role="content">
-<<<<<<< HEAD
-                <script id="Detail-template" type="text/x-handlebars-template">
-                	<table id="CarContainer" style="width:100%;">
-						<tr>
-							<td><h2>Precio: ${{price}}</h2></td>
-							<td>
-=======
             	<script id="Detail-template" type="text/x-handlebars-template">
 					<div class="ui-grid-a">
 						<div class="ui-block-a"><h2>Precio: ${{price}}</h2></div>
 						<div class="ui-block-b">
->>>>>>> dataManagement, navigationManagement
 								<select id="VersionSelector">
 									{{#each versions}}
 									<option value="{{version}}">{{version}}</option>
 									{{/each}}
 								</select>
-<<<<<<< HEAD
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2" style="width:100%;text-align:center;">
-								<img src="Img/{{brand}}/{{model}}{{color}}{{version}}.png" alt="{{model}}{{color}}{{version}}" />
-							</td>
-						</tr>
-					</table>
-					<a href="#PopupPage" id="PopupButton" data-rel="dialog" data-transition="pop" data-icon="arrow-l">muestra popup</a>
-=======
 						</div>	   
 					</div>
 					<div class="ui-grid-solo">
@@ -158,10 +139,9 @@
 							{{/each}}
 						</div>
 						<div class="ui-block-b" id="ButtonContainer">
-							<a href="#" data-role="button" data-inline="true">Continuar</a>
+							<a href="#PopupPage" data-rel="dialog" data-role="button" data-inline="true">Continuar</a>
 						</div>	   
 					</div>
->>>>>>> dataManagement, navigationManagement
                 </script>
                 
             	<div id="DetailContainer"></div>
@@ -169,38 +149,41 @@
             </div>
     </div>
     <!--Termina Detalle-->
-    <!--Inicia Popup-->
-    <div data-role="page" id="PopupPage">            
-            <div data-role="content">
-            	<script id="Popup-template" type="text/x-handlebars-template">
-                	<form>
-					  <fieldset>
-						<label for="firstName">Nombre</label>
-						<input type="text" name="firstName" id="firstName"/>
-						<label for="lastName1">Apellido paterno</label>
-						<input type="text" name="lastName1" id="lastName1"/>
-						<label for="lastName2">Apellido materno</label>
-						<input type="text" name="lastName2" id="lastName2"/>
-						<label>Dirección</label><br><br>
-						<label for="address">Calle</label>
-						<input type="text" name="address" id="address"/>
-						<label for="neighborhood">Colonia</label>
-						<input type="text" name="neighborhood" id="neighborhood"/>
-						<label for="city">Ciudad</label>
-						<input type="text" name="city" id="city"/>
-						<label for="state">Estado</label>
-						<select id="StateSelector">
-									{{#each States}}
-									<option value="{{State}}">{{State}}</option>
-									{{/each}}
-								</select>
-						
-						</fieldset>
-					</form>
-                </script>
-            	<div id="PopupContainer"></div>
+    <!--Inicia Popup-->          
+            <div id="PopupPage" data-close-btn-text="Cerrar" data-role="dialog" >
+            	<div data-role="header">
+                	<h1>Datos del Cliente</h1>
+                </div>
+                <div data-role="content">
+					<script id="Popup-template" type="text/x-handlebars-template">
+                        <form>
+                          <fieldset>
+                            <label for="firstName">Nombre</label>
+                            <input type="text" name="firstName" id="firstName"/>
+                            <label for="lastName1">Apellido paterno</label>
+                            <input type="text" name="lastName1" id="lastName1"/>
+                            <label for="lastName2">Apellido materno</label>
+                            <input type="text" name="lastName2" id="lastName2"/>
+                            <label>Dirección</label><br><br>
+                            <label for="address">Calle</label>
+                            <input type="text" name="address" id="address"/>
+                            <label for="neighborhood">Colonia</label>
+                            <input type="text" name="neighborhood" id="neighborhood"/>
+                            <label for="city">Ciudad</label>
+                            <input type="text" name="city" id="city"/>
+                            <label for="state">Estado</label>
+                            <select id="StateSelector">
+                                        {{#each this}}
+                                        <option value="{{State}}">{{State}}</option>
+                                        {{/each}}
+                                    </select>
+                            
+                            </fieldset>
+                        </form>
+                    </script>
+                    <div id="PopupContainer" style="padding:10px;" ></div>
+                </div>
             </div>
-    </div>
     <!--Termina Popup-->
     <!--Inicia Reporte-->
     <div data-role="page" id="ReportPage">            
