@@ -25,7 +25,8 @@
         <script src="Js/Data.js"></script>
         <script src="Js/classDBSetup.js"></script>
         <script src="Js/classCar.js"></script>
-        <script src="Js/dataManagement.js"></script>       
+        <script src="Js/dataManagement.js"></script>   
+        <script src="Js/navigationManagement.js"></script>       
     </head>
     <body onLoad="javascript:init();">
     <!--Inicia HOME-->
@@ -97,6 +98,7 @@
             </div>
             <div data-role="content">
             	<div id="ModelsContainer" class="ui-grid-a"></div>
+                <a href="#DetailPage?data=Chevrolet&Spark&Standar&Rosa">Test</a>
             </div>
     </div>
     <!--Termina Modelos-->
@@ -114,16 +116,24 @@
                 	</div>
             </div>
             <div data-role="content">
+<<<<<<< HEAD
                 <script id="Detail-template" type="text/x-handlebars-template">
                 	<table id="CarContainer" style="width:100%;">
 						<tr>
 							<td><h2>Precio: ${{price}}</h2></td>
 							<td>
+=======
+            	<script id="Detail-template" type="text/x-handlebars-template">
+					<div class="ui-grid-a">
+						<div class="ui-block-a"><h2>Precio: ${{price}}</h2></div>
+						<div class="ui-block-b">
+>>>>>>> dataManagement, navigationManagement
 								<select id="VersionSelector">
 									{{#each versions}}
 									<option value="{{version}}">{{version}}</option>
 									{{/each}}
 								</select>
+<<<<<<< HEAD
 							</td>
 						</tr>
 						<tr>
@@ -133,6 +143,25 @@
 						</tr>
 					</table>
 					<a href="#PopupPage" id="PopupButton" data-rel="dialog" data-transition="pop" data-icon="arrow-l">muestra popup</a>
+=======
+						</div>	   
+					</div>
+					<div class="ui-grid-solo">
+						<div class="ui-block-a">
+							<img src="Img/{{brand}}/{{model}}{{color}}{{version}}.png" alt="{{model}}{{color}}{{version}}" />
+						</div>
+					</div>
+					<div class="ui-grid-a">
+						<div class="ui-block-a">
+							{{#each colors}}
+									<img src="Img/{{color}}.png" alt="{{color}}"/>
+							{{/each}}
+						</div>
+						<div class="ui-block-b" id="ButtonContainer">
+							<a href="#" data-role="button" data-inline="true">Continuar</a>
+						</div>	   
+					</div>
+>>>>>>> dataManagement, navigationManagement
                 </script>
                 
             	<div id="DetailContainer"></div>

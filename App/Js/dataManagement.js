@@ -175,6 +175,7 @@
 		var template = Handlebars.compile(src);		
 		var html = template(data);		
 		$('#'+handledTypeList+"Container").html(html);
+		$('#'+handledTypeList+"Container").find( ":jqmData(role=button)" ).button();
   }
   
   //states
