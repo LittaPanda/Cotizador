@@ -61,7 +61,7 @@
   localDataStorage.webdb.getAllVersions = function(renderFunc, DBTable, brand, model) {
 	var db = localDataStorage.webdb.db;
 	db.transaction(function(tx) {
-	  tx.executeSql("SELECT version FROM "+ DBTable +" WHERE brand=? AND model=?", [brand, model], renderFunc,
+	  tx.executeSql("SELECT DISTINCT version FROM "+ DBTable +" WHERE brand=? AND model=?", [brand, model], renderFunc,
 		  localDataStorage.webdb.onError);
 	});
   };
@@ -69,7 +69,7 @@
   localDataStorage.webdb.getAllColors = function(renderFunc, DBTable, brand, model, version) {
 	var db = localDataStorage.webdb.db;
 	db.transaction(function(tx) {
-	  tx.executeSql("SELECT color FROM "+ DBTable +" WHERE brand=? AND model=? AND version=?", [brand, model, version], renderFunc,
+	  tx.executeSql("SELECT DISTINCT color FROM "+ DBTable +" WHERE brand=? AND model=? AND version=?", [brand, model, version], renderFunc,
 		  localDataStorage.webdb.onError);
 	});
   };
