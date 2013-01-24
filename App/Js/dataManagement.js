@@ -217,7 +217,7 @@
   }
   
   function renderModels(row) {
-	return "<div class=\"contenedorImagen\"><a class=\"modelLink\" href=\"#DetailPage\" name=\"" + row.brand + "\" id=\"" + row.model + "\"><img src=\"Img/" + row.brand+"/" + row.model + ".png\" alt=\""+ row.model +"\" title=\""+ row.model +"\" class=\"imagenStyle\" /></a></div>";
+	return "<div class=\"contenedorImagen\"><a class=\"modelLink\" href=\"#DetailPage?data="+row.brand+"&"+row.model+"&Deluxe&Azul\" name=\"" + row.brand + "\" id=\"" + row.model + "\"><img src=\"Img/" + row.brand+"/" + row.model + ".png\" alt=\""+ row.model +"\" title=\""+ row.model +"\" class=\"imagenStyle\" /></a></div>";
   }
   
   function renderVersions(row) {
