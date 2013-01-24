@@ -276,9 +276,44 @@
             </div>
     <!--Termina Popup-->
     <!--Inicia Reporte-->
-    <div data-role="page" id="ReportPage">            
+    <div data-role="page" id="ReportPage">    
+    		<div data-theme="e" data-role="header">
+                    <div data-role="navbar" data-iconpos="top">
+                        <ul>
+                            <li><a href="#AppHome" data-rel="back" data-transition="slide" data-theme="a" data-icon="arrow-l">HOME</a></li>
+                            <li><a href="#BrandsPage" data-rel="back" data-transition="slide" data-theme="a" data-icon="arrow-l">Marcas</a></li>
+                            <li><a href="#ModelsPage" data-rel="back" data-transition="slide" data-theme="a" data-icon="arrow-l">Modelos</a></li>
+                            <li><a href="#DetailPage" data-rel="back" data-transition="slide" data-theme="a" data-icon="arrow-l">Detalle</a></li>
+                        </ul>
+                	</div>
+            </div>        
             <div data-role="content">
-            
+            	<script id="Models-template" type="text/x-handlebars-template">
+					<div class="ui-grid-d">
+					<div><h4>Número de Pago</h4></div>
+						{{#each MonthPay}}
+							<div class="ui-block-a">		
+								<div id="{{numberOfPay}}">{{numberOfPay}}</div>							
+							</div>
+							<div class="ui-block-b">
+								<div>{{pay}}</div>						
+							</div>	 
+							<div class="ui-block-c">
+								<div>{{interestAmount}}</div>
+							</div>
+							<div class="ui-block-d">
+								<div>{{capitalAmount}}</div>	
+							</div> 
+							<div class="ui-block-e">
+								<div>{{balance}}</div>
+							</div> 
+							<div class="ui-block-e">
+								<div>{{amortizedCapital}}</div>
+							</div>
+						{{/each}}
+					</div>				
+                </script>
+                <div id="ReportContainer"></div>            	
             </div>
     </div>
     <!--Termina Reporte-->        
