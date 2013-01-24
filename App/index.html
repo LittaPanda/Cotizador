@@ -197,50 +197,78 @@
             	<div data-role="header">
                 	<h1>Datos del Cliente</h1>
                 </div>
-                <div data-role="content">
+                <div data-role="content" class="content-primary">
 					<script id="Popup-template" type="text/x-handlebars-template">
                         <form>
+							<fieldset>
 							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
-                          		<fieldset data-role="controlgroup">
-									<input type="text" name="firstName" id="firstName" placeholder="Nombre"/>
-								</fieldset>
+                          		
+									<input type="text" name="firstName" id="firstName" placeholder="Nombre" style="width:100%"/>
+								<!--</fieldset>-->
 							</div>
 							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
-								<fieldset data-role="controlgroup">
-									<input type="text" name="lastName1" id="lastName1" placeholder="Apellido paterno"/>
-								</fieldset>
+								<!--<fieldset data-role="controlgroup">-->
+									<input type="text" name="lastName1" id="lastName1" placeholder="Apellido paterno" style="width:100%"/>
+								<!--</fieldset>-->
 							</div>
 							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
-								<fieldset data-role="controlgroup">
-									<input type="text" name="lastName2" id="lastName2" placeholder="Apellido materno"/>
-								</fieldset>
-							</div>
-							<h2>Dirección</h2>
-							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
-								<fieldset data-role="controlgroup">									
-									<input type="text" name="address" id="address" placeholder="Calle"/>
-								</fieldset>
+								<!--<fieldset data-role="controlgroup">-->
+									<input type="text" name="lastName2" id="lastName2" placeholder="Apellido materno" style="width:100%"/>
+								<!--</fieldset>-->
 							</div>
 							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
-								<fieldset data-role="controlgroup">
-									<input type="text" name="neighborhood" id="neighborhood" placeholder="Colonia"/>
-								</fieldset>
+								<!--<fieldset data-role="controlgroup">-->
+									<input type="text" name="rfc" id="rfc" placeholder="RFC" style="width:100%"/>
+								<!--</fieldset>-->
+							</div>
+							<h4>Dirección</h4>
+							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+								<!--<fieldset data-role="controlgroup">-->									
+									<input type="text" name="address" id="address" placeholder="Calle" style="width:100%"/>
+								<!--</fieldset>-->
 							</div>
 							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
-								<fieldset data-role="controlgroup">
-									<input type="text" name="city" id="city" placeholder="Ciudad"/>
-								</fieldset>
+								<!--<fieldset data-role="controlgroup">-->
+									<input type="text" name="neighborhood" id="neighborhood" placeholder="Colonia" style="width:100%"/>
+								<!--</fieldset>-->
 							</div>
 							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
-									<select id="StateSelector" data-mini="true">
+								<!--<fieldset data-role="controlgroup">-->
+									<input type="text" name="city" id="city" placeholder="Ciudad" style="width:100%"/>
+								<!--</fieldset>-->
+							</div>
+							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br" style="width:100%">
+									<select id="StateSelector" data-mini="true" style="width:100%">
 										<option value="Estado">Estado</option>
 										{{#each this}}
 										<option value="{{State}}">{{State}}</option>
 										{{/each}}
 									</select>
 							</div>
-							<input data-role="button" type="submit" value="Enviar">
-							<input type="reset" value="Limpiar" />
+							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+								<!--<fieldset data-role="controlgroup">-->
+									<input type="text" name="country" id="country" placeholder="País" style="width:100%"/>
+								<!--</fieldset>-->
+							</div>
+							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+								<!--<fieldset data-role="controlgroup">-->
+									<input type="text" name="zipCode" id="zipCode" placeholder="Código Postal" style="width:100%"/>
+								<!--</fieldset>-->
+							</div>
+							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+								<!--<fieldset data-role="controlgroup">-->
+									<input type="text" name="phone" id="phone" placeholder="Teléfono" style="width:100%"/>
+								<!--</fieldset>-->
+							</div>
+							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+								<!--<fieldset data-role="controlgroup">-->
+									<input type="text" name="email" id="email" placeholder="Correo electrónico" style="width:100%"/>		
+							</div>
+							</fieldset>
+							<div style="text-align:center">
+								<input data-role="button" type="submit" value="Enviar" data-theme="a" data-inline="true"/>
+								<input data-role="button" type="reset" value="Limpiar" data-inline="true"/>
+							</div>
                         </form>
                     </script>
                     <div id="PopupContainer"></div>
