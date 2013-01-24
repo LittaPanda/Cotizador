@@ -75,13 +75,35 @@
                     <div data-role="navbar" data-iconpos="right">
                         <ul>
                             <li>
-                            	<a href="#AppHome" data-transition="slide" data-theme="a" data-icon="arrow-l">HOME</a>
+                            	<a href="#AppHome" data-rel="back" data-transition="slide" data-theme="a" data-icon="arrow-l">HOME</a>
                             </li>
                         </ul>
                 	</div>
             </div>
             <div data-role="content">
-            	<div id="BrandsContainer" class="ui-grid-a"></div>
+            	<script id="Brands-template" type="text/x-handlebars-template">
+					<div class="ui-grid-a">
+						<div class="ui-block-a">
+							{{#each blockA}}
+								<div class="contenedorImagen">
+									<a data-transition="slide" href="#ModelsPage?data={{brand}}" name="{{brand}}" id="{{brand}}">
+										<img src="Img/{{brand}}.png" alt="{{brand}}" title="{{brand}}" class="imagenStyle"/>
+									</a>
+								</div>
+							{{/each}}
+						</div>
+						<div class="ui-block-b">
+							{{#each blockB}}
+								<div class="contenedorImagen">
+									<a data-transition="slide" href="#ModelsPage?data={{brand}}" name="{{brand}}" id="{{brand}}">
+										<img src="Img/{{brand}}.png" alt="{{brand}}" title="{{brand}}" class="imagenStyle"/>
+									</a>
+								</div>
+							{{/each}}
+						</div>	   
+					</div>				
+                </script>
+            	<div id="BrandsContainer"></div>
             </div>
     </div>
     <!--Termina Marcas-->
@@ -91,14 +113,35 @@
             <div data-theme="e" data-role="header">
                     <div data-role="navbar" data-iconpos="top">
                         <ul>
-                            <li><a href="#AppHome" data-transition="slide" data-theme="a" data-icon="arrow-l">HOME</a></li>
-                            <li><a href="#BrandsPage" data-transition="slide" data-theme="a" data-icon="arrow-l">Marcas</a></li>
+                            <li><a href="#AppHome" data-rel="back" data-transition="slide" data-theme="a" data-icon="arrow-l">HOME</a></li>
+                            <li><a href="#BrandsPage" data-rel="back" data-transition="slide" data-theme="a" data-icon="arrow-l">Marcas</a></li>
                         </ul>
                 	</div>
             </div>
             <div data-role="content">
-            	<div id="ModelsContainer" class="ui-grid-a"></div>
-                <!--<a href="#DetailPage?data=Chevrolet&Spark&Standar&Rosa">Test</a>-->
+            	<script id="Models-template" type="text/x-handlebars-template">
+					<div class="ui-grid-a">
+						<div class="ui-block-a">
+							{{#each blockA}}
+								<div class="contenedorImagen">
+									<a data-transition="slide" href="#DetailPage?data={{brand}}&{{model}}" name="{{brand}}" id="{{model}}">
+										<img src="Img/{{brand}}/{{model}}.png" alt="{{model}}" title="{{model}}" class="imagenStyle"/>
+									</a>
+								</div>
+							{{/each}}
+						</div>
+						<div class="ui-block-b">
+							{{#each blockB}}
+								<div class="contenedorImagen">
+									<a data-transition="slide" href="#DetailPage?data={{brand}}&{{model}}" name="{{brand}}" id="{{model}}">
+										<img src="Img/{{brand}}/{{model}}.png" alt="{{model}}" title="{{model}}" class="imagenStyle"/>
+									</a>
+								</div>
+							{{/each}}
+						</div>	   
+					</div>				
+                </script>
+            	<div id="ModelsContainer"></div>
             </div>
     </div>
     <!--Termina Modelos-->
@@ -109,17 +152,17 @@
             <div data-theme="e" data-role="header">
                     <div data-role="navbar" data-iconpos="top">
                         <ul>
-                            <li><a href="#AppHome" data-transition="slide" data-theme="a" data-icon="arrow-l">HOME</a></li>
-                            <li><a href="#BrandsPage" data-transition="slide" data-theme="a" data-icon="arrow-l">Marcas</a></li>
-                            <li><a href="#ModelsPage" data-transition="slide" data-theme="a" data-icon="arrow-l">Modelos</a></li>
+                            <li><a href="#AppHome" data-rel="back" data-transition="slide" data-theme="a" data-icon="arrow-l">HOME</a></li>
+                            <li><a href="#BrandsPage" data-rel="back" data-transition="slide" data-theme="a" data-icon="arrow-l">Marcas</a></li>
+                            <li><a href="#ModelsPage" data-rel="back" data-transition="slide" data-theme="a" data-icon="arrow-l">Modelos</a></li>
                         </ul>
                 	</div>
             </div>
             <div data-role="content">
             	<script id="Detail-template" type="text/x-handlebars-template">
 					<div class="ui-grid-a">
-						<div class="ui-block-a"><h2>Precio: ${{price}}</h2></div>
-						<div class="ui-block-b">
+						<div class="ui-block-a" style="text-align:center;"><h2>Precio: ${{price}}</h2></div>
+						<div class="ui-block-b" >
 								<select id="VersionSelector">
 									{{#each versions}}
 									<option value="{{version}}">{{version}}</option>
@@ -128,17 +171,17 @@
 						</div>	   
 					</div>
 					<div class="ui-grid-solo">
-						<div class="ui-block-a">
+						<div class="ui-block-a" style="text-align:center;">
 							<img src="Img/{{brand}}/{{model}}{{color}}{{version}}.png" alt="{{model}}{{color}}{{version}}" />
 						</div>
 					</div>
 					<div class="ui-grid-a">
-						<div class="ui-block-a">
+						<div class="ui-block-a" style="text-align:center;">
 							{{#each colors}}
 									<img src="Img/{{color}}.png" alt="{{color}}"/>
 							{{/each}}
 						</div>
-						<div class="ui-block-b" id="ButtonContainer">
+						<div class="ui-block-b" id="ButtonContainer" style="text-align:center;">
 							<a href="#PopupPage" data-rel="dialog" data-role="button" data-inline="true">Continuar</a>
 						</div>	   
 					</div>

@@ -1,4 +1,4 @@
-// JavaScript Document
+//Init Global 
   var handledTypeList= "";
   var localDataStorage = {};
   localDataStorage.webdb = {};
@@ -6,7 +6,8 @@
   var dbSetup = new DataBaseSetup();
   var thisVersions = new Array;
   var thisColors = new Array;
-	
+//End Global 
+//Begins Database management:: SQL Instructions
   localDataStorage.webdb.open = function(DBName, DBVersion, DBDesc) {
 	  var dbSize = 5 * 1024 * 1024; // 5MB
 	  localDataStorage.webdb.db = openDatabase(DBName, DBVersion, DBDesc, dbSize);
@@ -38,9 +39,8 @@
   };
   
   localDataStorage.webdb.onSuccess = function(tx, r) {
-	//localDataStorage.webdb.getAllitemsList(loaditems);
-  };
-	
+	//localDataStorage.webdb.getAllitemsList();
+  };	
 	
   localDataStorage.webdb.getAllitemsList = function(renderFunc, DBTable) {
 	var db = localDataStorage.webdb.db;
@@ -58,7 +58,7 @@
 	});
   };
   
-  localDataStorage.webdb.getAllVersions = function(renderFunc, DBTable, brand , model) {
+  localDataStorage.webdb.getAllVersions = function(renderFunc, DBTable, brand, model) {
 	var db = localDataStorage.webdb.db;
 	db.transaction(function(tx) {
 	  tx.executeSql("SELECT version FROM "+ DBTable +" WHERE brand=? AND model=?", [brand, model], renderFunc,
@@ -66,7 +66,7 @@
 	});
   };
   
-  localDataStorage.webdb.getAllColors = function(renderFunc, DBTable, brand , model, version) {
+  localDataStorage.webdb.getAllColors = function(renderFunc, DBTable, brand, model, version) {
 	var db = localDataStorage.webdb.db;
 	db.transaction(function(tx) {
 	  tx.executeSql("SELECT color FROM "+ DBTable +" WHERE brand=? AND model=? AND version=?", [brand, model, version], renderFunc,
@@ -74,7 +74,7 @@
 	});
   };
   
-  localDataStorage.webdb.getCar = function(renderFunc, DBTable, brand , model, version, color) {
+  localDataStorage.webdb.getCar = function(renderFunc, DBTable, brand, model, version, color) {
 	var db = localDataStorage.webdb.db;
 	db.transaction(function(tx) {
 	  tx.executeSql("SELECT * FROM "+ DBTable +" WHERE brand=? AND model=? AND version=? AND color=?", [brand, model, version, color], renderFunc,
@@ -108,43 +108,43 @@
 		  localDataStorage.webdb.onError);
 	  });
   };
-	  
-  function loaditems(tx, rs) {
-	var rowOutput = "";
-	var itemsList = document.getElementById(handledTypeList+"Container");
+//Ends Database management:: SQL Instructions
+//Begins Data Handling:: Manipulation of results
+  
+  function loadAllBrands(tx, rs) {
+	var thisBlockA = new Array;
+	var thisBlockB = new Array;
 	for (var i=0; i < rs.rows.length; i++) {
 		if((i%2)==0)
 			{
-				rowOutput += renderBlockA();	
+				thisBlockA.push({"brand":rs.rows.item(i).brand});
 			}
 		else
 			{
-				rowOutput += renderBlockB();
+				thisBlockB.push({"brand":rs.rows.item(i).brand});
 			}
-			
-		switch (handledTypeList){
-			case "Brands":
-				rowOutput += renderBrands(rs.rows.item(i));					
-			break;
-			case "Models":
-				rowOutput += renderModels(rs.rows.item(i));
-			break;
-            /*case "Versions":
-				rowOutput += renderVersions(rs.rows.item(i));
-			break;*/
-		}		
-		rowOutput += "</div>";
-		itemsList.innerHTML = rowOutput;  
-	}	 		
+	}		
+	var brands = {blockA: thisBlockA,
+				  blockB: thisBlockB};
+	basicRender(brands);		
   }
   
-  function loadColors (tx, rs){
-	  	var colors = new Array;
-		for (var i=0; i < rs.rows.length; i++) {
-			var thisColor = rs.rows.item(i).color;
-			colors.push({"color":thisColor});
-		}	  
-		thisColors = colors;
+  function loadAllModels(tx, rs) {
+	var thisBlockA = new Array;
+	var thisBlockB = new Array;
+	for (var i=0; i < rs.rows.length; i++) {
+		if((i%2)==0)
+			{
+				thisBlockA.push({"brand":rs.rows.item(i).brand,"model":rs.rows.item(i).model});
+			}
+		else
+			{
+				thisBlockB.push({"brand":rs.rows.item(i).brand,"model":rs.rows.item(i).model});
+			}
+	}		
+	var models = {blockA: thisBlockA,
+				  blockB: thisBlockB};
+	basicRender(models);		
   }
   
   function loadVersions (tx, rs){
@@ -168,28 +168,6 @@
 			versions: thisVersions
 		};
 		renderDetail(data);  
-  }
-  
-  function renderDetail (data){
-	  	var src = $('#'+handledTypeList+'-template').html();
-		var template = Handlebars.compile(src);		
-		var html = template(data);		
-		$('#'+handledTypeList+"Container").html(html);
-		$('#'+handledTypeList+"Container").find( ":jqmData(role=button)" ).button();
-  }
-  
-  //states
-  function renderPopup(){
-	  	var src = $('#Popup-template').html();
-		var template = Handlebars.compile(src);		
-		var html = template(States);		
-		$('#PopupContainer').html(html);
-		$('#PopupContainer').find( ":jqmData(role=fieldcontain)" ).fieldcontain();
-		$('#PopupContainer').find( ":jqmData(role=controlgroup)" ).controlgroup();
-		$('#PopupContainer').find( "select" ).selectmenu();
-		$('#PopupContainer').find('input').textinput();
-		$('#PopupContainer').find( ":jqmData(role=button)" ).button();
-		$('#PopupContainer').find('[type="reset"]').button();
   }
   
   function storeNewBrands(tx, rs) {
@@ -218,26 +196,49 @@
 	addCars(dbSetup.carsTableName, dbSetup.allFields, allItems, dateToCompare);		
   }
   
-  function renderBrands(row) {
-	return "<div class=\"contenedorImagen\"><a class=\"brandLink\" href=\"#ModelsPage\" id=\"" + row.brand + "\"><img src=\"Img/" + row.brand + ".png\" alt=\""+ row.brand +"\" title=\""+ row.brand +"\" class=\"imagenStyle\" /></a></div>";
+//Ends Data Handling:: Manipulation of results
+//Begins Data Handling:: Renders
+  
+  function basicRender (data){
+	  	var src = $('#'+handledTypeList+'-template').html();
+		var template = Handlebars.compile(src);		
+		var html = template(data);		
+		$('#'+handledTypeList+"Container").html(html);
   }
   
-  function renderModels(row) {
-	return "<div class=\"contenedorImagen\"><a class=\"modelLink\" href=\"#DetailPage?data="+row.brand+"&"+row.model+"&Deluxe&Azul\" name=\"" + row.brand + "\" id=\"" + row.model + "\"><img src=\"Img/" + row.brand+"/" + row.model + ".png\" alt=\""+ row.model +"\" title=\""+ row.model +"\" class=\"imagenStyle\" /></a></div>";
+  function loadColors (tx, rs){
+	  	var colors = new Array;
+		for (var i=0; i < rs.rows.length; i++) {
+			var thisColor = rs.rows.item(i).color;
+			colors.push({"color":thisColor});
+		}	  
+		thisColors = colors;
   }
   
-  function renderVersions(row) {
-	return "<div class=\"contenedorImagen\"><a><img src=\"Img/" + row.brand+"/"+row.model+row.color+ row.version  + ".png\" alt=\""+ row.version +"\" title=\""+ row.version +"\" class=\"imagenStyle\" /></a></div>";
+  function renderDetail (data){
+	  	var src = $('#'+handledTypeList+'-template').html();
+		var template = Handlebars.compile(src);		
+		var html = template(data);		
+		$('#'+handledTypeList+"Container").html(html);
+		$('#'+handledTypeList+"Container").find( "select" ).selectmenu();
+		$('#'+handledTypeList+"Container").find( ":jqmData(role=button)" ).button();
   }
   
-  function renderBlockA() {
-	return "<div class=\"ui-block-a\">";
+  //states
+  function renderPopup(){
+	  	var src = $('#Popup-template').html();
+		var template = Handlebars.compile(src);		
+		var html = template(States);		
+		$('#PopupContainer').html(html);
+		$('#PopupContainer').find( ":jqmData(role=fieldcontain)" ).fieldcontain();
+		$('#PopupContainer').find( ":jqmData(role=controlgroup)" ).controlgroup();
+		$('#PopupContainer').find( "select" ).selectmenu();
+		$('#PopupContainer').find('input').textinput();
+		$('#PopupContainer').find( ":jqmData(role=button)" ).button();
+		$('#PopupContainer').find('[type="reset"]').button();
   }
-  
-  function renderBlockB() {
-	return "<div class=\"ui-block-b\">";
-  }
-
+//Ends Data Handling:: Renders
+//Begins Event Shooter:: Initialization
   function init() {
 	localDataStorage.webdb.open(dbSetup.Name, dbSetup.Version, dbSetup.Vesc);
 	localDataStorage.webdb.createTable(dbSetup.carsTableName, dbSetup.allFields);
@@ -249,15 +250,17 @@
 	//customers
 	localDataStorage.webdb.createTable(dbSetup.customersTableName, dbSetup.customerAllFields);
   }
+//Ends Event Shooter:: Initialization
+//Begins Event Shooter:: Loading
   
-  function loadBrands(typeList){
-	handledTypeList = typeList;	
-	localDataStorage.webdb.getAllitemsList(loaditems,dbSetup.brandsTableName);
+  function loadBrands(){
+	handledTypeList = "Brands";	
+	localDataStorage.webdb.getAllitemsList(loadAllBrands,dbSetup.brandsTableName);
   }
   
-  function loadModels(typeList, brand){
-	handledTypeList = typeList;
-	localDataStorage.webdb.getAllModels(loaditems,dbSetup.carsTableName,brand);
+  function loadModels(brand){
+	handledTypeList = "Models";
+	localDataStorage.webdb.getAllModels(loadAllModels,dbSetup.carsTableName,brand);
   }
   
   function loadDetail(brand, model, defaultVersion, defaultColor){
@@ -266,6 +269,8 @@
 	localDataStorage.webdb.getAllColors(loadColors, dbSetup.carsTableName, brand, model, defaultVersion);
 	localDataStorage.webdb.getCar(loadCarDetail, dbSetup.carsTableName, brand, model, defaultVersion, defaultColor);	
   }
+//Ends Event Shooter:: Loading
+//Begins Data Aggregation
   
   function addCars(DBTable, TFields, allItemsList, dateToCompare) {	
 	var itemsToAdd = new Array;		
@@ -328,3 +333,4 @@
 		}
 	}
   }
+//Ends Data Aggregation

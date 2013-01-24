@@ -23,20 +23,10 @@
 
 // Place any jQuery/helper plugins in here.
 $(document).ready(function(e) {
-    $('#StartButton').click(function(){
+    /*$('#StartButton').click(function(){
 		var typeList = "Brands";
 		loadBrands(typeList);
-		});
-	$('.brandLink').live('click' , function(){
-		var brand = this.id;
-		var typeList = "Models";
-		loadModels(typeList, brand);
-	});
-/*	$('.modelLink').live('click' , function(){
-		var brand = this.name;
-		var model = this.id;
-		loadDetail(brand, model, "Standar", "Rosa");
-	});*/
+		});*/
 	//$('#PopupButton').live('click',function(){
 //		$('#PopupPage').bind({ create: function(event,ui){
 //			renderPopup();
