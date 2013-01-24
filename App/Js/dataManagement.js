@@ -184,6 +184,12 @@
 		var template = Handlebars.compile(src);		
 		var html = template(States);		
 		$('#PopupContainer').html(html);
+		$('#PopupContainer').find( ":jqmData(role=fieldcontain)" ).fieldcontain();
+		$('#PopupContainer').find( ":jqmData(role=controlgroup)" ).controlgroup();
+		$('#PopupContainer').find( "select" ).selectmenu();
+		$('#PopupContainer').find('input').textinput();
+		$('#PopupContainer').find( ":jqmData(role=button)" ).button();
+		$('#PopupContainer').find('[type="reset"]').button();
   }
   
   function storeNewBrands(tx, rs) {

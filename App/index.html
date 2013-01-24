@@ -157,31 +157,50 @@
                 <div data-role="content">
 					<script id="Popup-template" type="text/x-handlebars-template">
                         <form>
-                          <fieldset>
-                            <label for="firstName">Nombre</label>
-                            <input type="text" name="firstName" id="firstName"/>
-                            <label for="lastName1">Apellido paterno</label>
-                            <input type="text" name="lastName1" id="lastName1"/>
-                            <label for="lastName2">Apellido materno</label>
-                            <input type="text" name="lastName2" id="lastName2"/>
-                            <label>Dirección</label><br><br>
-                            <label for="address">Calle</label>
-                            <input type="text" name="address" id="address"/>
-                            <label for="neighborhood">Colonia</label>
-                            <input type="text" name="neighborhood" id="neighborhood"/>
-                            <label for="city">Ciudad</label>
-                            <input type="text" name="city" id="city"/>
-                            <label for="state">Estado</label>
-                            <select id="StateSelector">
-                                        {{#each this}}
-                                        <option value="{{State}}">{{State}}</option>
-                                        {{/each}}
-                                    </select>
-                            
-                            </fieldset>
+							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+                          		<fieldset data-role="controlgroup">
+									<input type="text" name="firstName" id="firstName" placeholder="Nombre"/>
+								</fieldset>
+							</div>
+							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+								<fieldset data-role="controlgroup">
+									<input type="text" name="lastName1" id="lastName1" placeholder="Apellido paterno"/>
+								</fieldset>
+							</div>
+							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+								<fieldset data-role="controlgroup">
+									<input type="text" name="lastName2" id="lastName2" placeholder="Apellido materno"/>
+								</fieldset>
+							</div>
+							<h2>Dirección</h2>
+							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+								<fieldset data-role="controlgroup">									
+									<input type="text" name="address" id="address" placeholder="Calle"/>
+								</fieldset>
+							</div>
+							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+								<fieldset data-role="controlgroup">
+									<input type="text" name="neighborhood" id="neighborhood" placeholder="Colonia"/>
+								</fieldset>
+							</div>
+							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+								<fieldset data-role="controlgroup">
+									<input type="text" name="city" id="city" placeholder="Ciudad"/>
+								</fieldset>
+							</div>
+							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+									<select id="StateSelector" data-mini="true">
+										<option value="Estado">Estado</option>
+										{{#each this}}
+										<option value="{{State}}">{{State}}</option>
+										{{/each}}
+									</select>
+							</div>
+							<input data-role="button" type="submit" value="Enviar">
+							<input type="reset" value="Limpiar" />
                         </form>
                     </script>
-                    <div id="PopupContainer" style="padding:10px;" ></div>
+                    <div id="PopupContainer"></div>
                 </div>
             </div>
     <!--Termina Popup-->
