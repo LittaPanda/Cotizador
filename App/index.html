@@ -86,19 +86,23 @@
 					<div class="ui-grid-a">
 						<div class="ui-block-a">
 							{{#each blockA}}
-								<div class="contenedorImagen">
-									<a data-transition="slide" href="#ModelsPage?data={{brand}}" name="{{brand}}" id="{{brand}}">
-										<img src="Img/{{brand}}.png" alt="{{brand}}" title="{{brand}}" class="imagenStyle"/>
-									</a>
+								<div class="thisBlock">
+									<div class="contenedorImagen turnImage">
+										<a data-transition="slide" href="#ModelsPage?data={{brand}}" name="{{brand}}" id="{{brand}}">
+											<img src="Img/{{brand}}.png" alt="{{brand}}" title="{{brand}}" class="imagenStyle"/>
+										</a>
+									</div>
 								</div>
 							{{/each}}
 						</div>
 						<div class="ui-block-b">
 							{{#each blockB}}
-								<div class="contenedorImagen">
-									<a data-transition="slide" href="#ModelsPage?data={{brand}}" name="{{brand}}" id="{{brand}}">
-										<img src="Img/{{brand}}.png" alt="{{brand}}" title="{{brand}}" class="imagenStyle"/>
-									</a>
+								<div class="thisBlock">
+									<div class="contenedorImagen turnImage">
+										<a data-transition="slide" href="#ModelsPage?data={{brand}}" name="{{brand}}" id="{{brand}}">
+											<img src="Img/{{brand}}.png" alt="{{brand}}" title="{{brand}}" class="imagenStyle"/>
+										</a>
+									</div>
 								</div>
 							{{/each}}
 						</div>	   
@@ -124,19 +128,23 @@
 					<div class="ui-grid-a">
 						<div class="ui-block-a">
 							{{#each blockA}}
-								<div class="contenedorImagen">
-									<a data-transition="slide" href="#DetailPage?data={{brand}}&{{model}}" name="{{brand}}" id="{{model}}">
-										<img src="Img/{{brand}}/{{model}}.png" alt="{{model}}" title="{{model}}" class="imagenStyle"/>
-									</a>
+								<div class="thisBlock">
+									<div class="contenedorImagen turnImage">									
+										<a data-transition="slide" href="#DetailPage?data={{brand}}&{{model}}" name="{{brand}}" id="{{model}}">
+											<img src="Img/{{brand}}/{{model}}.png" alt="{{model}}" title="{{model}}" class="imagenStyle"/>
+										</a>
+									</div>
 								</div>
 							{{/each}}
 						</div>
 						<div class="ui-block-b">
 							{{#each blockB}}
-								<div class="contenedorImagen">
-									<a data-transition="slide" href="#DetailPage?data={{brand}}&{{model}}" name="{{brand}}" id="{{model}}">
-										<img src="Img/{{brand}}/{{model}}.png" alt="{{model}}" title="{{model}}" class="imagenStyle"/>
-									</a>
+								<div class="thisBlock">
+									<div class="contenedorImagen turnImage">
+										<a data-transition="slide" href="#DetailPage?data={{brand}}&{{model}}" name="{{brand}}" id="{{model}}">
+											<img src="Img/{{brand}}/{{model}}.png" alt="{{model}}" title="{{model}}" class="imagenStyle"/>
+										</a>
+									</div>
 								</div>
 							{{/each}}
 						</div>	   
@@ -225,8 +233,8 @@
 							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
 									<input type="text" name="city" id="city" placeholder="Ciudad" style="width:100%"/>
 							</div>
-							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br" style="width:100%">
-									<select id="StateSelector" data-mini="true" style="width:100%">
+							<div data-role="fieldcontain" style="width:100%">
+									<select id="StateSelector" style="width:100%">
 										<option value="Estado">Estado</option>
 										{{#each this}}
 										<option value="{{State}}">{{State}}</option>
@@ -247,7 +255,7 @@
 							</div>
 							</fieldset>
 							<div style="text-align:center">
-								<input data-role="button" type="submit" value="Enviar" data-theme="a" data-inline="true"/>
+								<a href="#ReportPage" data-role="button" data-theme="a" data-inline="true" data-icon="arrow-l">Enviar</a>
 								<input data-role="button" type="reset" value="Limpiar" data-inline="true"/>
 							</div>
                         </form>
@@ -269,7 +277,7 @@
                 	</div>
             </div>        
             <div data-role="content">
-            	<script id="Models-template" type="text/x-handlebars-template">
+            	<script id="Report-template" type="text/x-handlebars-template">
 					<div class="ui-grid-e">
 							<div class="ui-block-a">		
 								<div><h4>Número de Pago</h4></div>							
@@ -289,7 +297,7 @@
 							<div class="ui-block-e">
 								<div><h4>Capital Amortizado</h4></div>
 							</div>					
-						{{#each MonthPay}}
+						{{#each this}}
 							<div class="ui-block-a">		
 								<div id="{{numberOfPay}}">{{numberOfPay}}</div>							
 							</div>

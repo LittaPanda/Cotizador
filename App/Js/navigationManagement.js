@@ -63,6 +63,20 @@ function showPopup( urlObj, options )
 	$.mobile.changePage( $page, options );
 }
 
+function showReport( urlObj, options )
+{
+	var pageSelector = urlObj.hash.replace( /\?.*$/, "" );
+
+	var $page = $( pageSelector ),
+		$header = $page.children( ":jqmData(role=header)" ),
+		$content = $page.children( ":jqmData(role=content)" ),
+		markup = renderReport();
+
+	$page.page();
+	options.dataUrl = urlObj.href;
+	$.mobile.changePage( $page, options );
+}
+
 $(document).bind( "pagebeforechange", function( e, data ) {
 	if ( typeof data.toPage === "string" ) {
 		var u = $.mobile.path.parseUrl( data.toPage ),
@@ -93,8 +107,8 @@ $(document).bind( "pagebeforechange", function( e, data ) {
 			e.preventDefault();
 		}
 		if ( u.hash.search(reportP) !== -1 ) {
-			//showPopup( u, data.options );
-			//e.preventDefault();
+			showReport( u, data.options );
+			e.preventDefault();
 		}
 	}
 });

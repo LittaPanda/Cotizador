@@ -23,14 +23,5 @@
 
 // Place any jQuery/helper plugins in here.
 $(document).ready(function(e) {
-    /*$('#StartButton').click(function(){
-		var typeList = "Brands";
-		loadBrands(typeList);
-		});*/
-	//$('#PopupButton').live('click',function(){
-//		$('#PopupPage').bind({ create: function(event,ui){
-//			renderPopup();
-//		}
-//		}).dialog("open");
-//	});
+
 });

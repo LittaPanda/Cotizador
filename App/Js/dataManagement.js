@@ -237,6 +237,21 @@
 		$('#PopupContainer').find( ":jqmData(role=button)" ).button();
 		$('#PopupContainer').find('[type="reset"]').button();
   }
+  
+    function renderReport(){
+	  	var src = $('#Report-template').html();
+		var template = Handlebars.compile(src);	
+		var data = {Residue:450000.0,Months:18,AnualRate:8.5,payPeriod:1}
+		var send = quotation(data);	
+		var html = template(send);		
+		$('#ReportContainer').html(html);
+		$('#ReportContainer').find( ":jqmData(role=fieldcontain)" ).fieldcontain();
+		$('#ReportContainer').find( ":jqmData(role=controlgroup)" ).controlgroup();
+		$('#ReportContainer').find( "select" ).selectmenu();
+		$('#ReportContainer').find('input').textinput();
+		$('#ReportContainer').find( ":jqmData(role=button)" ).button();
+		$('#ReportContainer').find('[type="reset"]').button();
+  }
 //Ends Data Handling:: Renders
 //Begins Event Shooter:: Initialization
   function init() {

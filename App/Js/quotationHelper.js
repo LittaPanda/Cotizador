@@ -1,6 +1,5 @@
-function quotation()
+function quotation(data)
 {
-	var data = {Residue:450000.0,Months:12,AnualRate:8.5,payPeriod:1}
 	var MonthPay = [];
 	var residue = data.Residue;
 	var months = data.Months;
