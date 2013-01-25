@@ -31,8 +31,8 @@
     </head>
     <body onLoad="javascript:init();">
     <!--Inicia HOME-->
-        <div data-role="page" id="AppHome">
-            <div data-theme="e" data-role="header">
+        <div data-role="page" id="AppHome" data-theme="d">
+            <div data-theme="d" data-role="header">
                     <h3>
                         Cotizador
                     </h3>
@@ -70,9 +70,8 @@
         </div>
     <!--Termina HOME-->
     <!--Inicia Marcas-->
-    <div data-role="page" id="BrandsPage">
-    		<input type="hidden" id="SelectedBrand" value="" />
-            <div data-theme="e" data-role="header">
+    <div data-role="page" id="BrandsPage" data-theme="d">
+    		<div data-theme="d" data-role="header">
                     <div data-role="navbar" data-iconpos="right">
                         <ul>
                             <li>
@@ -113,9 +112,9 @@
     </div>
     <!--Termina Marcas-->
     <!--Inicia Modelos-->
-    <div data-role="page" id="ModelsPage">
+    <div data-role="page" data-theme="d" id="ModelsPage">
     		<input type="hidden" id="SelectedModel" value="" />
-            <div data-theme="e" data-role="header">
+            <div data-theme="d" data-role="header">
                     <div data-role="navbar" data-iconpos="top">
                         <ul>
                             <li><a href="#AppHome" data-rel="back" data-transition="slide" data-theme="a" data-icon="arrow-l">HOME</a></li>
@@ -155,10 +154,10 @@
     </div>
     <!--Termina Modelos-->
     <!--Inicia Detalle-->
-        <div data-role="page" id="DetailPage">
+        <div data-role="page" data-theme="d" id="DetailPage">
     		<input type="hidden" id="SelectedColor" value="" />
             <input type="hidden" id="SelectedVersion" value="" />
-            <div data-theme="e" data-role="header">
+            <div data-theme="d" data-role="header">
                     <div data-role="navbar" data-iconpos="top">
                         <ul>
                             <li><a href="#AppHome" data-rel="back" data-transition="slide" data-theme="a" data-icon="arrow-l">HOME</a></li>
@@ -191,7 +190,7 @@
 							{{/each}}
 						</div>
 						<div class="ui-block-b" id="ButtonContainer" style="text-align:center;">
-							<a href="#PopupPage" data-rel="dialog" data-role="button" data-inline="true">Continuar</a>
+							<a href="#PopupPage?data={{brand}}&{{model}}&{{version}}&{{color}}&{{description}}&{{price}}" data-rel="dialog" data-role="button" data-inline="true">Continuar</a>
 						</div>	   
 					</div>
                 </script>
@@ -202,13 +201,13 @@
     </div>
     <!--Termina Detalle-->
     <!--Inicia Popup-->          
-            <div id="PopupPage" data-close-btn-text="Cerrar" data-role="dialog" >
+            <div id="PopupPage" data-theme="d" data-close-btn-text="Cerrar" data-role="dialog" >
             	<div data-role="header">
                 	<h1>Datos del Cliente</h1>
                 </div>
                 <div data-role="content" class="content-primary">
 					<script id="Popup-template" type="text/x-handlebars-template">
-                        <form>
+                        <form id="form_customer">
 							<fieldset>
 							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
                           		
@@ -234,9 +233,9 @@
 									<input type="text" name="city" id="city" placeholder="Ciudad" style="width:100%"/>
 							</div>
 							<div data-role="fieldcontain" style="width:100%">
-									<select id="StateSelector" style="width:100%">
+									<select id="StateSelector" name="stateSelector" style="width:100%">
 										<option value="Estado">Estado</option>
-										{{#each this}}
+										{{#each States}}
 										<option value="{{State}}">{{State}}</option>
 										{{/each}}
 									</select>
@@ -258,6 +257,12 @@
 								<a href="#ReportPage" data-role="button" data-theme="a" data-inline="true" data-icon="arrow-l">Enviar</a>
 								<input data-role="button" type="reset" value="Limpiar" data-inline="true"/>
 							</div>
+							<input type="hidden" name="SelectedBrand" id="SelectedBrand" value="{{CarData.Brand}}" />
+							<input type="hidden" name="SelectedModel" id="SelectedModel" value="{{CarData.Model}}" />
+							<input type="hidden" name="SelectedVersion" id="SelectedVersion" value="{{CarData.Version}}" />
+							<input type="hidden" name="SelectedColor" id="SelectedColor" value="{{CarData.Color}}" />
+							<input type="hidden" name="SelectedDescription" id="SelectedDescription" value="{{CarData.Description}}" />
+							<input type="hidden" name="SelectedPrice" id="SelectedPrice" value="{{CarData.Price}}" />
                         </form>
                     </script>
                     <div id="PopupContainer"></div>
@@ -265,8 +270,8 @@
             </div>
     <!--Termina Popup-->
     <!--Inicia Reporte-->
-    <div data-role="page" id="ReportPage">    
-    		<div data-theme="e" data-role="header">
+    <div data-role="page" data-theme="d" id="ReportPage">    
+    		<div data-theme="d" data-role="header">
                     <div data-role="navbar" data-iconpos="top">
                         <ul>
                             <li><a href="#AppHome" data-rel="back" data-transition="slide" data-theme="a" data-icon="arrow-l">HOME</a></li>
@@ -278,26 +283,60 @@
             </div>        
             <div data-role="content">
             	<script id="Report-template" type="text/x-handlebars-template">
+					<div class="ui-grid-solo">
+						<div class="ui-block-a" style="text-align:center;">
+							<h3>Datos del Cliente</h3>
+							<table style="width:100%;text-align:left;">
+								<tr>
+									<td style="width:20%;">Nombre: </td>
+									<td><label name="firstName" >{{CustomerData.firstName}} </label>
+										<label name="lastName1" >{{CustomerData.lastName1}} </label>
+										<label name="lastName2" >{{CustomerData.lastName2}}</label>
+									</td>
+								</tr>
+								<tr>
+									<td style="width:20%;">R.F.C.: </td>
+									<td><label name="rfc" >{{CustomerData.rfc}}</label></td>
+								</tr>
+								<tr>
+									<td style="width:20%;">Dirección: </td>
+									<td><label name="address" >{{CustomerData.address}} </label>
+										<label name="neighborhood" >{{CustomerData.neighborhood}}, </label>
+										<label name="city" >{{CustomerData.address}}, </label>
+										<label name="state" >{{CustomerData.stateSelector}}, </label>
+										<label name="country" >{{CustomerData.country}} </label>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										C.P.: <label name="zipCode" >{{CustomerData.zipCode}}, </label>
+										Teléfono: <label name="phone" >{{CustomerData.phone}}, </label>
+										Email: <label name="email" >{{CustomerData.email}}</label>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
 					<div class="ui-grid-e">
-							<div class="ui-block-a">		
+							<div class="ui-block-a ui-bar-d" >		
 								<div><h4>Número de Pago</h4></div>							
 							</div>
-							<div class="ui-block-b">
+							<div class="ui-block-b ui-bar-d">
 								<div><h4>Pago</h4></div>					
 							</div>	 
-							<div class="ui-block-c">
+							<div class="ui-block-c ui-bar-d">
 								<div><h4>Cuota de Interés</h4></div>
 							</div>
-							<div class="ui-block-d">
+							<div class="ui-block-d ui-bar-d">
 								<div><h4>Cuota de Capital</h4></div>
 							</div> 
-							<div class="ui-block-e">
+							<div class="ui-block-e ui-bar-d">
 								<div><h4>Saldo</h4></div>
 							</div> 
-							<div class="ui-block-e">
+							<div class="ui-block-e ui-bar-d">
 								<div><h4>Capital Amortizado</h4></div>
 							</div>					
-						{{#each this}}
+						{{#each AmortizedTable}}
 							<div class="ui-block-a">		
 								<div id="{{numberOfPay}}">{{numberOfPay}}</div>							
 							</div>

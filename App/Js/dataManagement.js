@@ -164,6 +164,7 @@
 			version: thisCar.version,
 			price: thisCar.price,
 			color: thisCar.color,
+			description: thisCar.description,
 			colors: thisColors,
 			versions: thisVersions
 		};
@@ -225,10 +226,11 @@
   }
   
   //states
-  function renderPopup(){
+  function renderPopup(carData){
+		var data = {"States":States,"CarData": carData};
 	  	var src = $('#Popup-template').html();
 		var template = Handlebars.compile(src);		
-		var html = template(States);		
+		var html = template(data);
 		$('#PopupContainer').html(html);
 		$('#PopupContainer').find( ":jqmData(role=fieldcontain)" ).fieldcontain();
 		$('#PopupContainer').find( ":jqmData(role=controlgroup)" ).controlgroup();
@@ -238,12 +240,13 @@
 		$('#PopupContainer').find('[type="reset"]').button();
   }
   
-    function renderReport(){
+  function renderReport(customerData,carData){
 	  	var src = $('#Report-template').html();
 		var template = Handlebars.compile(src);	
-		var data = {Residue:450000.0,Months:18,AnualRate:8.5,payPeriod:1}
-		var send = quotation(data);	
-		var html = template(send);		
+		var data = {Residue:carData.SelectedPrice,Months:18,AnualRate:8.5,payPeriod:1};
+		var amortizationData = quotation(data);
+		var renderData = {"CustomerData":customerData,"AmortizedTable":amortizationData};	
+		var html = template(renderData);		
 		$('#ReportContainer').html(html);
 		$('#ReportContainer').find( ":jqmData(role=fieldcontain)" ).fieldcontain();
 		$('#ReportContainer').find( ":jqmData(role=controlgroup)" ).controlgroup();
