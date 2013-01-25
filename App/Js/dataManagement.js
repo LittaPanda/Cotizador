@@ -352,3 +352,18 @@
 	}
   }
 //Ends Data Aggregation
+
+// PDF Report creation
+function CreatePDFTest(){
+var pdf = new jsPDF('p','in','letter'), source = $('html')[0], specialElementHandlers = {'title': function(element, renderer){return true}}
+pdf.fromHTML(
+ source // HTML string or DOM elem ref.
+ , 0.0 // x coord
+ , 0.0 // y coord
+ , {
+  'width':7.5 // max width of content on PDF
+  , 'elementHandlers': specialElementHandlers
+ }
+)
+pdf.output('datauri');
+}
