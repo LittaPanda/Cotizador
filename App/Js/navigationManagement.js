@@ -32,13 +32,13 @@ function showDetail( urlObj, options )
 {
 	var carData = urlObj.hash.replace(/.*data=/,'').split('&'),
 		pageSelector = urlObj.hash.replace( /\?.*$/, "" );
-		var defaultItem = new Array;
-		for(car in defaultCatalog){
-			var thisItem = defaultCatalog[car];
-			if(thisItem.Brand == carData[0] && thisItem.Model == carData[1]){
-				defaultItem.push(thisItem);
-			}
+	var defaultItem = new Array;
+	for(car in defaultCatalog){
+		var thisItem = defaultCatalog[car];
+		if(thisItem.Brand == carData[0] && thisItem.Model == carData[1]){
+			defaultItem.push(thisItem);
 		}
+	}
 	var $page = $( pageSelector ),
 		$header = $page.children( ":jqmData(role=header)" ),
 		$content = $page.children( ":jqmData(role=content)" ),
@@ -105,7 +105,19 @@ function showReport( urlObj, options )
 	$.mobile.changePage( $page, options );
 }
 
+function onChangeDetailbyVersion(brand,model,id)
+{
+	var version = $("#"+id).val();
+	changeDetailbyVersion(brand, model, version);
+}
+
+function onChangeDetailbyColor(brand, model, version, color)
+{
+	changeDetailbyColor(brand, model, color, version);
+}
+
 $(document).bind( "pagebeforechange", function( e, data ) {
+	var emailreg = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
 	if ( typeof data.toPage === "string" ) {
 		var u = $.mobile.path.parseUrl( data.toPage ),
 			apphome = /^#AppHome/,

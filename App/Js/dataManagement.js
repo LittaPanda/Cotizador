@@ -81,6 +81,14 @@
 		  localDataStorage.webdb.onError);
 	});
   };
+  
+  localDataStorage.webdb.getCarWithoutColor = function(renderFunc, DBTable, brand, model, version) {
+	var db = localDataStorage.webdb.db;
+	db.transaction(function(tx) {
+	  tx.executeSql("SELECT * FROM "+ DBTable +" WHERE brand=? AND model=? AND version=? LIMIT 1", [brand, model, version], renderFunc,
+		  localDataStorage.webdb.onError);
+	});
+  };
 	  
   localDataStorage.webdb.deleteList = function(id, DBTable) {
 	var db = localDataStorage.webdb.db;
@@ -157,7 +165,26 @@
   }
   
   function loadCarDetail (tx, rs){
-		var thisCar = rs.rows.item(0);	 
+		var thisCar = rs.rows.item(0);
+		var versionCollection = new Array;
+		var colorsCollection = new Array;
+		for(index in thisVersions){
+			var thisVersion = thisVersions[index];
+			if(thisCar.version == thisVersion.version){
+				versionCollection.push({"version" : thisVersion.version,"selected":"selected"});
+			}else{
+				versionCollection.push({"version" : thisVersion.version});
+			}
+		}
+		for(index in thisColors){
+			var thisColor = thisColors[index];
+			colorsCollection.push({brand: thisCar.brand,
+									model: thisCar.model,
+									version: thisCar.version,
+									price: thisCar.price,
+									color: thisColor.color
+									});
+		}
 		var data = {
 			brand: thisCar.brand,
 			model: thisCar.model,
@@ -165,8 +192,8 @@
 			price: thisCar.price,
 			color: thisCar.color,
 			description: thisCar.description,
-			colors: thisColors,
-			versions: thisVersions
+			colors: colorsCollection,
+			versions: versionCollection
 		};
 		renderDetail(data);  
   }
@@ -288,6 +315,21 @@
 	localDataStorage.webdb.getCar(loadCarDetail, dbSetup.carsTableName, brand, model, defaultVersion, defaultColor);	
   }
 //Ends Event Shooter:: Loading
+//Begins Event Shooter:: Change  
+  function changeDetailbyVersion(brand, model, version){
+	handledTypeList = "Detail";
+	localDataStorage.webdb.getAllVersions(loadVersions, dbSetup.carsTableName, brand , model);
+	localDataStorage.webdb.getAllColors(loadColors, dbSetup.carsTableName, brand, model, version);
+	localDataStorage.webdb.getCarWithoutColor(loadCarDetail, dbSetup.carsTableName, brand, model, version);	
+  }
+  
+  function changeDetailbyColor(brand, model, color, version){
+	handledTypeList = "Detail";
+	localDataStorage.webdb.getAllVersions(loadVersions, dbSetup.carsTableName, brand , model);
+	localDataStorage.webdb.getAllColors(loadColors, dbSetup.carsTableName, brand, model, version);
+	localDataStorage.webdb.getCar(loadCarDetail, dbSetup.carsTableName, brand, model, version, color);	
+  }
+//Ends Event Shooter:: Change
 //Begins Data Aggregation
   
   function addCars(DBTable, TFields, allItemsList, dateToCompare) {	

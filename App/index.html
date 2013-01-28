@@ -175,9 +175,14 @@
 					<div class="ui-grid-a">
 						<div class="ui-block-a" style="text-align:center;"><h2>Precio: ${{price}}</h2></div>
 						<div class="ui-block-b" >
-								<select id="VersionSelector">
+								<select id="VersionSelector" onchange="javascript:onChangeDetailbyVersion('{{brand}}','{{model}}',this.id);">
 									{{#each versions}}
-									<option value="{{version}}">{{version}}</option>
+									{{#if selected}}
+										<option value="{{version}}" selected="{{selected}}">{{version}}</option>
+									  {{else}}
+										<option value="{{version}}">{{version}}</option>
+									{{/if}}
+									
 									{{/each}}
 								</select>
 						</div>	   
@@ -190,7 +195,7 @@
 					<div class="ui-grid-a">
 						<div class="ui-block-a" style="text-align:center;">
 							{{#each colors}}
-									<img src="Img/{{color}}.png" alt="{{color}}"/>
+									<img class="imgColors" onclick="javascript:onChangeDetailbyColor('{{brand}}','{{model}}','{{version}}','{{color}}');" src="Img/{{color}}.png" alt="{{color}}"/>
 							{{/each}}
 						</div>
 						<div class="ui-block-b" id="ButtonContainer" style="text-align:center;">
@@ -258,7 +263,7 @@
 							</div>
 							</fieldset>
 							<div style="text-align:center">
-								<a href="#ReportPage" data-role="button" data-theme="a" data-inline="true" data-icon="arrow-l">Enviar</a>
+								<a class="button" href="#ReportPage" data-role="button" data-theme="a" data-inline="true" data-icon="arrow-r">Enviar</a>
 								<input data-role="button" type="reset" value="Limpiar" data-inline="true"/>
 							</div>
 							<input type="hidden" name="SelectedBrand" id="SelectedBrand" value="{{CarData.Brand}}" />
