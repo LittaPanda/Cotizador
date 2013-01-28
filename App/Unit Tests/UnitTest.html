@@ -2,16 +2,23 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>QUnit Example</title>
-  <link rel="stylesheet" href="/resources/qunit.css">
+  <title>Unit Test</title>
+  <link rel="stylesheet"><!--href="/resources/qunit.css">-->
 </head>
 <body>
   <div id="qunit"></div>
   <div id="qunit-fixture"></div>
-  <script src="qunit-1.11.0.js"></script>
-  <script src="../Js/classDBSetup.js"></script>
-  <script src="../Js/dataManagement.js"></script>  
-  <script src="../Js/Data.js"></script>     
-  <script src="test.js"></script>
-</body>
-</html>
+          <script>window.jQuery || document.write('<script src="../Js/Vendors/jquery.js"><\/script>')</script>
+       <!-- <script src="../Js/Vendors/jquery.mobile-1.2.0.min.js"></script>-->
+        <script src="../Js/Vendors/handlebars.js"></script>  
+        <script src="../Js/plugins.js"></script>
+        <script src="../Js/main.js"></script>
+        <script src="../Js/Data.js"></script>
+        <script src="../Js/classDBSetup.js"></script>
+        <script src="../Js/classCar.js"></script>
+        <script src="../Js/dataManagement.js"></script>       
+	  	<script src="qunit-1.11.0.js"></script>
+   		<script src="test.js"></script>
+</body>	
+
+</html>	
