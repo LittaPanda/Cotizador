@@ -15,7 +15,7 @@
 				localDataStorage.webdb.open("TestDB", "1", "Database Testing");
 				localDataStorage.webdb.createTable("TestTable",testFields);
 				localDataStorage.webdb.getAllitemsList(function() {
-				ok( true, "Open db works!" );
+				ok( true, "Get all works!" );
 				start();
 				},"TestTable",function(){
 					ok( false, "Get all items don't works!" );
@@ -29,7 +29,7 @@
 				ok( false, "Get all items don't works!" );
 				start();
 				},"FakeTable",function(){
-					ok( true, "Open db works!" );
+					ok( true, "Get all works!" );
 					start();
 					});
 		});
