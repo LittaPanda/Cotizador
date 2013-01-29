@@ -465,5 +465,5 @@ function CreatePDFTest(){
 
 			});						 
 		});
-		doc.output('datauri');
+		doc.output('save');
 }
