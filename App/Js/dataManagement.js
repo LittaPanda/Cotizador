@@ -409,13 +409,8 @@ pdf.fromHTML(
 pdf.output('datauri');
 }*/
 
-//Test PDF generator
-var specialElementHandlers = {
-		'#editor': function(element, renderer){
-				return true;
-			}
-		};
-function CreatePDFTest(){
+//PDF generator
+function CreatePDF(){
 		var doc = new jsPDF('landscape');
 		doc.setFontSize(16);
 		var positionX = 5;
