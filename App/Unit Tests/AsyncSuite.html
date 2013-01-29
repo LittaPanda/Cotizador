@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Async Suite Unit Test</title>
+	<link rel="stylesheet" href="qunit-1.11.0.css">
+	<script src="qunit-1.11.0.js"></script>
+    <!-- Begins Document to Test -->
+    <script src="../Js/classDBSetup.js"></script>
+    <script src="../Js/dataManagement.js"></script>
+    <!-- Ends Document to Test -->
+    <!-- Begins Test -->
+    <script>	
+		asyncTest( "asynchronous test: localDataStorage.webdb.getAllitemsList",1, function() {
+				localDataStorage.webdb.open("TestDB", "1", "Database Testing");
+				localDataStorage.webdb.createTable("TestTable",testFields);
+				localDataStorage.webdb.getAllitemsList(function() {
+				ok( true, "Open db works!" );
+				start();
+				},"TestTable",function(){
+					ok( false, "Get all items don't works!" );
+					start();
+					});
+		});
+		asyncTest( "asynchronous test: localDataStorage.webdb.getAllitemsList",1, function() {
+				localDataStorage.webdb.open("TestDB", "1", "Database Testing");
+				localDataStorage.webdb.createTable("TestTable",testFields);
+				localDataStorage.webdb.getAllitemsList(function() {
+				ok( false, "Get all items don't works!" );
+				start();
+				},"FakeTable",function(){
+					ok( true, "Open db works!" );
+					start();
+					});
+		});
+	</script>
+    <!-- Ends Test -->
+</head>
+
+<body>
+
+	<div id="qunit"></div>
+    <div id="qunit-fixture">
+    	<script>
+        	var testFields = new Array({"Name":"TestField","Type":"TEXT"}
+				  					,{"Name":"added_on","Type":"DATETIME"});
+        </script>
+    </div>
+    
+</body>
+</html>

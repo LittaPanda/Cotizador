@@ -42,11 +42,10 @@
 	//localDataStorage.webdb.getAllitemsList();
   };	
 	
-  localDataStorage.webdb.getAllitemsList = function(renderFunc, DBTable) {
+  localDataStorage.webdb.getAllitemsList = function(renderFunc, DBTable, errorCallback) {
 	var db = localDataStorage.webdb.db;
 	db.transaction(function(tx) {
-	  tx.executeSql("SELECT * FROM "+ DBTable, [], renderFunc,
-		  localDataStorage.webdb.onError);
+	  tx.executeSql("SELECT * FROM "+ DBTable, [], renderFunc, errorCallback);
 	});
   };
   
@@ -290,8 +289,8 @@
 	localDataStorage.webdb.createTable(dbSetup.brandsTableName, dbSetup.brandFields);
 	//localDataStorage.webdb.truncateList(dbSetup.carsTableName);
 	//localDataStorage.webdb.truncateList(dbSetup.brandsTableName);
-	localDataStorage.webdb.getAllitemsList(storeNewCars,dbSetup.carsTableName);
-	localDataStorage.webdb.getAllitemsList(storeNewBrands,dbSetup.brandsTableName);
+	localDataStorage.webdb.getAllitemsList(storeNewCars,dbSetup.carsTableName,localDataStorage.webdb.onError);
+	localDataStorage.webdb.getAllitemsList(storeNewBrands,dbSetup.brandsTableName,localDataStorage.webdb.onError);
 	//customers
 	localDataStorage.webdb.createTable(dbSetup.customersTableName, dbSetup.customerAllFields);
   }
@@ -300,7 +299,7 @@
   
   function loadBrands(){
 	handledTypeList = "Brands";	
-	localDataStorage.webdb.getAllitemsList(loadAllBrands,dbSetup.brandsTableName);
+	localDataStorage.webdb.getAllitemsList(loadAllBrands,dbSetup.brandsTableName,localDataStorage.webdb.onError);
   }
   
   function loadModels(brand){
@@ -416,7 +415,6 @@ var specialElementHandlers = {
 				return true;
 			}
 		};
-ClientDataContainer
 function CreatePDFTest(){
 		var doc = new jsPDF('landscape');
 		doc.setFontSize(16);
