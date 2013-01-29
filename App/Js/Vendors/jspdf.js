@@ -1,5 +1,5 @@
-/** @preserve jsPDF ( ${buildDate} ${commitID} )
-Copyright (c) 2010 James Hall, https://github.com/MrRio/jsPDF
+/** @preserve jsPDF 0.9.0rc1 ( ${buildDate} ${commitID} )
+Copyright (c) 2010-2012 James Hall, james@snapshotmedia.co.uk, https://github.com/MrRio/jsPDF
 Copyright (c) 2012 Willow Systems Corporation, willow-systems.com
 MIT license.
 */
@@ -42,7 +42,7 @@ var jsPDF = (function() {
 // this will run on <=IE9, possibly some niche browsers
 // new webkit-based, FireFox, IE10 already have native version of this.
 if (typeof btoa === 'undefined') {
-	var btoa = function(data) {
+	window.btoa = function(data) {
 		// DO NOT ADD UTF8 ENCODING CODE HERE!!!!
 
 		// UTF8 encoding encodes bytes over char code 128
@@ -124,7 +124,65 @@ if (typeof btoa === 'undefined') {
 		return (r ? enc.slice(0, r - 3) : enc) + '==='.slice(r || 3);
 
 		// end of base64 encoder MIT, GPL
-	}
+	};
+}
+
+if (typeof atob === 'undefined') {
+	window.atob = function (data) {
+		// http://kevin.vanzonneveld.net
+		// +   original by: Tyler Akins (http://rumkin.com)
+		// +   improved by: Thunder.m
+		// +      input by: Aman Gupta
+		// +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+		// +   bugfixed by: Onno Marsman
+		// +   bugfixed by: Pellentesque Malesuada
+		// +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+		// +      input by: Brett Zamir (http://brett-zamir.me)
+		// +   bugfixed by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+		// *     example 1: base64_decode('S2V2aW4gdmFuIFpvbm5ldmVsZA==');
+		// *     returns 1: 'Kevin van Zonneveld'
+		// mozilla has this native
+		// - but breaks in 2.0.0.12!
+		//if (typeof this.window['atob'] == 'function') {
+		//    return atob(data);
+		//}
+		var b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+		var o1, o2, o3, h1, h2, h3, h4, bits, i = 0,
+		ac = 0,
+		dec = "",
+		tmp_arr = [];
+
+		if (!data) {
+		return data;
+		}
+
+		data += '';
+
+		do { // unpack four hexets into three octets using index points in b64
+			h1 = b64.indexOf(data.charAt(i++));
+			h2 = b64.indexOf(data.charAt(i++));
+			h3 = b64.indexOf(data.charAt(i++));
+			h4 = b64.indexOf(data.charAt(i++));
+
+			bits = h1 << 18 | h2 << 12 | h3 << 6 | h4;
+
+			o1 = bits >> 16 & 0xff;
+			o2 = bits >> 8 & 0xff;
+			o3 = bits & 0xff;
+
+			if (h3 == 64) {
+				tmp_arr[ac++] = String.fromCharCode(o1);
+			} else if (h4 == 64) {
+				tmp_arr[ac++] = String.fromCharCode(o1, o2);
+			} else {
+				tmp_arr[ac++] = String.fromCharCode(o1, o2, o3);
+			}
+		} while (i < data.length);
+
+		dec = tmp_arr.join('');
+
+		return dec;
+	};
 }
 
 var getObjectLength = typeof Object.keys === 'function' ?
@@ -857,7 +915,6 @@ function jsPDF(/** String */ orientation, /** String */ unit, /** String */ form
 		}
 		return op;
 	}
-	
 
 	//---------------------------------------
 	// Public API
@@ -905,6 +962,9 @@ function jsPDF(/** String */ orientation, /** String */ unit, /** String */ form
 		// through multiplication.
 		, 'scaleFactor': k 
 		, 'pageSize': {'width':pageWidth, 'height':pageHeight}
+		, 'output': function(type, options) {
+			return output(type, options);
+		}
 	}
 	
 	/**
@@ -1164,6 +1224,41 @@ function jsPDF(/** String */ orientation, /** String */ unit, /** String */ form
 		)
 		return this;
 	}
+	
+	/**
+	Adds a rectangle with rounded corners to PDF
+	
+	@param {Number} x Coordinate (in units declared at inception of PDF document) against left edge of the page
+	@param {Number} y Coordinate (in units declared at inception of PDF document) against upper edge of the page
+	@param {Number} w Width (in units declared at inception of PDF document) 
+	@param {Number} h Height (in units declared at inception of PDF document) 
+	@param {Number} rx Radius along x axis (in units declared at inception of PDF document) 
+	@param {Number} rx Radius along y axis (in units declared at inception of PDF document) 
+	@param {String} style (Defaults to active fill/stroke style) A string signalling if stroke, fill or both are to be applied.
+	@function
+	@returns {jsPDF}
+	@methodOf jsPDF#
+	@name roundedRect
+	*/
+	API.roundedRect = function(x, y, w, h, rx, ry, style) {
+		var MyArc = 4/3*(Math.SQRT2-1);
+		this.lines(
+			[
+				[ (w-2*rx), 0 ] 
+				, [ (rx*MyArc), 0, rx, ry-(ry*MyArc), rx, ry ] 
+				, [ 0, (h-2*ry) ] 
+				, [ 0, (ry*MyArc), -(rx*MyArc), ry, -rx, ry]
+				, [ (-w+2*rx), 0]
+				, [ -(rx*MyArc), 0, -rx, -(ry*MyArc), -rx, -ry]
+				, [ 0, (-h+2*ry)]
+				, [ 0, -(ry*MyArc), (rx*MyArc), -ry, rx, -ry]
+			]
+			, x+rx, y // start of path
+			, [1,1]
+			, style
+		)
+		return this;
+	}
 
 	/**
 	Adds an ellipse to PDF
@@ -1258,10 +1353,6 @@ function jsPDF(/** String */ orientation, /** String */ unit, /** String */ form
 				documentProperties[property] = properties[property]
 			}
 		}
-		return this
-	}
-
-	API.addImage = function(imageData, format, x, y, w, h) {
 		return this
 	}
 
@@ -1404,7 +1495,7 @@ function jsPDF(/** String */ orientation, /** String */ unit, /** String */ form
 			if (typeof ch1 === 'string') {
 				color = ch1 + ' G'
 			} else {
-				color = f2(r/255) + ' G'
+				color = f2(ch1/255) + ' G'
 			}
 		} else if (ch4 === undefined) {
 			// RGB
@@ -1590,19 +1681,69 @@ function jsPDF(/** String */ orientation, /** String */ unit, /** String */ form
 	@methodOf jsPDF#
 	@name output
 	*/
-	API.output = function(type, options) {
+	var output = function(type, options) {
 		var undef
 		switch (type){
-			case undef: return buildDocument() 
+			case undef: 
+				return buildDocument();
+			case 'save':
+
+				// If Safari - fallback to Data URL, sorry there's no way to feature detect this
+				// @TODO: Refactor this
+				$.browser.chrome = $.browser.webkit && !!window.chrome;
+				$.browser.safari = $.browser.webkit && !window.chrome;
+
+				// Open in new window if webkit, until the BlobBuilder is fixed
+				// Seems to have been removed in Chrome 24
+				if ($.browser.webkit) {
+					return API.output('dataurlnewwindow');
+				}
+
+				var bb = new BlobBuilder;
+				var data = buildDocument();
+
+				// Need to add the file to BlobBuilder as a Uint8Array
+				var length = data.length;
+				var array = new Uint8Array(new ArrayBuffer(length));
+
+				for (var i = 0; i < length; i++) {
+					array[i] = data.charCodeAt(i);
+				}
+
+				bb.append(array);
+
+				var blob = bb.getBlob('application/pdf');
+				saveAs(blob, options);
+				break;
 			case 'datauristring':
 			case 'dataurlstring':
 				return 'data:application/pdf;base64,' + btoa(buildDocument())
 			case 'datauri':
 			case 'dataurl':
 				document.location.href = 'data:application/pdf;base64,' + btoa(buildDocument()); break;
+				break;
+			case 'dataurlnewwindow':
+				window.open('data:application/pdf;base64,' + btoa(buildDocument()));
+				break;
 			default: throw new Error('Output type "'+type+'" is not supported.') 
 		}
 		// @TODO: Add different output options
+	};
+
+	// Output is both an internal (for plugins) and external function
+	API.output = output;
+
+	/**
+	 * Saves as PDF document. An alias of jsPDF.output('save', 'filename.pdf')
+	 * @param  {String} filename The filename including extension.
+	 *
+	 * @function
+	 * @returns {jsPDF}
+	 * @methodOf jsPDF#
+	 * @name save
+	 */
+	API.save = function(filename) {
+		API.output('save', filename);
 	}
 
 	// applying plugins (more methods) ON TOP of built-in API.

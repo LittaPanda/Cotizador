@@ -272,7 +272,7 @@
 		var template = Handlebars.compile(src);	
 		var data = {Residue:carData.SelectedPrice,Months:18,AnualRate:8.5,payPeriod:1};
 		var amortizationData = quotation(data);
-		var renderData = {"CustomerData":customerData,"AmortizedTable":amortizationData};	
+		var renderData = {"CustomerData":customerData,"AmortizedTable":amortizationData,"CarData":carData};	
 		var html = template(renderData);		
 		$('#ReportContainer').html(html);
 		$('#ReportContainer').find( ":jqmData(role=fieldcontain)" ).fieldcontain();
@@ -396,16 +396,74 @@
 //Ends Data Aggregation
 
 // PDF Report creation
-function CreatePDFTest(){
+/*function CreatePDFTest(){
 var pdf = new jsPDF('p','in','letter'), source = $('html')[0], specialElementHandlers = {'title': function(element, renderer){return true}}
 pdf.fromHTML(
  source // HTML string or DOM elem ref.
  , 0.0 // x coord
  , 0.0 // y coord
  , {
-  'width':7.5 // max width of content on PDF
+    'width':7.5 // max width of content on PDF
   , 'elementHandlers': specialElementHandlers
  }
 )
 pdf.output('datauri');
+}*/
+
+//Test PDF generator
+var specialElementHandlers = {
+		'#editor': function(element, renderer){
+				return true;
+			}
+		};
+ClientDataContainer
+function CreatePDFTest(){
+		var doc = new jsPDF('landscape');
+		doc.setFontSize(16);
+		var positionX = 5;
+		var positionY = 40;
+		var rectW = 37;
+		var rectH = 7;
+		doc.rect(5, 10, 222, 35);
+		doc.text(10, 15, 'Cotizacion');
+		doc.setFontSize(11);
+		var firstBlock = "";
+		$('.firstBlock').each(function () {			
+			firstBlock += this.innerHTML + "  ";														 
+		});	
+		doc.text(10, 20, firstBlock);
+		var secondBlock = "";	
+		$('.secondBlock').each(function () {			
+			secondBlock += this.innerHTML + "  ";										 
+		});	
+		doc.text(10, 25, secondBlock);
+		var thirdBlock = "";
+		$('.thirdBlock').each(function () {
+			thirdBlock += this.innerHTML + "  ";							 
+		});	
+		doc.text(10, 30, thirdBlock);	
+		
+		$('#GeneratedHeaderContainer h4').each(function () {
+			var header = "";
+			header += this.innerHTML;
+			doc.setDrawColor(0);
+			doc.setFillColor(100,100,100);
+			doc.rect(positionX, positionY, rectW, rectH, 'FD');
+			doc.text(positionX + 2, positionY + 5, header);
+			positionX = positionX + rectW;							 
+		});
+		
+		$('#GeneratedDataContainer .rowCont').each(function () {
+			positionX = 5;
+			positionY = positionY + rectH;
+			$(this).children().children().children("p").each(function () {					
+					var content = "";
+					content += this.innerHTML;
+					doc.rect(positionX, positionY, rectW, rectH);
+					doc.text(positionX + 2, positionY + 5, content);
+					positionX = positionX + rectW;	
+
+			});						 
+		});
+		doc.output('datauri');
 }

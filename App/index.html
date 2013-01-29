@@ -17,12 +17,16 @@
         <link rel="stylesheet" href="CSS/appStyle.css">
         <script src="Js/Vendors/modernizr.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="Js/Vendors/jquery.js"><\/script>')</script>
+        <script>window.jQuery || document.write('<script src="Js/Vendors/jquery.js"></script>')</script>
         <script src="Js/Vendors/jquery.mobile-1.2.0.min.js"></script>
         <script src="Js/Vendors/jspdf.js"></script>
         <script src="Js/Vendors/jspdf.plugin.from_html.js"></script>
         <script src="Js/Vendors/jspdf.plugin.split_text_to_size.js"></script>
         <script src="Js/Vendors/jspdf.plugin.standard_fonts_metrics.js"></script>
+        <script src="Js/Vendors/jspdf.plugin.addimage.js"></script>
+        <script src="Js/Vendors/jspdf.plugin.ie_below_9_shim.js"></script>
+        <script src="Js/Vendors/jspdf.plugin.sillysvgrenderer.js"></script>
+        <script src="Js/Vendors/jspdf.PLUGINTEMPLATE.js"></script>
         <script src="Js/Vendors/handlebars.js"></script> 
         <script src="Js/quotationHelper.js"></script>  
         <script src="Js/plugins.js"></script>
@@ -293,40 +297,59 @@
             <div data-role="content">
             	<script id="Report-template" type="text/x-handlebars-template">
 					<div class="ui-grid-solo">
-						<div class="ui-block-a" style="text-align:center;">
+						<div class="ui-block-a" style="text-align:center;" id="ClientDataContainer">
 							<h3>Datos del Cliente</h3>
 							<table style="width:100%;text-align:left;">
+								{{#if CustomerData}}
 								<tr>
-									<td style="width:20%;">Nombre: </td>
-									<td><label name="firstName" >{{CustomerData.firstName}} </label>
-										<label name="lastName1" >{{CustomerData.lastName1}} </label>
-										<label name="lastName2" >{{CustomerData.lastName2}}</label>
+									<td>
+										<input type="hidden" name="firstName" >{{CustomerData.firstName}}</label>
+										<input type="hidden" name="lastName1" >{{CustomerData.lastName1}}</label>
+										<input type="hidden" name="lastName2" >{{CustomerData.lastName2}}</label>
+										<label class="firstBlock" name="fullName">Nombre: {{CustomerData.firstName}} {{CustomerData.lastName1}} {{CustomerData.lastName2}}</label>
 									</td>
 								</tr>
 								<tr>
-									<td style="width:20%;">R.F.C.: </td>
-									<td><label name="rfc" >{{CustomerData.rfc}}</label></td>
+									<td style="width:10%;"> </td>
+									<td>
+										<label class="firstBlock" name="rfc" >R.F.C.: {{CustomerData.rfc}}</label></td>
 								</tr>
 								<tr>
-									<td style="width:20%;">Dirección: </td>
-									<td><label name="address" >{{CustomerData.address}} </label>
-										<label name="neighborhood" >{{CustomerData.neighborhood}}, </label>
-										<label name="city" >{{CustomerData.address}}, </label>
-										<label name="state" >{{CustomerData.stateSelector}}, </label>
-										<label name="country" >{{CustomerData.country}} </label>
+									<td colspan="4">
+										<label class="firstBlock">Dirección: </label>
+										{{#if CustomerData.address}}<label class="secondBlock" name="address" >{{CustomerData.address}} </label> {{/if}}
+										{{#if CustomerData.neighborhood}}<label class="secondBlock" name="neighborhood" >{{CustomerData.neighborhood}}, </label>{{/if}}
+										{{#if CustomerData.city}}<label class="secondBlock" name="city" >{{CustomerData.city}}, </label>{{/if}}
+										{{#if CustomerData.stateSelector}}<label class="secondBlock" name="state" >{{CustomerData.stateSelector}}, </label>{{/if}}
+										{{#if CustomerData.country}}<label class="secondBlock" name="country" >{{CustomerData.country}} </label>{{/if}}
 									</td>
 								</tr>
 								<tr>
-									<td colspan="2">
-										C.P.: <label name="zipCode" >{{CustomerData.zipCode}}, </label>
-										Teléfono: <label name="phone" >{{CustomerData.phone}}, </label>
-										Email: <label name="email" >{{CustomerData.email}}</label>
+									<td colspan="4">
+										<label class="secondBlock" name="zipCode" >C.P.: {{CustomerData.zipCode}}, </label>
+										<label class="secondBlock" name="phone" >Teléfono: {{CustomerData.phone}}, </label>
+										<label class="secondBlock" name="email" >Email: {{CustomerData.email}}</label>
+									</td>
+								</tr>
+								{{/if}}
+								<tr>
+									<td>
+										<label class="thirdBlock" name="brand" >Marca: {{CarData.SelectedBrand}}</label>
+									</td>
+									<td>
+										<label class="thirdBlock" name="model" >Modelo: {{CarData.SelectedModel}}</label>
+									</td>
+									<td>
+										<label class="thirdBlock" name="version" >Versión: {{CarData.SelectedVersion}}</label>
+									</td>
+									<td>
+										<label class="thirdBlock" name="price" >Precio: {{CarData.SelectedPrice}}</label>
 									</td>
 								</tr>
 							</table>
 						</div>
 					</div>
-					<div class="ui-grid-e">
+					<div class="ui-grid-e" id="GeneratedHeaderContainer">
 							<div class="ui-block-a ui-bar-d" >		
 								<div><h4>Número de Pago</h4></div>							
 							</div>
@@ -342,30 +365,34 @@
 							<div class="ui-block-e ui-bar-d">
 								<div><h4>Saldo</h4></div>
 							</div> 
-							<div class="ui-block-e ui-bar-d">
+							<div class="ui-block-f ui-bar-d">
 								<div><h4>Capital Amortizado</h4></div>
-							</div>					
+							</div>						
+					</div>	
+					<div class="ui-grid-e" id="GeneratedDataContainer">
 						{{#each AmortizedTable}}
+						<div class="rowCont" style="width:100%;">
 							<div class="ui-block-a">		
-								<div id="{{numberOfPay}}">{{numberOfPay}}</div>							
+								<div id="{{numberOfPay}}"><p>{{numberOfPay}}</p></div>							
 							</div>
 							<div class="ui-block-b">
-								<div>{{pay}}</div>						
+								<div><p>{{pay}}</p></div>						
 							</div>	 
 							<div class="ui-block-c">
-								<div>{{interestAmount}}</div>
+								<div><p>{{interestAmount}}</p></div>
 							</div>
 							<div class="ui-block-d">
-								<div>{{capitalAmount}}</div>	
+								<div><p>{{capitalAmount}}</p></div>	
 							</div> 
 							<div class="ui-block-e">
-								<div>{{balance}}</div>
+								<div><p>{{balance}}</p></div>
 							</div> 
-							<div class="ui-block-e">
-								<div>{{amortizedCapital}}</div>
+							<div class="ui-block-f">
+								<div><p>{{amortizedCapital}}</p></div>
 							</div>
+						</div>
 						{{/each}}
-					</div>	
+					</div>
 					<div class="ui-block-b" id="ReportButtonContainer" style="text-align:center;">
 							<a href="" onclick="javascript:CreatePDFTest();" data-rel="dialog" data-role="button" data-inline="true">Generar reporte</a>
 					</div>				
