@@ -147,6 +147,9 @@ $(document).bind( "pagebeforechange", function( e, data ) {
 			e.preventDefault();
 		}
 		if ( u.hash.search(reportP) !== -1 ) {
+			//Field Validations
+			validateFullName(firstName, lastName1, lastName2);
+			validateEmail(email);
 			showReport( u, data.options );
 			e.preventDefault();
 		}
