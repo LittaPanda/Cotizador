@@ -48,12 +48,42 @@
   to   { -webkit-transform: rotateY(-360deg); }
 }
 
+@-ms-keyframes turnImage{
+	from { -ms-transform: rotateY(0deg);    }
+  	to   { -ms-transform: rotateY(-360deg); }
+}
+
+@-moz-keyframes turnImage{
+	from { -moz-transform: rotateY(0deg);    }
+  	to   { -moz-transform: rotateY(-360deg); }
+}
+
+@-o-keyframes turnImage{
+	from { -o-transform: rotateY(0deg);    }
+  	to   { -o-transform: rotateY(-360deg); }
+}
+
 .turnImage:hover {
    -webkit-animation-name: turnImage;
    -webkit-animation-timing-function: linear;
    -webkit-animation-iteration-count: 1;
    -webkit-animation-duration: 3s;
    -webkit-transform-style: preserve-3d;
+   -ms-animation-name: turnImage;
+   -ms-animation-timing-function: linear;
+   -ms-animation-iteration-count: 1;
+   -ms-animation-duration: 3s;
+   -ms-transform-style: preserve-3d;
+   -moz-animation-name: turnImage;
+   -moz-animation-timing-function: linear;
+   -moz-animation-iteration-count: 1;
+   -moz-animation-duration: 3s;
+   -moz-transform-style: preserve-3d;
+   -o-animation-name: turnImage;
+   -o-animation-timing-function: linear;
+   -o-animation-iteration-count: 1;
+   -o-animation-duration: 3s;
+   -o-transform-style: preserve-3d;
 }
 
 .error{
