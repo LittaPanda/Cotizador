@@ -19,7 +19,7 @@ test("Create or open Database: Database name is not empty",function() {
 
 
 /*************************************/
-asyncTest("Create or open table: Table name is correct",function() {
+/*asyncTest("Create or open table: Table name is correct",function() {
 	setTimeout(function()
 		{					
 			CreatedTable("BrandsList//")
@@ -45,10 +45,10 @@ expect(1);
 */
 /*asyncTest("Add/Delete brands: Database length is equals to Server length and both contain only diferent values",function() {
 //	expect(3);
-	var brands =  
-		[{"Brand":"ChevroletTest"},
- 		 {"Brand":"NissanTest"},
- 		 {"Brand":"VolkswagenTest"}];
+		var brands =  
+			[{"Brand":"ChevroletTest"},
+			 {"Brand":"NissanTest"},
+			 {"Brand":"VolkswagenTest"}];
 		
 	setTimeout(function()
 		{ 	
@@ -177,7 +177,7 @@ function DataBaseOpen(dataBaseName)
 	return localDataStorage.webdb.open(dataBaseName,"","");
 }
 
-function CreatedTable(tableName)
+/*function CreatedTable(tableName)
 {
 	DataBaseOpen("TestDataBase");
 	var fields = new Array({"Name":"brand","Type":"TEXT"}
@@ -193,4 +193,4 @@ var fields = new Array({"Name":"brand","Type":"TEXT"}
 
 
 	return addBrands("BrandsList", fields, brands); 
-}	
+}	*/

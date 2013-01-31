@@ -8,43 +8,14 @@
     <!-- Begins Document to Test -->
     <script src="../Js/classDBSetup.js"></script>
     <script src="../Js/dataManagement.js"></script>
+    <script src="AsyncSuite.js"></script>
     <!-- Ends Document to Test -->
-    <!-- Begins Test -->
-    <script>	
-		asyncTest( "asynchronous test: localDataStorage.webdb.getAllitemsList",1, function() {
-				localDataStorage.webdb.open("TestDB", "1", "Database Testing");
-				localDataStorage.webdb.createTable("TestTable",testFields);
-				localDataStorage.webdb.getAllitemsList(function() {
-				ok( true, "Get all works!" );
-				start();
-				},"TestTable",function(){
-					ok( false, "Get all items don't works!" );
-					start();
-					});
-		});
-		asyncTest( "asynchronous test: localDataStorage.webdb.getAllitemsList",1, function() {
-				localDataStorage.webdb.open("TestDB", "1", "Database Testing");
-				localDataStorage.webdb.createTable("TestTable",testFields);
-				localDataStorage.webdb.getAllitemsList(function() {
-				ok( false, "Get all items don't works!" );
-				start();
-				},"FakeTable",function(){
-					ok( true, "Get all works!" );
-					start();
-					});
-		});
-	</script>
-    <!-- Ends Test -->
 </head>
 
 <body>
 
 	<div id="qunit"></div>
     <div id="qunit-fixture">
-    	<script>
-        	var testFields = new Array({"Name":"TestField","Type":"TEXT"}
-				  					,{"Name":"added_on","Type":"DATETIME"});
-        </script>
     </div>
     
 </body>
