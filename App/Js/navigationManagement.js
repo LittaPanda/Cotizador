@@ -148,6 +148,8 @@ function onChangePeriod()
 
 $(document).bind( "pagebeforechange", function( e, data ) {
 	var emailreg = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
+	///^(\w+[\-\.])*\w+@(\w+\.)+[A-Za-z]+$/;
+	//^[\\w-\\.]{1,}\\@([\\da-zA-Z-]{1,}\\.){1,}[\\da-zA-Z-]{2,6}$/
 	if ( typeof data.toPage === "string" ) {
 		var u = $.mobile.path.parseUrl( data.toPage ),
 			apphome = /^#AppHome/,
@@ -177,9 +179,8 @@ $(document).bind( "pagebeforechange", function( e, data ) {
 			e.preventDefault();
 		}
 		if ( u.hash.search(reportP) !== -1 ) {
-			//Field Validations
-			validateFullName(firstName, lastName1, lastName2);
-			validateEmail(email);
+			//Field Validations;
+			validatePopup(form_customer);
 			showReport( u, data.options );
 			e.preventDefault();
 		}
