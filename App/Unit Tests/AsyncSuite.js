@@ -1,7 +1,55 @@
+	var testBrandsFields = new Array(
+								{"Name":"brand","Type":"TEXT"},
+				  				{"Name":"added_on","Type":"DATETIME"});
+
+	var testCarsFields = new Array(
+								{"Name":"brand","Type":"TEXT"},
+						  	   	{"Name":"model","Type":"TEXT"},
+							   	{"Name":"color","Type":"TEXT"},
+						  	   	{"Name":"version","Type":"TEXT"},
+						  	   	{"Name":"description","Type":"TEXT"},
+						  	   	{"Name":"price","Type":"TEXT"},
+						  	   	{"Name":"added_on","Type":"DATETIME"});
+									
+	var testCustomersFields = new Array(
+								{"Name":"id","Type":"TEXT"},
+						  	   	{"Name":"firstName","Type":"TEXT"},
+							   	{"Name":"lastName1","Type":"TEXT"},
+						  	   	{"Name":"lastName2","Type":"TEXT"},
+						  	  	{"Name":"address","Type":"TEXT"},
+						  	   	{"Name":"neighborhood","Type":"TEXT"},
+							   	{"Name":"city","Type":"TEXT"},
+						  	   	{"Name":"state","Type":"TEXT"},
+						  	   	{"Name":"country","Type":"TEXT"},
+							   	{"Name":"zipCode","Type":"TEXT"},
+						  	   	{"Name":"phone","Type":"TEXT"},
+						  	   	{"Name":"rfc","Type":"TEXT"},
+						  	   	{"Name":"email","Type":"TEXT"},
+							   	{"Name":"added_on","Type":"DATETIME"});
+
+	var testValuesBrandsFine= new Array();
+	testValuesBrandsFine.push(new Array("Chevrolet",new Date()));	
+
+	var testValuesBrandsBad= new Array();
+	testValuesBrandsBad.push(new Array("Chevrolet","Non Value",new Date()));	
+			
+	var testValuesCarsFine = new Array();
+ 	testValuesCarsFine.push(new Array("Chevrolet","Spark","Azul","Deluxe","Contiene un año                            de seguro mas stereo y 2 pares de ruedas","350000",new Date()));
+
+	var testValuesCarsBad = new Array();
+ 	testValuesCarsBad.push(new Array("Chevrolet","Spark","Azul","Deluxe","Contiene un año                           de seguro mas stereo y 2 pares de ruedas","350000","No Value",
+	                       new Date()));
+						   
+	var tabletoTest= "BrandsTestTable";
+	//var createTable= "CarsTestTable";
+	//var createTable= "CustomersTestTable";
+
+
+
 	asyncTest("asynchronous test: localDataStorage.webdb.createTable--Create table with an invalid 			   name",1,
 	function() {
 		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
-		localDataStorage.webdb.createTable("BrandsTestTable//",testBrandsFields,
+		localDataStorage.webdb.createTable(tabletoTest + "//",testBrandsFields,
 		function() {
 			ok(false,"Create table function works, but it must have failed");
 			start();
@@ -15,7 +63,7 @@
 	asyncTest("asynchronous test: localDataStorage.webdb.createTable--Create table with a valid 			               name",1,
 	function() {
 		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
-		localDataStorage.webdb.createTable("BrandsTestTable",testBrandsFields,
+		localDataStorage.webdb.createTable(tabletoTest,testBrandsFields,
 		function() {
 			ok(true,"Create table function works correctly");
 			start();
@@ -98,19 +146,16 @@
 			start();
 		});
 	});
-
-/**/
 	
 	asyncTest( "asynchronous test: localDataStorage.webdb.getAllitemsList--Get all items for an                 inexisting table",1, 
 	function() {
 		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
-		var tableToGetElements= "BrandsTestTable";
-		localDataStorage.webdb.createTable(tableToGetElements,testBrandsFields);
+		localDataStorage.webdb.createTable(tabletoTest,testBrandsFields);
 		localDataStorage.webdb.getAllitemsList(
 		function() {
 			ok( false, "Get all items list function works correctly, but it must have failed" );
 			start();
-		},tableToGetElements+"Fake",
+		},tabletoTest+"Fake",
 		function(){
 			ok(true, "Get all items list function does not work correctlym and this is correct" );
 			start();
@@ -120,13 +165,12 @@
 	asyncTest( "asynchronous test: localDataStorage.webdb.getAllitemsList--Get all items for an                 existing table",1, 
 	function() {
 		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
-		var tableToGetElements= "BrandsTestTable";
-		localDataStorage.webdb.createTable(tableToGetElements,testBrandsFields);
+		localDataStorage.webdb.createTable(tabletoTest,testBrandsFields);
 		localDataStorage.webdb.getAllitemsList(
 		function() {
 			ok( true, "Get all items list function works correctly" );
 			start();
-		},tableToGetElements,
+		},tabletoTest,
 		function(){
 			ok( false, "Get all items list function does not work correctly" );
 			start();
@@ -415,9 +459,8 @@
 	asyncTest( "asynchronous test: localDataStorage.webdb.deleteList--Delete an element for an inexisting table",1, 
 	function() {
 		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
-		var dataBaseToErase= "BrandsTestTable";
-		localDataStorage.webdb.createTable(dataBaseToErase,testCarsFields);
-		localDataStorage.webdb.deleteList(1,dataBaseToErase + "Fake",
+		localDataStorage.webdb.createTable(tabletoTest,testCarsFields);
+		localDataStorage.webdb.deleteList(1,tabletoTest + "Fake",
 		function() {
 			ok(false, "Delete list function works correctly, but it must have failed" );
 			start();
@@ -431,9 +474,8 @@
 	asyncTest( "asynchronous test: localDataStorage.webdb.deleteList--Delete an element for an existing table without concidences",1, 
 	function() {
 		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
-		var dataBaseToErase= "BrandsTestTable";
-		localDataStorage.webdb.createTable(dataBaseToErase,testCarsFields);
-		localDataStorage.webdb.deleteList(1000,dataBaseToErase,
+		localDataStorage.webdb.createTable(tabletoTest,testCarsFields);
+		localDataStorage.webdb.deleteList(1000,tabletoTest,
 		function() {
 			ok(true,"Delete list function works correctly although it did not delete any record");
 			start();
@@ -447,9 +489,8 @@
 	asyncTest( "asynchronous test: localDataStorage.webdb.deleteList--Delete an element for an existing table with concidences",1, 
 	function() {
 		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
-		var dataBaseToErase= "BrandsTestTable";
-		localDataStorage.webdb.createTable(dataBaseToErase,testCarsFields);
-		localDataStorage.webdb.deleteList(2,dataBaseToErase,
+		localDataStorage.webdb.createTable(tabletoTest,testCarsFields);
+		localDataStorage.webdb.deleteList(2,tabletoTest,
 		function() {
 			ok(true, "Delete list function works correctly, it deleted only one record" );
 			start();
@@ -463,9 +504,8 @@
 	asyncTest( "asynchronous test: localDataStorage.webdb.truncateList--Delete all elements for an inexisting table",1, 
 	function() {
 		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
-		var dataBaseToErase= "BrandsTestTable";
-		localDataStorage.webdb.createTable(dataBaseToErase,testCarsFields);
-		localDataStorage.webdb.truncateList(dataBaseToErase+"Fake",
+		localDataStorage.webdb.createTable(tabletoTest,testCarsFields);
+		localDataStorage.webdb.truncateList(tabletoTest+"Fake",
 		function() {
 			ok(false, "Truncate list function works correctly, but it must have failed" );
 			start();
@@ -480,9 +520,9 @@
 	function() {
 		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
 		var dataBaseToErase= "BrandsTestTable";
-		localDataStorage.webdb.createTable(dataBaseToErase,testCarsFields);
+		localDataStorage.webdb.createTable(tabletoTest,testCarsFields);
 
-		localDataStorage.webdb.truncateList(dataBaseToErase,
+		localDataStorage.webdb.truncateList(tabletoTest,
 		function() {
 			ok(true,"Truncate list function works correctly");
 			start();
@@ -492,11 +532,47 @@
 			start();
 		});
 	});
+/**/
+	asyncTest( "asynchronous test: localDataStorage.webdb.dropTable--Delete an inexisting table",1, 
+	function() {
+		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
+		localDataStorage.webdb.dropTable(tabletoTest + "Fake",
+		function() {
+			ok(false, "Drop table function works correctly, but it must have failed" );
+			start();
+		},
+		function(){
+			ok(true, "Drop table function does not work correctly, and this is correct" );
+			start();
+		});
+	});
+		
+	asyncTest( "asynchronous test: localDataStorage.webdb.dropDataBase--Delete an existing table",1, 
+	function() {
+	//	localDataStorage.webdb.open("TestDB", "1", "Database Testing");
+		//localDataStorage.webdb.open("ETCatalog", "1.0", "Local storage of cars for mobile app");
+	 	//var dropTable = "CustomerList";	
+		//var dropTable = "BrandsList";
+		//var dropTable = "CarList";
+	
+		var dropTable= "BrandsTestTable";
+		//var dropTable="CarsTestTable";
+		//var dropTable="CustomersTestTable";
+		localDataStorage.webdb.dropTable(dropTable,
+		function() {
+			ok(true, "Drop table function works correctly" );
+			start();
+		},
+		function(){
+			ok(false, "Drop table function does not work correctly" );
+			start();
+		});
+	});
 
 /**/
 	asyncTest( "asynchronous test: localDataStorage.webdb.dropDataBase--Delete an inexisting database",1, 
 	function() {
-		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
+		//localDataStorage.webdb.open("TestDB", "1", "Database Testing");
 		localDataStorage.webdb.dropDataBase("TestDBFake",
 		function() {
 			ok(false, "Drop database function works correctly, but it must have failed" );
@@ -508,59 +584,17 @@
 		});
 	});
 		
-	asyncTest( "asynchronous test: localDataStorage.webdb.dropDataBase--Delete an inexisting database",1, 
+	asyncTest( "asynchronous test: localDataStorage.webdb.dropDataBase--Delete an existing database",1, 
 	function() {
 		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
 		localDataStorage.webdb.dropDataBase("TestDB",
 		function() {
-			ok(false, "Drop database function works correctly, but it must have failed" );
+			ok(true, "Drop database function works correctly" );
 			start();
 		},
 		function(){
-			ok(true, "Drop database function does not work correctly, and this is correct" );
+			ok(false, "Drop database function does not work correctly" );
 			start();
 		});
 	});
-
 /**/
-	var testBrandsFields = new Array(
-								{"Name":"brand","Type":"TEXT"},
-				  				{"Name":"added_on","Type":"DATETIME"});
-
-	var testCarsFields = new Array(
-								{"Name":"brand","Type":"TEXT"},
-						  	   	{"Name":"model","Type":"TEXT"},
-							   	{"Name":"color","Type":"TEXT"},
-						  	   	{"Name":"version","Type":"TEXT"},
-						  	   	{"Name":"description","Type":"TEXT"},
-						  	   	{"Name":"price","Type":"TEXT"},
-						  	   	{"Name":"added_on","Type":"DATETIME"});
-									
-	var testCustomerFields = new Array(
-								{"Name":"id","Type":"TEXT"},
-						  	   	{"Name":"firstName","Type":"TEXT"},
-							   	{"Name":"lastName1","Type":"TEXT"},
-						  	   	{"Name":"lastName2","Type":"TEXT"},
-						  	  	{"Name":"address","Type":"TEXT"},
-						  	   	{"Name":"neighborhood","Type":"TEXT"},
-							   	{"Name":"city","Type":"TEXT"},
-						  	   	{"Name":"state","Type":"TEXT"},
-						  	   	{"Name":"country","Type":"TEXT"},
-							   	{"Name":"zipCode","Type":"TEXT"},
-						  	   	{"Name":"phone","Type":"TEXT"},
-						  	   	{"Name":"rfc","Type":"TEXT"},
-						  	   	{"Name":"email","Type":"TEXT"},
-							   	{"Name":"added_on","Type":"DATETIME"});
-
-	var testValuesBrandsFine= new Array();
-	testValuesBrandsFine.push(new Array("Chevrolet",new Date()));	
-
-	var testValuesBrandsBad= new Array();
-	testValuesBrandsBad.push(new Array("Chevrolet","Non Value",new Date()));	
-			
-	var testValuesCarsFine = new Array();
- 	testValuesCarsFine.push(new Array("Chevrolet","Spark","Azul","Deluxe","Contiene un año                            de seguro mas stereo y 2 pares de ruedas","350000",new Date()));
-
-	var testValuesCarsBad = new Array();
- 	testValuesCarsBad.push(new Array("Chevrolet","Spark","Azul","Deluxe","Contiene un año                           de seguro mas stereo y 2 pares de ruedas","350000","No Value",
-	                       new Date()));

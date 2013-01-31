@@ -10,8 +10,7 @@ DataBaseSetup = function () {
 		this.brandFields = new Array({"Name":"brand","Type":"TEXT"}
 				  					,{"Name":"added_on","Type":"DATETIME"});
 		//customers
-		this.customerAllFields = new Array({"Name":"id","Type":"TEXT"}
-						  	   ,{"Name":"firstName","Type":"TEXT"}
+		this.customerAllFields = new Array({"Name":"firstName","Type":"TEXT"}
 							   ,{"Name":"lastName1","Type":"TEXT"}
 						  	   ,{"Name":"lastName2","Type":"TEXT"}
 						  	   ,{"Name":"address","Type":"TEXT"}

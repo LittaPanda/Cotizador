@@ -9,30 +9,50 @@
 //End Global 
 //Begins Database management:: SQL Instructions
   localDataStorage.webdb.open = function(DBName, DBVersion, DBDesc) {
+	  if(!DBName)
+		{
+			return false;
+		}
 	  var dbSize = 5 * 1024 * 1024; // 5MB
 	  localDataStorage.webdb.db = openDatabase(DBName, DBVersion, DBDesc, dbSize);
+	  return true;
   };
 	
-  localDataStorage.webdb.createTable = function(DBTable, TFields) {
+  localDataStorage.webdb.createTable = function(DBTable, TFields,onSuccess,onError) {
 	  var fields = dbSetup.concatenateFields(TFields, true); 
 	  var db = localDataStorage.webdb.db;
 	  db.transaction(function(tx) {
-		tx.executeSql("CREATE TABLE IF NOT EXISTS "+ DBTable +"(ID INTEGER PRIMARY KEY ASC, " + fields + ")", []);
+		tx.executeSql("CREATE TABLE IF NOT EXISTS "+ DBTable +"(ID INTEGER PRIMARY KEY ASC, " + fields + ")", [],onSuccess,onError);
 	  });
   };
   
-  localDataStorage.webdb.addNewItem = function(DBTable, TFields, thisItem) {
+  localDataStorage.webdb.addNewItem = function(DBTable, TFields, thisItem,onSuccess,onError) {
+	  var f=true;
+	  if(!f)
+	  {
+		  	var db = localDataStorage.webdb.db;
+	db.transaction(function(tx) {
+	  tx.executeSql("SELECT * FROM CarsTestTable",[],function(tx,results)
+	  {
+		var len = results.rows.length, i;
+	    for (i = 0; i < len; i++){
+        	alert(results.rows.item(i).brand );
+   		}
+	  },null);
+  	});
+
+	  }
+	  else
+	  {
 	  var fields = dbSetup.concatenateFields(TFields, false); 
 	  var db = localDataStorage.webdb.db;
 	  var totalParameters = dbSetup.setNumberofParameters(thisItem.length);
 	  db.transaction(function(tx){
 			var addedOn = new Date();
 			tx.executeSql("INSERT INTO "+ DBTable +"("+ fields +") VALUES " + totalParameters,
-						  thisItem,
-						  localDataStorage.webdb.onSuccess,
-						  localDataStorage.webdb.onError);
+						  thisItem, onSuccess,onError);
 	 });
-  };
+  }};
 	
   localDataStorage.webdb.onError = function(tx, e) {
 	alert("Ha ocurrido un error: " + e.message);
@@ -49,70 +69,68 @@
 	});
   };
   
-  localDataStorage.webdb.getAllModels = function(renderFunc, DBTable, brand) {
+  localDataStorage.webdb.getAllModels = function(renderFunc, DBTable, brand,onError) {
 	var db = localDataStorage.webdb.db;
 	db.transaction(function(tx) {
-	  tx.executeSql("SELECT DISTINCT model,brand FROM "+ DBTable +" WHERE brand=?", [brand], renderFunc,
-		  localDataStorage.webdb.onError);
+	  tx.executeSql("SELECT DISTINCT model,brand FROM "+ DBTable +" WHERE brand=?", [brand], renderFunc,onError);
 	});
   };
   
-  localDataStorage.webdb.getAllVersions = function(renderFunc, DBTable, brand, model) {
+  localDataStorage.webdb.getAllVersions = function(renderFunc, DBTable, brand, model,onError) {
 	var db = localDataStorage.webdb.db;
 	db.transaction(function(tx) {
-	  tx.executeSql("SELECT DISTINCT version FROM "+ DBTable +" WHERE brand=? AND model=?", [brand, model], renderFunc,
-		  localDataStorage.webdb.onError);
+	  tx.executeSql("SELECT DISTINCT version FROM "+ DBTable +" WHERE brand=? AND model=?", [brand, model], renderFunc,onError);
 	});
   };
   
-  localDataStorage.webdb.getAllColors = function(renderFunc, DBTable, brand, model, version) {
+  localDataStorage.webdb.getAllColors = function(renderFunc, DBTable, brand, model, version,onError) {
 	var db = localDataStorage.webdb.db;
 	db.transaction(function(tx) {
-	  tx.executeSql("SELECT DISTINCT color FROM "+ DBTable +" WHERE brand=? AND model=? AND version=?", [brand, model, version], renderFunc,
-		  localDataStorage.webdb.onError);
+	  tx.executeSql("SELECT DISTINCT color FROM "+ DBTable +" WHERE brand=? AND model=? AND version=?", [brand, model, version], renderFunc,onError);
 	});
   };
   
-  localDataStorage.webdb.getCar = function(renderFunc, DBTable, brand, model, version, color) {
+  localDataStorage.webdb.getCar = function(renderFunc, DBTable, brand, model, version, color,onError) {
 	var db = localDataStorage.webdb.db;
 	db.transaction(function(tx) {
-	  tx.executeSql("SELECT * FROM "+ DBTable +" WHERE brand=? AND model=? AND version=? AND color=?", [brand, model, version, color], renderFunc,
-		  localDataStorage.webdb.onError);
+	  tx.executeSql("SELECT * FROM "+ DBTable +" WHERE brand=? AND model=? AND version=? AND color=?", [brand, model, version, color], renderFunc,onError);
 	});
   };
   
-  localDataStorage.webdb.getCarWithoutColor = function(renderFunc, DBTable, brand, model, version) {
+  localDataStorage.webdb.getCarWithoutColor = function(renderFunc, DBTable, brand, model, version,onError) {
 	var db = localDataStorage.webdb.db;
 	db.transaction(function(tx) {
-	  tx.executeSql("SELECT * FROM "+ DBTable +" WHERE brand=? AND model=? AND version=? LIMIT 1", [brand, model, version], renderFunc,
-		  localDataStorage.webdb.onError);
+	  tx.executeSql("SELECT * FROM "+ DBTable +" WHERE brand=? AND model=? AND version=? LIMIT 1", [brand, model, version], renderFunc,onError);
 	});
   };
 	  
-  localDataStorage.webdb.deleteList = function(id, DBTable) {
+  localDataStorage.webdb.deleteList = function(id, DBTable,onSuccess,onError) {
 	var db = localDataStorage.webdb.db;
 	db.transaction(function(tx){
 	  tx.executeSql("DELETE FROM "+ DBTable +" WHERE ID=?", [id],
-		  localDataStorage.webdb.onSuccess,
-		  localDataStorage.webdb.onError);
+		  onSuccess,onError);
 	  });
   };
   
-  localDataStorage.webdb.truncateList = function(DBTable) {
+  localDataStorage.webdb.truncateList = function(DBTable,onSuccess,onError) {
 	var db = localDataStorage.webdb.db;
 	db.transaction(function(tx){
 	  tx.executeSql("DELETE FROM "+ DBTable, [],
-		  localDataStorage.webdb.onSuccess,
-		  localDataStorage.webdb.onError);
+		  onSuccess,onError);
 	  });
   };
   
-  localDataStorage.webdb.dropDataBase = function(DBName) {
+  localDataStorage.webdb.dropTable = function(DBTable,onSuccess,onError) {
+  	var db=localDataStorage.webdb.db;
+  	db.transaction(function(tx) {
+		tx.executeSql("DROP TABLE " + DBTable,[],onSuccess,onError);
+	});
+  };
+  
+  localDataStorage.webdb.dropDataBase = function(DBName,onSuccess,onError) {
 	var db = localDataStorage.webdb.db;
 	db.transaction(function(tx){
-	  tx.executeSql("DROP DATABASE "+ DBName, [],
-		  localDataStorage.webdb.onSuccess,
-		  localDataStorage.webdb.onError);
+	  tx.executeSql("DROP DATABASE "+ DBName, [],onSuccess,onError);
 	  });
   };
 //Ends Database management:: SQL Instructions
@@ -285,14 +303,14 @@
 //Begins Event Shooter:: Initialization
   function init() {
 	localDataStorage.webdb.open(dbSetup.Name, dbSetup.Version, dbSetup.Vesc);
-	localDataStorage.webdb.createTable(dbSetup.carsTableName, dbSetup.allFields);
-	localDataStorage.webdb.createTable(dbSetup.brandsTableName, dbSetup.brandFields);
+	localDataStorage.webdb.createTable(dbSetup.carsTableName, dbSetup.allFields,localDataStorage. webdb.onSuccess,localDataStorage.webdb.onError);
+	localDataStorage.webdb.createTable(dbSetup.brandsTableName, dbSetup.brandFields,localDataStorage.webdb.onSuccess,localDataStorage.webdb.onError);
 	//localDataStorage.webdb.truncateList(dbSetup.carsTableName);
 	//localDataStorage.webdb.truncateList(dbSetup.brandsTableName);
 	localDataStorage.webdb.getAllitemsList(storeNewCars,dbSetup.carsTableName,localDataStorage.webdb.onError);
 	localDataStorage.webdb.getAllitemsList(storeNewBrands,dbSetup.brandsTableName,localDataStorage.webdb.onError);
 	//customers
-	localDataStorage.webdb.createTable(dbSetup.customersTableName, dbSetup.customerAllFields);
+	localDataStorage.webdb.createTable(dbSetup.customersTableName, dbSetup.customerAllFields,localDataStorage.webdb.onSuccess,localDataStorage.webdb.onError);
   }
 //Ends Event Shooter:: Initialization
 //Begins Event Shooter:: Loading
@@ -304,29 +322,29 @@
   
   function loadModels(brand){
 	handledTypeList = "Models";
-	localDataStorage.webdb.getAllModels(loadAllModels,dbSetup.carsTableName,brand);
+	localDataStorage.webdb.getAllModels(loadAllModels,dbSetup.carsTableName,brand,localDataStorage.webdb.onError);
   }
   
   function loadDetail(brand, model, defaultVersion, defaultColor){
 	handledTypeList = "Detail";
-	localDataStorage.webdb.getAllVersions(loadVersions, dbSetup.carsTableName, brand , model);
-	localDataStorage.webdb.getAllColors(loadColors, dbSetup.carsTableName, brand, model, defaultVersion);
-	localDataStorage.webdb.getCar(loadCarDetail, dbSetup.carsTableName, brand, model, defaultVersion, defaultColor);	
+	localDataStorage.webdb.getAllVersions(loadVersions, dbSetup.carsTableName, brand , model,localDataStorage.webdb.onError);
+	localDataStorage.webdb.getAllColors(loadColors, dbSetup.carsTableName, brand, model, defaultVersion,localDataStorage.webdb.onError);
+	localDataStorage.webdb.getCar(loadCarDetail, dbSetup.carsTableName, brand, model, defaultVersion, defaultColor,localDataStorage.webdb.onError);	
   }
 //Ends Event Shooter:: Loading
 //Begins Event Shooter:: Change  
   function changeDetailbyVersion(brand, model, version){
 	handledTypeList = "Detail";
-	localDataStorage.webdb.getAllVersions(loadVersions, dbSetup.carsTableName, brand , model);
-	localDataStorage.webdb.getAllColors(loadColors, dbSetup.carsTableName, brand, model, version);
-	localDataStorage.webdb.getCarWithoutColor(loadCarDetail, dbSetup.carsTableName, brand, model, version);	
+	localDataStorage.webdb.getAllVersions(loadVersions, dbSetup.carsTableName, brand , model,localDataStorage.webdb.onError);
+	localDataStorage.webdb.getAllColors(loadColors, dbSetup.carsTableName, brand, model, version,localDataStorage.webdb.onError);
+	localDataStorage.webdb.getCarWithoutColor(loadCarDetail, dbSetup.carsTableName, brand, model, version,localDataStorage.webdb.onError);	
   }
   
   function changeDetailbyColor(brand, model, color, version){
 	handledTypeList = "Detail";
-	localDataStorage.webdb.getAllVersions(loadVersions, dbSetup.carsTableName, brand , model);
-	localDataStorage.webdb.getAllColors(loadColors, dbSetup.carsTableName, brand, model, version);
-	localDataStorage.webdb.getCar(loadCarDetail, dbSetup.carsTableName, brand, model, version, color);	
+	localDataStorage.webdb.getAllVersions(loadVersions, dbSetup.carsTableName, brand , model,localDataStorage.webdb.onError);
+	localDataStorage.webdb.getAllColors(loadColors, dbSetup.carsTableName, brand, model, version,localDataStorage.webdb.onError);
+	localDataStorage.webdb.getCar(loadCarDetail, dbSetup.carsTableName, brand, model, version, color,localDataStorage.webdb.onError);	
   }
 //Ends Event Shooter:: Change
 //Begins Data Aggregation
@@ -356,7 +374,7 @@
 				}
 			}
 			if(!thisCar.dup){
-				localDataStorage.webdb.addNewItem(DBTable, TFields, carToAdd);
+				localDataStorage.webdb.addNewItem(DBTable, TFields, carToAdd,localDataStorage.webdb.onSuccess,localDataStorage.webdb.onError);
 			}
 	}
   }
@@ -388,7 +406,7 @@
 	if(itemsToAdd.length != 0){
 		for(newItem in itemsToAdd){
 			var thisNew = itemsToAdd[newItem];
-			localDataStorage.webdb.addNewItem(DBTable, TFields, thisNew);
+			localDataStorage.webdb.addNewItem(DBTable, TFields, thisNew,localDataStorage.webdb.onSuccess,localDataStorage.webdb.onError);
 		}
 	}
   }
