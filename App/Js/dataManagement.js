@@ -266,10 +266,10 @@
 		$('#PopupContainer').find('[type="reset"]').button();
   }
   
-  function renderReport(customerData,carData){
+  function renderReport(customerData,carData,data){
 	  	var src = $('#Report-template').html();
-		var template = Handlebars.compile(src);	
-		var data = {Residue:carData.SelectedPrice,Months:18,AnualRate:8.5,payPeriod:1};
+		var template = Handlebars.compile(src);		
+		carData.SelectedPrice = toCurrency(carData.SelectedPrice);
 		var amortizationData = quotation(data);
 		var renderData = {"CustomerData":customerData,"AmortizedTable":amortizationData,"CarData":carData};	
 		var html = template(renderData);		
@@ -279,7 +279,7 @@
 		$('#ReportContainer').find( "select" ).selectmenu();
 		$('#ReportContainer').find('input').textinput();
 		$('#ReportContainer').find( ":jqmData(role=button)" ).button();
-		$('#ReportContainer').find('[type="reset"]').button();
+		$('#ReportContainer').find(":jqmData(type=range)").slider();
   }
 //Ends Data Handling:: Renders
 //Begins Event Shooter:: Initialization
@@ -394,31 +394,17 @@
   }
 //Ends Data Aggregation
 
-// PDF Report creation
-/*function CreatePDFTest(){
-var pdf = new jsPDF('p','in','letter'), source = $('html')[0], specialElementHandlers = {'title': function(element, renderer){return true}}
-pdf.fromHTML(
- source // HTML string or DOM elem ref.
- , 0.0 // x coord
- , 0.0 // y coord
- , {
-    'width':7.5 // max width of content on PDF
-  , 'elementHandlers': specialElementHandlers
- }
-)
-pdf.output('datauri');
-}*/
-
+// Begins PDF Report creation
 //PDF generator
 function CreatePDF(){
 		var doc = new jsPDF('landscape');
 		doc.setFontSize(16);
 		var positionX = 5;
-		var positionY = 40;
-		var rectW = 37;
+		var positionY = 35;
+		var rectW = 47;
 		var rectH = 7;
-		doc.rect(5, 10, 222, 35);
-		doc.text(10, 15, 'Cotizacion');
+		doc.rect(5, 10, 282, 25);
+		doc.text(10, 15, 'Cotización');
 		doc.setFontSize(11);
 		var firstBlock = "";
 		$('.firstBlock').each(function () {			
@@ -432,11 +418,20 @@ function CreatePDF(){
 		doc.text(10, 25, secondBlock);
 		var thirdBlock = "";
 		$('.thirdBlock').each(function () {
-			thirdBlock += this.innerHTML + "  ";							 
+			var valueUnForm = this.innerHTML;
+			var valueDisp = "";
+			if(this.attributes.name.nodeValue == "price"){
+				var cur = valueUnForm.replace("Precio: ", "");
+				valueDisp += "Precio: $";
+				valueDisp += toCurrency(cur);
+			}else{
+				valueDisp += valueUnForm;
+				}
+			thirdBlock += valueDisp + "  ";							 
 		});	
 		doc.text(10, 30, thirdBlock);	
 		
-		$('#GeneratedHeaderContainer h4').each(function () {
+		$('#GeneratedHeaderContainer h5').each(function () {
 			var header = "";
 			header += this.innerHTML;
 			doc.setDrawColor(0);
@@ -445,18 +440,45 @@ function CreatePDF(){
 			doc.text(positionX + 2, positionY + 5, header);
 			positionX = positionX + rectW;							 
 		});
-		
+		var counter = 0;
 		$('#GeneratedDataContainer .rowCont').each(function () {
+			if(counter == 22){
+				doc.addPage();
+				positionY = 5;
+			}
 			positionX = 5;
 			positionY = positionY + rectH;
-			$(this).children().children().children("p").each(function () {					
-					var content = "";
-					content += this.innerHTML;
-					doc.rect(positionX, positionY, rectW, rectH);
-					doc.text(positionX + 2, positionY + 5, content);
-					positionX = positionX + rectW;	
-
-			});						 
+			$(this).children().children().children("p").each(function () {							
+						var content = "";
+						var valueDisp = "";
+						content += this.innerHTML;
+						if(this.className != "payment"){
+							valueDisp += "$";
+							valueDisp += toCurrency(content);
+						}else{
+							valueDisp += content;
+						}
+						doc.rect(positionX, positionY, rectW, rectH);
+						doc.text(positionX + 2, positionY + 5, valueDisp);
+						positionX = positionX + rectW;
+			});
+			counter++;					 
 		});
 		doc.output('save');
 }
+// Currency formater
+function toCurrency(cnt){
+    cnt = cnt.toString().replace(/\$|\,/g,'');
+    if (isNaN(cnt))
+        return 0;    
+    var sgn = (cnt == (cnt = Math.abs(cnt)));
+    cnt = Math.floor(cnt * 100 + 0.5);
+    cvs = cnt % 100;
+    cnt = Math.floor(cnt / 100).toString();
+    if (cvs < 10)
+    cvs = '0' + cvs;
+    for (var i = 0; i < Math.floor((cnt.length - (1 + i)) / 3); i++)
+        cnt = cnt.substring(0, cnt.length - (4 * i + 3)) + ',' + cnt.substring(cnt.length - (4 * i + 3));
+    return (((sgn) ? '' : '-') + cnt + '.' + cvs);
+}
+// Ends PDF Report creation
