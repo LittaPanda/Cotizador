@@ -302,13 +302,13 @@
 						<div class="ui-block-a" style="text-align:center;">
 							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br" >
 								<label for="slider" class="ui-input-text ui-slider" id="slider-label">Mensualidades:</label>
-								<input id="PeriodPay" type="number" data-type="range" name="slider" id="slider" value="{{CustomerData.period}}" min="6" max="48" step="6" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset ui-slider-input"/>								
+								<input onchange="javascript:onChangePeriod();" id="PeriodPay" type="number" data-type="range" name="slider" id="slider" value="{{CustomerData.period}}" min="6" max="48" step="6" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset ui-slider-input"/>								
 							</div>
 						</div>
 						<div class="ui-block-b" >
-							<div class="ui-block-a" id="RecalculateButtonContainer" style="text-align:center;">
-								<a data-theme="a" id="RecalculateButton" onclick="javascript:onChangePeriod();" data-role="button" data-inline="false">Recalcular</a>
-							</div>
+<!--							<div class="ui-block-a" id="RecalculateButtonContainer" style="text-align:center;">
+								<a data-theme="a" id="RecalculateButton"  data-role="button" data-inline="false" onclick="javascript:onChangePeriod();">Recalcular</a>
+							</div>-->
 							<div class="ui-block-a" id="ReportButtonContainer" style="text-align:center;">
 								<a data-theme="a" onclick="javascript:CreatePDF();" data-role="button" data-inline="false">Generar reporte</a>
 							</div>
