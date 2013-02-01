@@ -27,23 +27,7 @@
   };
   
   localDataStorage.webdb.addNewItem = function(DBTable, TFields, thisItem,onSuccess,onError) {
-	 /* var f=true;
-	  if(!f)
-	  {
-		  	var db = localDataStorage.webdb.db;
-	db.transaction(function(tx) {
-	  tx.executeSql("SELECT * FROM CarList",[],function(tx,results)
-	  {
-		var len = results.rows.length, i;
-	    for (i = 0; i < len; i++){
-        	alert(results.rows.item(i).price );
-   		}
-	  },null);
-  	});
-
-	  }
-	  else
-	  {*/
+	  
 	  var fields = dbSetup.concatenateFields(TFields, false); 
 	  var db = localDataStorage.webdb.db;
 	  var totalParameters = dbSetup.setNumberofParameters(thisItem.length);
@@ -60,7 +44,6 @@
   };
   
   localDataStorage.webdb.onSuccess = function(tx, r) {
-	//localDataStorage.webdb.getAllitemsList();
   };	
 	
   localDataStorage.webdb.getAllitemsList = function(renderFunc, DBTable, errorCallback) {
@@ -267,7 +250,6 @@
 			newCar.isolate.Version = thatItem.version;
 			newCar.isolate.Description = thatItem.description;
 			newCar.isolate.Price = thatItem.price;
-//			newCar.isolate.added_on = dateToCompare;
 			allItems.push(newCar);		 
 	}	
 	addCars(dbSetup.carsTableName, dbSetup.allFields, allItems, dateToCompare);		
@@ -337,8 +319,6 @@
 	localDataStorage.webdb.open(dbSetup.Name, dbSetup.Version, dbSetup.Vesc);
 	localDataStorage.webdb.createTable(dbSetup.carsTableName, dbSetup.allFields,localDataStorage. webdb.onSuccess,localDataStorage.webdb.onError);
 	localDataStorage.webdb.createTable(dbSetup.brandsTableName, dbSetup.brandFields,localDataStorage.webdb.onSuccess,localDataStorage.webdb.onError);
-	//localDataStorage.webdb.truncateList(dbSetup.carsTableName);
-	//localDataStorage.webdb.truncateList(dbSetup.brandsTableName);
 	localDataStorage.webdb.getAllitemsList(storeNewCars,dbSetup.carsTableName,localDataStorage.webdb.onError);
 	localDataStorage.webdb.getAllitemsList(storeNewBrands,dbSetup.brandsTableName,localDataStorage.webdb.onError);
 	//customers
@@ -383,7 +363,6 @@
   
   function addCars(DBTable, TFields, allItemsList, dateToCompare) {	
 	var itemsToAdd = new Array;		
-/**/
 	for(var car in allItemsList){
 			var src = allItemsList[car];
 			var thisCar = new Car();
@@ -394,7 +373,6 @@
 			thisCar.isolate.Version = src.isolate.Version;
 			thisCar.isolate.Description = src.isolate.Description;
 			thisCar.isolate.Price = src.isolate.Price;
-//			thisCar.isolate.added_on = dateToCompare;
 			if(allItemsList.length != 0){
 				for(var itemIn in carsCatalog){
 					if(!thisCar.dup || !newCar.dup){
@@ -411,19 +389,16 @@
 			}	
 	}
 
-/**/
-
 	for(var car in carsCatalog){
 			var src = carsCatalog[car];
 			var thisCar = new Car();
 			var carToAdd = new Array(src.Brand,src.Model,src.Color,src.Version,src.Description,src.Price,new Date());
-			thisCar.isolate.brand = src.Brand;
-			thisCar.isolate.model = src.Model;
-			thisCar.isolate.color = src.Color;
-			thisCar.isolate.version = src.Version;
-			thisCar.isolate.description = src.Description;
-			thisCar.isolate.price = src.Price;
-	//		thisCar.isolate.added_on = dateToCompare;
+			thisCar.isolate.Brand = src.Brand;
+			thisCar.isolate.Model = src.Model;
+			thisCar.isolate.Color = src.Color;
+			thisCar.isolate.Version = src.Version;
+			thisCar.isolate.Description = src.Description;
+			thisCar.isolate.Price = src.Price;
 			if(allItemsList.length != 0){
 				for(var itemIn in allItemsList){
 					if(!thisCar.dup || !newCar.dup){
@@ -473,7 +448,7 @@
 			itemsToAdd.push(thisBrand);		
 		}
 	}
-	/**/
+	
 	for(var brand in allBrandsList){
 		isDup = false;
 		var src = allBrandsList[brand];

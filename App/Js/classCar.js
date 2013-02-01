@@ -34,12 +34,5 @@ Car.prototype.isDup = function (itemToCompare){
 		if(this.isolate.Version != itemToCompare.Version){
 			return;
 		}
-		/*if(this.isolate.description != itemToCompare.description){
-			return;
-		}
-		if(this.isolate.price != itemToCompare.price){
-			return;
-		}
-		*/
 		this.dup = true;
 	};
