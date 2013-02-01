@@ -182,9 +182,16 @@ $(document).bind( "pagebeforechange", function( e, data ) {
 		}
 		if ( u.hash.search(reportP) !== -1 ) {
 			//Field Validations;
-			validatePopup(form_customer);
+			var Errors = validatePopup(form_customer);
+			if(!Errors)
+			{
+				return false;
+			}
+			else
+			{
 			showReport( u, data.options );
 			e.preventDefault();
+			}
 		}
 	}
 });

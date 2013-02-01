@@ -225,27 +225,26 @@
                         <form id="form_customer">
 							<fieldset>
 							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
-                          		
-									<input type="text" name="firstName" id="firstName" placeholder="Nombre" style="width:100%"/>
+									<input type="text" name="firstName" id="firstName" onfocus="javascript:onFocusInput(id);" placeholder="Nombre" style="width:100%"/>
+							</div>
+					 		<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
+									<input type="text" name="lastName1" id="lastName1" onfocus="javascript:onFocusInput(id);" placeholder="Apellido paterno" style="width:100%"/>
 							</div>
 							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
-									<input type="text" name="lastName1" id="lastName1" placeholder="Apellido paterno" style="width:100%"/>
+									<input type="text" name="lastName2" id="lastName2" onfocus="javascript:onFocusInput(id);" placeholder="Apellido materno" style="width:100%"/>
 							</div>
 							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
-									<input type="text" name="lastName2" id="lastName2" placeholder="Apellido materno" style="width:100%"/>
-							</div>
-							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
-									<input type="text" name="rfc" id="rfc" placeholder="RFC" style="width:100%"/>
+									<input type="text" name="rfc" id="rfc" placeholder="RFC" onfocus="javascript:onFocusInput(id);" style="width:100%"/>
 							</div>
 							<h4>Dirección</h4>
 							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">							
-									<input type="text" name="address" id="address" placeholder="Calle" style="width:100%"/>
+									<input type="text" name="address" id="address" placeholder="Calle" onfocus="javascript:onFocusInput(id);" style="width:100%"/>
 							</div>
 							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
-									<input type="text" name="neighborhood" id="neighborhood" placeholder="Colonia" style="width:100%"/>
+									<input type="text" name="neighborhood" id="neighborhood" onfocus="javascript:onFocusInput(id);" placeholder="Colonia" style="width:100%"/>
 							</div>
 							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
-									<input type="text" name="city" id="city" placeholder="Ciudad" style="width:100%"/>
+									<input type="text" name="city" id="city" placeholder="Ciudad" onfocus="javascript:onFocusInput(id);" style="width:100%"/>
 							</div>
 							<div data-role="fieldcontain" style="width:100%">
 									<select id="StateSelector" name="stateSelector" style="width:100%">
@@ -256,16 +255,16 @@
 									</select>
 							</div>
 							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
-									<input type="text" name="country" id="country" placeholder="País" style="width:100%"/>
+									<input type="text" name="country" id="country" placeholder="País" onfocus="javascript:onFocusInput(id);" style="width:100%"/>
 							</div>
 							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
-									<input type="text" name="zipCode" id="zipCode" placeholder="Código Postal" style="width:100%"/>
+									<input type="text" name="zipCode" id="zipCode" placeholder="Código Postal" onfocus="javascript:onFocusInput(id);" style="width:100%"/>
 							</div>
 							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
-									<input type="text" name="phone" id="phone" placeholder="Teléfono" style="width:100%"/>
+									<input type="text" name="phone" id="phone" placeholder="Teléfono" onfocus="javascript:onFocusInput(id);" style="width:100%"/>
 							</div>
 							<div data-role="fieldcontain" class="ui-field-contain ui-body ui-br">
-									<input type="text" name="email" id="email" placeholder="Correo electrónico" style="width:100%"/>		
+									<input type="text" name="email" id="email" placeholder="Correo electrónico" onfocus="javascript:onFocusInput(id);" style="width:100%"/>		
 							</div>
 							</fieldset>
 							<div style="text-align:center">

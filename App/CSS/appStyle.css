@@ -87,24 +87,19 @@
 }
 
 .error{
-    background-color: #BC1010;
-    padding: 6px 12px;
-    border-radius: 4px;
-    color: white;
-    font-weight: bold;
-    margin-left: 16px;
-    margin-top: 6px;
-    position: absolute;
-	z-index:10;
-}
-.error:before{ /* Este es un truco para crear una flechita */
-    content: '';
-    border-top: 8px solid transparent;
-    border-bottom: 8px solid transparent;
-    border-right: 8px solid #BC1010;
-    border-left: 8px solid transparent;
-    left: -16px;
-    position: absolute;
-    top: 5px;
+
+ 	background-color: #f78185;
+	background-size: auto;
+	border-right-width: 1px;
+    padding-bottom: 6.390625px;
+	padding-left: 6.390625px;
+	padding-right: 6.390625px;
+	padding-top: 6.390625px;
+    border-radius: 9.59375px;
+    color: black;
+    font-weight: normal;
+	margin-right: 4px;
+	width: 40px;
+    position: relative;
 	z-index:10;
 }
