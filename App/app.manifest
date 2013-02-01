@@ -1,19 +1,39 @@
 CACHE MANIFEST
 # Cotizador
 # Primera version::21/01/2013
+# Segunda version::01/02/2013
 
 # Archivos que se guardarán para trabajar Off-Line.
 CACHE:
 index.html
-JS/Data.js
-JS/dataManagement.js
-JS/classCar.js
-JS/classDBSetup.js
-JS/main.js
-JS/plugins.js
-JS/Vendors/jquery.js
-JS/Vendors/jquery.mobile-1.2.0.min.js
-JS/Vendors/modernizr.js
+CSS/Vendors/normalize.css
+CSS/Vendors/main.css
+CSS/Vendors/jquery.mobile.structure-1.2.0.min.css
+CSS/Vendors/jquery.mobile.theme-1.2.0.min.css
+CSS/Vendors/jquery.mobile-1.2.0.min.css
+CSS/appStyle.css
+Js/Vendors/modernizr.js
+Js/Vendors/jquery.js
+Js/Vendors/jquery.mobile-1.2.0.min.js
+Js/Vendors/jspdf.js
+Js/Vendors/jspdf.plugin.from_html.js
+Js/Vendors/jspdf.plugin.split_text_to_size.js
+Js/Vendors/jspdf.plugin.standard_fonts_metrics.js
+Js/Vendors/jspdf.plugin.addimage.js
+Js/Vendors/jspdf.plugin.ie_below_9_shim.js
+Js/Vendors/jspdf.plugin.sillysvgrenderer.js
+Js/Vendors/jspdf.PLUGINTEMPLATE.js
+Js/ValidationHelper.js
+Js/Vendors/handlebars.js 
+Js/quotationHelper.js  
+Js/plugins.js
+Js/main.js
+Js/Data.js
+Js/classDBSetup.js
+Js/classCar.js
+Js/dataManagement.js   
+Js/navigationManagement.js    
+
 
 # Archivos que requieren estar On-Line para funcionar.
 NETWORK:
