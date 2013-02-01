@@ -43,13 +43,17 @@
 	var tabletoTest= "BrandsTestTable";
 	//var createTable= "CarsTestTable";
 	//var createTable= "CustomersTestTable";
+	
+	var fieldsToTest = testBrandsFields;
+	//var fieldsToTest = testCarsFields;
+	//var fieldsToTest = testCustomersFields;
 
 
 
 	asyncTest("asynchronous test: localDataStorage.webdb.createTable--Create table with an invalid 			   name",1,
 	function() {
 		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
-		localDataStorage.webdb.createTable(tabletoTest + "//",testBrandsFields,
+		localDataStorage.webdb.createTable(tabletoTest + "//",fieldsToTest,
 		function() {
 			ok(false,"Create table function works, but it must have failed");
 			start();
@@ -63,7 +67,7 @@
 	asyncTest("asynchronous test: localDataStorage.webdb.createTable--Create table with a valid 			               name",1,
 	function() {
 		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
-		localDataStorage.webdb.createTable(tabletoTest,testBrandsFields,
+		localDataStorage.webdb.createTable(tabletoTest,fieldsToTest,
 		function() {
 			ok(true,"Create table function works correctly");
 			start();
@@ -150,14 +154,14 @@
 	asyncTest( "asynchronous test: localDataStorage.webdb.getAllitemsList--Get all items for an                 inexisting table",1, 
 	function() {
 		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
-		localDataStorage.webdb.createTable(tabletoTest,testBrandsFields);
+		localDataStorage.webdb.createTable(tabletoTest,fieldsToTest);
 		localDataStorage.webdb.getAllitemsList(
 		function() {
 			ok( false, "Get all items list function works correctly, but it must have failed" );
 			start();
 		},tabletoTest+"Fake",
 		function(){
-			ok(true, "Get all items list function does not work correctlym and this is correct" );
+			ok(true, "Get all items list function does not work correctly and this is correct" );
 			start();
 		});
 	});	
@@ -165,7 +169,7 @@
 	asyncTest( "asynchronous test: localDataStorage.webdb.getAllitemsList--Get all items for an                 existing table",1, 
 	function() {
 		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
-		localDataStorage.webdb.createTable(tabletoTest,testBrandsFields);
+		localDataStorage.webdb.createTable(tabletoTest,fieldsToTest);
 		localDataStorage.webdb.getAllitemsList(
 		function() {
 			ok( true, "Get all items list function works correctly" );
@@ -176,7 +180,54 @@
 			start();
 		});
 	});
-		
+
+	asyncTest( "asynchronous test: localDataStorage.webdb.getAllBrandsList--Get all brands for an                 inexisting table",1, 
+	function() {
+		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
+		localDataStorage.webdb.createTable("BrandsTestTable",testBrandsFields);
+		localDataStorage.webdb.getAllBrandsList("BrandsTestTableFake","Chevrolet",
+		function() {
+			ok( false, "Get all brands function works correctly, but it must have failed" );
+			start();
+		},
+		function(){
+			ok(true,"Get all brands list function does not work correctly and this is correct" );
+			start();
+		});
+	});	
+	
+	asyncTest( "asynchronous test: localDataStorage.webdb.getAllitemsList--Get all brands for an                 existing table",1, 
+	function() {
+		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
+		localDataStorage.webdb.createTable("BrandsTestTable",testBrandsFields);
+		localDataStorage.webdb.getAllBrandsList("BrandsTestTable","Chevrolet",
+		function() {
+			ok(true, "Get all brands list function works correctly" );
+			start();
+		},
+		function(){
+			ok(false,"Get all items list function does not work correctly" );
+			start();
+		});
+	});	
+
+/***/		
+	asyncTest( "asynchronous test: localDataStorage.webdb.updateCarData--Update car data for an inexisting table",1, 
+	function() {
+		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
+		localDataStorage.webdb.createTable("CarsTestTable",testCarsFields);
+		localDataStorage.webdb.getAllModels(
+		function() {
+			ok(false, "Get all models function works correctly, but it must have failed" );
+			start();
+		},"CarsTestTableFake","Chevrolet",
+		function(){
+			ok(true, "Get all models function does not work correctly, and this is correct" );
+			start();
+		});
+	});
+
+/**/
 	asyncTest( "asynchronous test: localDataStorage.webdb.getAllModels--Get all models for an                inexisting table",1, 
 	function() {
 		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
@@ -459,7 +510,7 @@
 	asyncTest( "asynchronous test: localDataStorage.webdb.deleteList--Delete an element for an inexisting table",1, 
 	function() {
 		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
-		localDataStorage.webdb.createTable(tabletoTest,testCarsFields);
+		localDataStorage.webdb.createTable(tabletoTest,fieldsToTest);
 		localDataStorage.webdb.deleteList(1,tabletoTest + "Fake",
 		function() {
 			ok(false, "Delete list function works correctly, but it must have failed" );
@@ -474,7 +525,7 @@
 	asyncTest( "asynchronous test: localDataStorage.webdb.deleteList--Delete an element for an existing table without concidences",1, 
 	function() {
 		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
-		localDataStorage.webdb.createTable(tabletoTest,testCarsFields);
+		localDataStorage.webdb.createTable(tabletoTest,fieldsToTest);
 		localDataStorage.webdb.deleteList(1000,tabletoTest,
 		function() {
 			ok(true,"Delete list function works correctly although it did not delete any record");
@@ -489,7 +540,7 @@
 	asyncTest( "asynchronous test: localDataStorage.webdb.deleteList--Delete an element for an existing table with concidences",1, 
 	function() {
 		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
-		localDataStorage.webdb.createTable(tabletoTest,testCarsFields);
+		localDataStorage.webdb.createTable(tabletoTest,fieldsToTest);
 		localDataStorage.webdb.deleteList(2,tabletoTest,
 		function() {
 			ok(true, "Delete list function works correctly, it deleted only one record" );
@@ -504,7 +555,7 @@
 	asyncTest( "asynchronous test: localDataStorage.webdb.truncateList--Delete all elements for an inexisting table",1, 
 	function() {
 		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
-		localDataStorage.webdb.createTable(tabletoTest,testCarsFields);
+		localDataStorage.webdb.createTable(tabletoTest,fieldsToTest);
 		localDataStorage.webdb.truncateList(tabletoTest+"Fake",
 		function() {
 			ok(false, "Truncate list function works correctly, but it must have failed" );
@@ -520,7 +571,7 @@
 	function() {
 		localDataStorage.webdb.open("TestDB", "1", "Database Testing");
 		var dataBaseToErase= "BrandsTestTable";
-		localDataStorage.webdb.createTable(tabletoTest,testCarsFields);
+		localDataStorage.webdb.createTable(tabletoTest,fieldsToTest);
 
 		localDataStorage.webdb.truncateList(tabletoTest,
 		function() {

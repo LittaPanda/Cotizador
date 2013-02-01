@@ -27,23 +27,23 @@
   };
   
   localDataStorage.webdb.addNewItem = function(DBTable, TFields, thisItem,onSuccess,onError) {
-	  var f=true;
+	 /* var f=true;
 	  if(!f)
 	  {
 		  	var db = localDataStorage.webdb.db;
 	db.transaction(function(tx) {
-	  tx.executeSql("SELECT * FROM CarsTestTable",[],function(tx,results)
+	  tx.executeSql("SELECT * FROM CarList",[],function(tx,results)
 	  {
 		var len = results.rows.length, i;
 	    for (i = 0; i < len; i++){
-        	alert(results.rows.item(i).brand );
+        	alert(results.rows.item(i).price );
    		}
 	  },null);
   	});
 
 	  }
 	  else
-	  {
+	  {*/
 	  var fields = dbSetup.concatenateFields(TFields, false); 
 	  var db = localDataStorage.webdb.db;
 	  var totalParameters = dbSetup.setNumberofParameters(thisItem.length);
@@ -52,7 +52,8 @@
 			tx.executeSql("INSERT INTO "+ DBTable +"("+ fields +") VALUES " + totalParameters,
 						  thisItem, onSuccess,onError);
 	 });
-  }};
+  //}
+  };
 	
   localDataStorage.webdb.onError = function(tx, e) {
 	alert("Ha ocurrido un error: " + e.message);
@@ -108,6 +109,17 @@
 	  tx.executeSql("SELECT * FROM "+ DBTable +" WHERE brand=? AND model=? AND version=? AND color=?", [brand, model, version, color], renderFunc,onError);
 	});
   };
+
+  localDataStorage.webdb.getCarId = function(DBTable, brand, model, version, color,onSuccess,onError) {
+	var db = localDataStorage.webdb.db;
+	db.transaction(function(tx) {
+	tx.executeSql("SELECT * FROM "+ DBTable +" WHERE brand=? AND model=? AND version=? AND color=?", [brand, model, version, color], 
+	function(tx,results) {
+		localDataStorage.webdb.deleteList(results.rows.item(0).ID,DBTable,onSuccess,onError);
+	} ,onError);
+	});
+  };
+
   
   localDataStorage.webdb.getCarWithoutColor = function(renderFunc, DBTable, brand, model, version,onError) {
 	var db = localDataStorage.webdb.db;
@@ -115,6 +127,14 @@
 	  tx.executeSql("SELECT * FROM "+ DBTable +" WHERE brand=? AND model=? AND version=? LIMIT 1", [brand, model, version], renderFunc,onError);
 	});
   };
+	  
+  localDataStorage.webdb.updateCarData = function(DBTable,brand, model, version, color,description,price,onSuccess,onError) {
+	var db=localDataStorage.webdb.db;
+	db.transaction(function(tx) {
+		tx.executeSql("UPDATE " + DBTable + "  SET price=?,description=?,added_on=? WHERE brand=? AND model=? AND version=? AND color=?",[price,description,new Date(),brand, model, version, color],onSuccess,onError);
+	});
+	  
+  };	  
 	  
   localDataStorage.webdb.deleteList = function(id, DBTable,onSuccess,onError) {
 	var db = localDataStorage.webdb.db;
@@ -233,7 +253,7 @@
 		allItems.push(rs.rows.item(i));		 
 	}	
 	addBrands(dbSetup.brandsTableName, dbSetup.brandFields, allItems);		
-  }
+  }	
   
   function storeNewCars(tx, rs) {
 	var allItems = new Array;
@@ -241,13 +261,13 @@
 	for (var i=0; i < rs.rows.length; i++) {
 			var newCar = new Car();				
 			var thatItem = rs.rows.item(i);			
-			newCar.isolate.brand = thatItem.brand;
-			newCar.isolate.model = thatItem.model;
-			newCar.isolate.color = thatItem.color;
-			newCar.isolate.version = thatItem.version;
-			newCar.isolate.description = thatItem.description;
-			newCar.isolate.price = thatItem.price;
-			newCar.isolate.added_on = dateToCompare;
+			newCar.isolate.Brand = thatItem.brand;
+			newCar.isolate.Model = thatItem.model;
+			newCar.isolate.Color = thatItem.color;
+			newCar.isolate.Version = thatItem.version;
+			newCar.isolate.Description = thatItem.description;
+			newCar.isolate.Price = thatItem.price;
+//			newCar.isolate.added_on = dateToCompare;
 			allItems.push(newCar);		 
 	}	
 	addCars(dbSetup.carsTableName, dbSetup.allFields, allItems, dateToCompare);		
@@ -363,6 +383,36 @@
   
   function addCars(DBTable, TFields, allItemsList, dateToCompare) {	
 	var itemsToAdd = new Array;		
+/**/
+	for(var car in allItemsList){
+			var src = allItemsList[car];
+			var thisCar = new Car();
+			var carToAdd = new Array(src.isolate.Brand,src.isolate.Model,src.isolate.Color,src.isolate.Version,src.isolate.Description,src.isolate.Price,new Date());
+			thisCar.isolate.Brand = src.isolate.Brand;
+			thisCar.isolate.Model = src.isolate.Model;
+			thisCar.isolate.Color = src.isolate.Color;
+			thisCar.isolate.Version = src.isolate.Version;
+			thisCar.isolate.Description = src.isolate.Description;
+			thisCar.isolate.Price = src.isolate.Price;
+//			thisCar.isolate.added_on = dateToCompare;
+			if(allItemsList.length != 0){
+				for(var itemIn in carsCatalog){
+					if(!thisCar.dup || !newCar.dup){
+						var newCar = carsCatalog[itemIn];
+						thisCar.isDup(newCar);
+						if(thisCar.dup){
+							newCar.dup = true;
+						}
+					}				
+				}
+			}
+			if(!thisCar.dup){
+				localDataStorage.webdb.getCarId(DBTable,src.isolate.Brand,src.isolate.Model,src.isolate.Version,src.isolate.Color,localDataStorage.webdb.onSuccess,localDataStorage.webdb.onError);
+			}	
+	}
+
+/**/
+
 	for(var car in carsCatalog){
 			var src = carsCatalog[car];
 			var thisCar = new Car();
@@ -373,7 +423,7 @@
 			thisCar.isolate.version = src.Version;
 			thisCar.isolate.description = src.Description;
 			thisCar.isolate.price = src.Price;
-			thisCar.isolate.added_on = dateToCompare;
+	//		thisCar.isolate.added_on = dateToCompare;
 			if(allItemsList.length != 0){
 				for(var itemIn in allItemsList){
 					if(!thisCar.dup || !newCar.dup){
@@ -381,6 +431,7 @@
 						thisCar.isDup(newCar.isolate);
 						if(thisCar.dup){
 							newCar.dup = true;
+							thisCar.mustChangeData(newCar.isolate);
 						}
 					}				
 				}
@@ -388,6 +439,12 @@
 			if(!thisCar.dup){
 				localDataStorage.webdb.addNewItem(DBTable, TFields, carToAdd,localDataStorage.webdb.onSuccess,localDataStorage.webdb.onError);
 			}
+			else {
+				if(thisCar.changeData){
+					localDataStorage.webdb.updateCarData(DBTable,src.Brand,src.Model,src.Version,src.Color,src.Description,src.Price,localDataStorage.webdb.onSuccess,localDataStorage.webdb.onError);
+				}
+			}
+			
 	}
   }
   
@@ -445,7 +502,7 @@
 			localDataStorage.webdb.getAllBrandsList(DBTable, thisNew[0],localDataStorage.webdb.onSuccess,localDataStorage.webdb.onError);
 		}
 	}
-	/**/
+	
 	if(itemsToAdd.length != 0){
 		for(newItem in itemsToAdd){
 			var thisNew = itemsToAdd[newItem];

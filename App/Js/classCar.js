@@ -2,34 +2,44 @@
 // Construccion del uso del prototipo
 Car = function () {
 		this.isolate = new Object();       
-      	this.isolate.brand = new String;
-		this.isolate.model = new String;
-		this.isolate.color = new String;
-		this.isolate.version = new String;
-		this.isolate.description = new String;
-		this.isolate.price = new String;
+      	this.isolate.Brand = new String;
+		this.isolate.Model = new String;
+		this.isolate.Color = new String;
+		this.isolate.Version = new String;
+		this.isolate.Description = new String;
+		this.isolate.Price = new String;
 		this.isolate.added_on = new Date;
 		this.dup = false;
+		this.changeData=true;
 	  };
 	  
+Car.prototype.mustChangeData = function(itemToCompare) {
+	if(this.isolate.Description != itemToCompare.Description)
+		return;
+	if(this.isolate.Price != itemToCompare.Price)
+		return;
+	this.changeData = false;
+}
+
 Car.prototype.isDup = function (itemToCompare){
-		if(this.isolate.brand != itemToCompare.brand){
+		if(this.isolate.Brand != itemToCompare.Brand){
 			return;
 		}
-		if(this.isolate.model != itemToCompare.model){
+		if(this.isolate.Model != itemToCompare.Model){
 			return;
 		}
-		if(this.isolate.color != itemToCompare.color){
+		if(this.isolate.Color != itemToCompare.Color){
 			return;
 		}
-		if(this.isolate.version != itemToCompare.version){
+		if(this.isolate.Version != itemToCompare.Version){
 			return;
 		}
-		if(this.isolate.description != itemToCompare.description){
+		/*if(this.isolate.description != itemToCompare.description){
 			return;
 		}
 		if(this.isolate.price != itemToCompare.price){
 			return;
 		}
+		*/
 		this.dup = true;
 	};
