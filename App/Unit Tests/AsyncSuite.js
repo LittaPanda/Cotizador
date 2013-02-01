@@ -569,7 +569,7 @@
 		});
 	});
 
-/**/
+/*
 	asyncTest( "asynchronous test: localDataStorage.webdb.dropDataBase--Delete an inexisting database",1, 
 	function() {
 		//localDataStorage.webdb.open("TestDB", "1", "Database Testing");

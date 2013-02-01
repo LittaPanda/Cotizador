@@ -69,6 +69,18 @@
 	});
   };
   
+  localDataStorage.webdb.getAllBrandsList = function(DBTable,brand,onSuccess,onError) {
+	var db = localDataStorage.webdb.db;
+	db.transaction(function(tx) {
+	  tx.executeSql("SELECT * FROM "+ DBTable +" WHERE brand=?", [brand],
+	  function(tx,results) {
+			localDataStorage.webdb.deleteList(results.rows.item(0).ID,DBTable,onSuccess,onError);
+			}
+	  ,onError);
+	});
+  };
+  
+  
   localDataStorage.webdb.getAllModels = function(renderFunc, DBTable, brand,onError) {
 	var db = localDataStorage.webdb.db;
 	db.transaction(function(tx) {
@@ -382,6 +394,7 @@
   function addBrands(DBTable, TFields, allBrandsList) {	
   	var isDup;
   	var itemsToAdd = new Array;		
+	var itemsToDelete = new Array;		
 	for(var brand in brandsCatalog){
 		isDup = false;
 		var src = brandsCatalog[brand];
@@ -403,6 +416,36 @@
 			itemsToAdd.push(thisBrand);		
 		}
 	}
+	/**/
+	for(var brand in allBrandsList){
+		isDup = false;
+		var src = allBrandsList[brand];
+		if(brandsCatalog.length != 0){
+			for(var itemIn in brandsCatalog){
+				if(!isDup){
+					var itemInSrc = brandsCatalog[itemIn];
+					if(itemInSrc.Brand == src.brand){
+						isDup = true;				
+					}
+				}				
+			}
+			if(!isDup){
+				var thisBrand = new Array(src.brand);							
+				itemsToDelete.push(thisBrand);	
+			}
+		}else{
+			var thisBrand = new Array(src.brand);		
+			itemsToDelete.push(thisBrand);		
+		}
+	}
+	
+	if(itemsToDelete.length!=0) {
+		for(newItem in itemsToDelete){
+			var thisNew = itemsToDelete[newItem];
+			localDataStorage.webdb.getAllBrandsList(DBTable, thisNew[0],localDataStorage.webdb.onSuccess,localDataStorage.webdb.onError);
+		}
+	}
+	/**/
 	if(itemsToAdd.length != 0){
 		for(newItem in itemsToAdd){
 			var thisNew = itemsToAdd[newItem];
