@@ -32,7 +32,42 @@ Js/Data.js
 Js/classDBSetup.js
 Js/classCar.js
 Js/dataManagement.js   
-Js/navigationManagement.js    
+Js/navigationManagement.js
+Img\Volkswagen\JettaRojoStandar.png
+Img\Volkswagen\JettaNegroDeluxe.png
+Img\Volkswagen\JettaBlancoPremium.png
+Img\Volkswagen\Jetta.png
+Img\Volkswagen\BeetleRojoClasico.png
+Img\Volkswagen\BeetleNegroXbox.png
+Img\Volkswagen\BeetleNegroClasico.png
+Img\Volkswagen\BeetleBlancoXbox.png
+Img\Volkswagen\BeetleBlancoClasico.png
+Img\Volkswagen\Beetle.png
+Img\Nissan\VersaRojoStandar.png
+Img\Nissan\VersaNegroStandar.png
+Img\Nissan\VersaAzulPremium.png
+Img\Nissan\Versa.png
+Img\Nissan\MarchRojoDeluxe.png
+Img\Nissan\MarchAzulDeluxe.png
+Img\Nissan\March.png
+Img\Chevrolet\SparkVerdePremium.png
+Img\Chevrolet\SparkRosaStandar.png
+Img\Chevrolet\SparkAzulDeluxe.png
+Img\Chevrolet\Spark.png
+Img\Volkswagen.png
+Img\Verde.png
+Img\Rosa.png
+Img\Rojo.png
+Img\Nissan.png
+Img\Negro.png
+Img\Chevrolet.png
+Img\Blanco.png
+Img\Azul.png 
+CSS\Vendors\images\ajax-loader.gif  
+CSS\Vendors\images\icons-18-black.png 
+CSS\Vendors\images\icons-18-white.png 
+CSS\Vendors\images\icons-36-black.png 
+CSS\Vendors\images\icons-36-white.png 
 
 
 # Archivos que requieren estar On-Line para funcionar.
