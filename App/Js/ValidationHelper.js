@@ -157,7 +157,7 @@ function validatePhone(phoneValue, PlaceHolder){
 			phoneValue.value="";
 			phoneValue.placeholder = "El campo " + PlacheHolder + " sólo permite números.";
 		}
-		else if(phoneValue.value.length<8 || phoneValue.value.length>8){
+		else if(phoneValue.value.length<8){
 			error = true
 			phoneValue.placeholder="";
 			phoneValue.value="";
